@@ -1,5 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
 
+import { Container } from "@/common/components/BaseContainer/BaseContainer";
+
 import { breakpoints } from "./breakpoints";
 import { fontSizes } from "./fonts";
 
@@ -10,4 +12,7 @@ import { fontSizes } from "./fonts";
 export const theme = extendTheme({
   breakpoints,
   fontSizes,
+  components: {
+    Container,
+  },
 });
