@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -10,13 +11,22 @@ import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 
+import { useSignIn } from "../hooks/useSignIn";
+
+import {
+  EMAIL_INVALID_ERROR,
+  EMAIL_REQUIRED_ERROR,
+  PASSWORD_REQUIRED_ERROR,
+} from "@/app/messages/errors";
+import { RouteEnum } from "@/common/models/RouteEnum";
+
 interface LoginFormInputs {
-  Email: string;
-  Password: string;
+  email: string;
+  password: string;
 }
 const schema = yup.object().shape({
-  Email: yup.string().email().required(),
-  Password: yup.string().required(),
+  email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
+  password: yup.string().required(PASSWORD_REQUIRED_ERROR),
 });
 
 const Login: React.FC = () => {
@@ -29,36 +39,44 @@ const Login: React.FC = () => {
     mode: "onBlur",
   });
 
+  const { isLoading: isSigningIn, mutateAsync: signIn } = useSignIn();
+
+  const navigate = useNavigate();
+
   const onSubmit = (values: LoginFormInputs) => {
-    console.log(values);
+    signIn(values).then(() => {
+      navigate(RouteEnum.HOME);
+    });
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <BaseFlex gap="1rem" direction="column">
-        <BaseFormControl isInvalid={Boolean(errors.Email)}>
+        <BaseFormControl isInvalid={Boolean(errors.email)}>
           <BaseFormLabel>Email</BaseFormLabel>
           <BaseInput
+            variant="filled"
             type="email"
             placeholder="Enter email"
-            {...register("Email")}
+            {...register("email")}
           />
-          <BaseFormErrorMessage>{errors.Email?.message}</BaseFormErrorMessage>
+          <BaseFormErrorMessage>{errors.email?.message}</BaseFormErrorMessage>
         </BaseFormControl>
 
-        <BaseFormControl isInvalid={Boolean(errors.Password)}>
+        <BaseFormControl isInvalid={Boolean(errors.password)}>
           <BaseFormLabel>Password</BaseFormLabel>
           <BaseInput
+            variant="filled"
             type="password"
             placeholder="Enter password"
-            {...register("Password")}
+            {...register("password")}
           />
           <BaseFormErrorMessage>
-            {errors.Password?.message}
+            {errors.password?.message}
           </BaseFormErrorMessage>
         </BaseFormControl>
 
-        <BaseButton variant="solid" type="submit">
+        <BaseButton isLoading={isSigningIn} variant="solid" type="submit">
           Submit
         </BaseButton>
       </BaseFlex>
