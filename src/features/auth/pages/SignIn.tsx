@@ -20,21 +20,22 @@ import {
 } from "@/app/messages/errors";
 import { RouteEnum } from "@/common/models/RouteEnum";
 
-interface LoginFormInputs {
+interface SignInFormInputs {
   email: string;
   password: string;
 }
+
 const schema = yup.object().shape({
   email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
   password: yup.string().required(PASSWORD_REQUIRED_ERROR),
 });
 
-const Login: React.FC = () => {
+const SignIn: React.FC = () => {
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<LoginFormInputs>({
+  } = useForm<SignInFormInputs>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
@@ -43,7 +44,7 @@ const Login: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = (values: LoginFormInputs) => {
+  const onSubmit = (values: SignInFormInputs) => {
     signIn(values).then(() => {
       navigate(RouteEnum.HOME);
     });
@@ -84,4 +85,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default SignIn;

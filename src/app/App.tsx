@@ -5,26 +5,32 @@ import { QueryClientProvider } from "react-query";
 import { createStandaloneToast } from "@chakra-ui/toast";
 
 import Home from "@/features/home/pages/Home";
-import Login from "@/features/auth/pages/Login";
+import SignIn from "@/features/auth/pages/SignIn";
 import AuthLayout from "@/layouts/AuthLayout/AuthLayout";
 
 import { RouteEnum } from "@/common/models/RouteEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
 import { theme } from "./styles/theme/theme";
+import MainLayout from "@/layouts/MainLayout/MainLayout";
 
 const { ToastContainer } = createStandaloneToast();
 
 const router = createBrowserRouter([
   {
-    path: RouteEnum.HOME,
-    element: <Home />,
+    element: <MainLayout />,
+    children: [
+      {
+        path: RouteEnum.HOME,
+        element: <Home />,
+      },
+    ],
   },
   {
     element: <AuthLayout />,
     children: [
       {
         path: RouteEnum.LOGIN,
-        element: <Login />,
+        element: <SignIn />,
       },
     ],
   },

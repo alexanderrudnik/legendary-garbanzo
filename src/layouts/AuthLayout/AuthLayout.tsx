@@ -9,21 +9,23 @@ import AuthBG from "@/app/assets/images/auth-bg.webp";
 
 const AuthLayout: React.FC = () => {
   return (
-    <BaseSection
-      height="100vh"
-      width="100vw"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      backgroundImage={AuthBG}
-      backgroundSize="cover"
-    >
-      <BaseCenter width="100%" maxWidth={400}>
-        <BaseContainer>
-          <Outlet />
-        </BaseContainer>
-      </BaseCenter>
-    </BaseSection>
+    <main>
+      <BaseSection
+        height="100vh"
+        width="100vw"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        backgroundImage={AuthBG}
+        backgroundSize="cover"
+      >
+        <BaseCenter width="100%" maxWidth={400}>
+          <BaseContainer>
+            <Outlet />
+          </BaseContainer>
+        </BaseCenter>
+      </BaseSection>
+    </main>
   );
 };
 
