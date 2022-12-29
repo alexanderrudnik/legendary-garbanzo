@@ -1,10 +1,18 @@
 import { auth } from "@/app/firebase/firebaseConfig";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { SignInDetails } from "./types";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { SignInDetails, SignUpDetails } from "./types";
 
 class AuthService {
   signIn({ email, password }: SignInDetails) {
     return signInWithEmailAndPassword(auth, email, password);
+  }
+
+  signUp({ email, password }: SignUpDetails) {
+    return createUserWithEmailAndPassword(auth, email, password);
   }
 
   signOut() {

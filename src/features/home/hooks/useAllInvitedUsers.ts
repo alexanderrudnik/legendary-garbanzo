@@ -14,7 +14,7 @@ const getAllInvitedUsers = async () => {
   }
 };
 
-export const useInvitedUsersByMe = () => {
+export const useAllInvitedUsers = () => {
   return useQuery(QueryKeysEnum.INVITED_USERS, getAllInvitedUsers, {
     onError: (error: Error) =>
       notificationService.show({

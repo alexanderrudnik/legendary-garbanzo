@@ -12,6 +12,7 @@ import { RouteEnum } from "@/common/models/RouteEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
 import { theme } from "./styles/theme/theme";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
+import SignUp from "@/features/auth/pages/SignUp";
 
 const { ToastContainer } = createStandaloneToast();
 
@@ -29,8 +30,12 @@ const router = createBrowserRouter([
     element: <AuthLayout />,
     children: [
       {
-        path: RouteEnum.LOGIN,
+        path: RouteEnum.SIGN_IN,
         element: <SignIn />,
+      },
+      {
+        path: RouteEnum.SIGN_UP,
+        element: <SignUp />,
       },
     ],
   },

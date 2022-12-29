@@ -17,7 +17,7 @@ function withAuth<T extends {}>(Component: ComponentType<T>) {
       if (user) {
         setIsAccessed(true);
       } else if (!isLoading && !user) {
-        navigate(RouteEnum.LOGIN);
+        navigate(RouteEnum.SIGN_IN);
       }
     }, [user, isLoading, navigate]);
 
