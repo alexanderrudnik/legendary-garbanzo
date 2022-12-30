@@ -13,7 +13,7 @@ import BaseButton from "@/common/components/BaseButton/BaseButton";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import MenuDrawer from "../MenuDrawer/MenuDrawer";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
-import { useColorMode } from "@chakra-ui/react";
+import { useColorMode, useTheme } from "@chakra-ui/react";
 
 const Header: React.FC = () => {
   const { data: user } = useMe();
@@ -25,6 +25,8 @@ const Header: React.FC = () => {
   const signOut = () => {
     authService.signOut();
   };
+
+  const theme = useTheme();
 
   const menu = useMemo(
     () => [
@@ -74,7 +76,9 @@ const Header: React.FC = () => {
           <Link to={RouteEnum.HOME}>
             <BaseImage
               transition="all 0.3s ease"
-              _hover={{ filter: "drop-shadow(5px 5px 5px #4444dd)" }}
+              _hover={{
+                filter: `drop-shadow(5px 5px 5px ${theme.colors.primary})`,
+              }}
               width={200}
               src={logo}
               alt="logo"
