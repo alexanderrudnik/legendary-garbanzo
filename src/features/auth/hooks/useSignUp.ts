@@ -1,4 +1,4 @@
-import { db } from "@/app/firebase/firebaseConfig";
+import { auth, db } from "@/app/firebase/firebaseConfig";
 import { errorMapper } from "@/common/errorMapper/errorMapper";
 import { FirestoreEnum } from "@/common/models/FirestoreEnum";
 import { authService } from "@/services/auth/authService";
@@ -23,6 +23,8 @@ const signup = async (details: SignUpDetails) => {
     await setDoc(dbRef, data);
 
     await sendEmailVerification(response.user);
+
+    await auth.signOut();
 
     return response.user;
   } catch (error) {
