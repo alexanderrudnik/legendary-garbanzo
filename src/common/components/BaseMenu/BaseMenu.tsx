@@ -41,7 +41,7 @@ const BaseMenu: React.FC<Props> = ({ trigger, items, ...props }) => {
                 {...(item.onClick && { onClick: item.onClick })}
               >
                 {item.href ? (
-                  <Link to={item.href}>
+                  <Link style={{ width: "100%" }} to={item.href}>
                     <BaseText color="error">{item.label}</BaseText>
                   </Link>
                 ) : (
