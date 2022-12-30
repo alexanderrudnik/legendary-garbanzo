@@ -1,7 +1,14 @@
-import { addDoc, collection, getDocs, query } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+} from "firebase/firestore";
 import { auth, db } from "@/app/firebase/firebaseConfig";
 import { FirestoreEnum } from "@/common/models/FirestoreEnum";
-import { InvitedUser, InviteUserDetails } from "./types";
+import { InvitedUser, InviteUserDetails, User } from "./types";
 
 class UserService {
   inviteUser({ email }: InviteUserDetails) {
@@ -42,6 +49,17 @@ class UserService {
     });
 
     return array;
+  }
+
+  async getMe() {
+    if (auth.currentUser) {
+      const docRef = doc(db, FirestoreEnum.USERS, auth.currentUser.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        return docSnap.data() as User;
+      }
+    }
   }
 }
 

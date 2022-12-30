@@ -3,6 +3,7 @@ import { errorMapper } from "@/common/errorMapper/errorMapper";
 import { authService } from "@/services/auth/authService";
 import { SignInDetails } from "@/services/auth/types";
 import { notificationService } from "@/services/notification/notificationService";
+import { useMe } from "@/common/hooks/useMe";
 
 const signIn = async (details: SignInDetails) => {
   try {
@@ -15,7 +16,12 @@ const signIn = async (details: SignInDetails) => {
 };
 
 export const useSignIn = () => {
+  const { refetch: getMe } = useMe();
+
   return useMutation(signIn, {
+    onSuccess: () => {
+      getMe();
+    },
     onError: (error: Error) =>
       notificationService.show({
         title: "An error occurred",
