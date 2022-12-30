@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import { Flex } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import BaseMenu from "@/common/components/BaseMenu/BaseMenu";
 import { useMe } from "@/common/hooks/useMe";
@@ -13,6 +12,7 @@ import { Link } from "react-router-dom";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import MenuDrawer from "../MenuDrawer/MenuDrawer";
+import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 
 const Header: React.FC = () => {
   const { data: user } = useMe();
@@ -38,6 +38,20 @@ const Header: React.FC = () => {
     []
   );
 
+  const nav = useMemo(
+    () => [
+      {
+        label: "Requests",
+        href: RouteEnum.REQUESTS,
+      },
+      {
+        label: "Proposals",
+        href: RouteEnum.PROPOSALS,
+      },
+    ],
+    []
+  );
+
   const name = useMemo(() => `${user?.firstName} ${user?.lastName}`, [user]);
 
   return (
@@ -49,37 +63,55 @@ const Header: React.FC = () => {
       boxShadow="0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06)"
     >
       <BaseContainer>
-        <Flex justify="space-between" align="center">
+        <BaseFlex gap="5rem" align="center">
           <Link to={RouteEnum.HOME}>
             <BaseImage width={200} src={logo} alt="logo" />
           </Link>
 
-          <BaseButton
-            display={{
-              md: "none",
-            }}
-            variant="ghost"
-            onClick={onOpen}
-          >
-            <HamburgerIcon />
+          <BaseFlex flexGrow={1} justify="space-between" align="center">
+            <BaseFlex
+              display={{
+                base: "none",
+                md: "flex",
+              }}
+              gap="2rem"
+            >
+              {nav.map((item, i) => (
+                <Link key={i} to={item.href}>
+                  <BaseButton variant="link" _hover={{ color: "primary" }}>
+                    {item.label}
+                  </BaseButton>
+                </Link>
+              ))}
+            </BaseFlex>
 
-            <MenuDrawer
-              isOpen={isOpen}
-              onClose={onClose}
-              name={name}
-              menu={menu}
-            />
-          </BaseButton>
+            <BaseButton
+              display={{
+                md: "none",
+              }}
+              variant="ghost"
+              onClick={onOpen}
+            >
+              <HamburgerIcon />
 
-          <BaseBox
-            display={{
-              base: "none",
-              md: "block",
-            }}
-          >
-            <BaseMenu trigger={name} items={menu} />
-          </BaseBox>
-        </Flex>
+              <MenuDrawer
+                isOpen={isOpen}
+                onClose={onClose}
+                name={name}
+                menu={[...nav, ...menu]}
+              />
+            </BaseButton>
+
+            <BaseBox
+              display={{
+                base: "none",
+                md: "block",
+              }}
+            >
+              <BaseMenu trigger={name} items={menu} />
+            </BaseBox>
+          </BaseFlex>
+        </BaseFlex>
       </BaseContainer>
     </BaseBox>
   );
