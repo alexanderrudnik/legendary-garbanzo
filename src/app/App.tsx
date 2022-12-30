@@ -1,6 +1,10 @@
 import React from "react";
 import { ChakraProvider } from "@chakra-ui/react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { QueryClientProvider } from "react-query";
 import { createStandaloneToast } from "@chakra-ui/toast";
 
@@ -43,6 +47,10 @@ const router = createBrowserRouter([
         element: <SignUp />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Navigate to={RouteEnum.HOME} />,
   },
 ]);
 
