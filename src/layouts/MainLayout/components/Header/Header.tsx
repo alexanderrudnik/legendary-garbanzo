@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Flex } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import BaseMenu from "@/common/components/BaseMenu/BaseMenu";
@@ -11,13 +11,34 @@ import BaseImage from "@/common/components/BaseImage/BaseImage";
 import logo from "@/app/assets/images/logo.png";
 import { Link } from "react-router-dom";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
+import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
+import MenuDrawer from "../MenuDrawer/MenuDrawer";
 
 const Header: React.FC = () => {
   const { data: user } = useMe();
 
+  const { isOpen, onClose, onOpen } = useBaseDisclosure();
+
   const signOut = () => {
     authService.signOut();
   };
+
+  const menu = useMemo(
+    () => [
+      {
+        label: "Invite a user",
+        href: RouteEnum.INVITE,
+      },
+      {
+        label: "Sign out",
+        onClick: () => signOut(),
+        danger: true,
+      },
+    ],
+    []
+  );
+
+  const name = useMemo(() => `${user?.firstName} ${user?.lastName}`, [user]);
 
   return (
     <BaseBox
@@ -38,8 +59,16 @@ const Header: React.FC = () => {
               md: "none",
             }}
             variant="ghost"
+            onClick={onOpen}
           >
             <HamburgerIcon />
+
+            <MenuDrawer
+              isOpen={isOpen}
+              onClose={onClose}
+              name={name}
+              menu={menu}
+            />
           </BaseButton>
 
           <BaseBox
@@ -48,20 +77,7 @@ const Header: React.FC = () => {
               md: "block",
             }}
           >
-            <BaseMenu
-              trigger={`${user?.firstName} ${user?.lastName}`}
-              items={[
-                {
-                  label: "Invite a user",
-                  href: RouteEnum.INVITE,
-                },
-                {
-                  label: "Sign out",
-                  onClick: () => signOut(),
-                  danger: true,
-                },
-              ]}
-            />
+            <BaseMenu trigger={name} items={menu} />
           </BaseBox>
         </Flex>
       </BaseContainer>

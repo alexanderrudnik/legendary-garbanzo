@@ -3,7 +3,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import {
   Menu,
   MenuButton,
-  MenuItem,
+  MenuItem as MenuItemComponent,
   MenuList,
   MenuProps,
 } from "@chakra-ui/react";
@@ -11,14 +11,16 @@ import BaseButton from "../BaseButton/BaseButton";
 import { Link } from "react-router-dom";
 import BaseText from "../BaseText/BaseText";
 
+export interface MenuItem {
+  href?: string;
+  label: string;
+  onClick?: () => void;
+  danger?: boolean;
+}
+
 interface Props extends Omit<MenuProps, "children"> {
   trigger: React.ReactNode;
-  items: {
-    href?: string;
-    label: string;
-    onClick?: () => void;
-    danger?: boolean;
-  }[];
+  items: MenuItem[];
 }
 
 const BaseMenu: React.FC<Props> = ({ trigger, items, ...props }) => {
@@ -34,7 +36,7 @@ const BaseMenu: React.FC<Props> = ({ trigger, items, ...props }) => {
           </MenuButton>
           <MenuList>
             {items.map((item, i) => (
-              <MenuItem
+              <MenuItemComponent
                 key={i}
                 {...(item.onClick && { onClick: item.onClick })}
               >
@@ -45,7 +47,7 @@ const BaseMenu: React.FC<Props> = ({ trigger, items, ...props }) => {
                 ) : (
                   <BaseText color="red">{item.label}</BaseText>
                 )}
-              </MenuItem>
+              </MenuItemComponent>
             ))}
           </MenuList>
         </>
