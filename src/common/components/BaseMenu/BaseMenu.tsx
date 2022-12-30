@@ -27,8 +27,11 @@ const BaseMenu: React.FC<Props> = ({ trigger, items }) => {
             {trigger}
           </MenuButton>
           <MenuList>
-            {items.map((item) => (
-              <MenuItem {...(item.onClick && { onClick: item.onClick })}>
+            {items.map((item, i) => (
+              <MenuItem
+                key={i}
+                {...(item.onClick && { onClick: item.onClick })}
+              >
                 {item.href ? (
                   <Link to={item.href}>
                     <BaseText color="error">{item.label}</BaseText>

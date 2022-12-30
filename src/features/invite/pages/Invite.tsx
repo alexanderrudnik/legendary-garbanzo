@@ -9,17 +9,16 @@ import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
 import BaseInput from "@/common/components/BaseInput/BaseInput";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
-import { useInviteUser } from "../../hooks/useInviteUser";
-import { useInvitedUsersByMe } from "../../hooks/useInvitedUsersByMe";
+import { useInviteUser } from "../../home/hooks/useInviteUser";
+import { useInvitedUsersByMe } from "../../home/hooks/useInvitedUsersByMe";
 import {
   EMAIL_INVALID_ERROR,
   EMAIL_REQUIRED_ERROR,
 } from "@/app/messages/errors";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
-import BaseText from "@/common/components/BaseText/BaseText";
-import BaseSpinner from "@/common/components/BaseSpinner/BaseSpinner";
+import BaseFormHelperText from "@/common/components/BaseFormHelperText/BaseFormHelperText";
 
-interface InviteUserInputs {
+interface InviteInputs {
   email: string;
 }
 
@@ -27,13 +26,13 @@ const schema = yup.object().shape({
   email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
 });
 
-const InviteUser: React.FC = () => {
+const Invite: React.FC = () => {
   const {
     handleSubmit,
     register,
     reset,
     formState: { errors },
-  } = useForm<InviteUserInputs>({
+  } = useForm<InviteInputs>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
@@ -41,15 +40,14 @@ const InviteUser: React.FC = () => {
   const { isLoading: isInvitingUser, mutateAsync: inviteUser } =
     useInviteUser();
 
-  const { isLoading: isGettingInvitedUsers, data: invitedUsers } =
-    useInvitedUsersByMe();
+  const { data: invitedUsers } = useInvitedUsersByMe();
 
-  const onSubmit = (values: InviteUserInputs) => {
+  const onSubmit = (values: InviteInputs) => {
     inviteUser(values).finally(() => reset());
   };
 
   return (
-    <BaseSection>
+    <BaseSection padding="2rem 0">
       <form onSubmit={handleSubmit(onSubmit)}>
         <BaseFlex gap="1rem" direction="column">
           <BaseFormControl isInvalid={Boolean(errors.email)}>
@@ -60,6 +58,15 @@ const InviteUser: React.FC = () => {
               placeholder="Enter email"
               {...register("email")}
             />
+            {invitedUsers && (
+              <BaseFormHelperText>
+                You've invited {invitedUsers.length} user
+                {invitedUsers.length > 1 || invitedUsers.length === 0
+                  ? "s"
+                  : ""}
+                .
+              </BaseFormHelperText>
+            )}
             <BaseFormErrorMessage>{errors.email?.message}</BaseFormErrorMessage>
           </BaseFormControl>
 
@@ -68,24 +75,8 @@ const InviteUser: React.FC = () => {
           </BaseButton>
         </BaseFlex>
       </form>
-
-      <BaseFlex marginTop="2rem" direction="column" gap="1rem">
-        <BaseText>Invited users:</BaseText>
-
-        {isGettingInvitedUsers ? (
-          <BaseSpinner />
-        ) : invitedUsers?.length ? (
-          <BaseFlex direction="column" gap="0.5rem">
-            {invitedUsers?.map((user) => (
-              <BaseText>{user.email}</BaseText>
-            ))}
-          </BaseFlex>
-        ) : (
-          <BaseText>No invited users yet</BaseText>
-        )}
-      </BaseFlex>
     </BaseSection>
   );
 };
 
-export default InviteUser;
+export default Invite;
