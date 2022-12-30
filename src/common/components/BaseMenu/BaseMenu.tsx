@@ -1,11 +1,17 @@
 import React from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
-import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  MenuProps,
+} from "@chakra-ui/react";
 import BaseButton from "../BaseButton/BaseButton";
 import { Link } from "react-router-dom";
 import BaseText from "../BaseText/BaseText";
 
-interface Props {
+interface Props extends Omit<MenuProps, "children"> {
   trigger: React.ReactNode;
   items: {
     href?: string;
@@ -15,9 +21,9 @@ interface Props {
   }[];
 }
 
-const BaseMenu: React.FC<Props> = ({ trigger, items }) => {
+const BaseMenu: React.FC<Props> = ({ trigger, items, ...props }) => {
   return (
-    <Menu>
+    <Menu {...props}>
       {({ isOpen }) => (
         <>
           <MenuButton
