@@ -65,7 +65,13 @@ const Header: React.FC = () => {
       <BaseContainer>
         <BaseFlex gap="5rem" align="center">
           <Link to={RouteEnum.HOME}>
-            <BaseImage width={200} src={logo} alt="logo" />
+            <BaseImage
+              transition="all 0.3s ease"
+              _hover={{ filter: "drop-shadow(5px 5px 5px #4444dd)" }}
+              width={200}
+              src={logo}
+              alt="logo"
+            />
           </Link>
 
           <BaseFlex flexGrow={1} justify="space-between" align="center">
