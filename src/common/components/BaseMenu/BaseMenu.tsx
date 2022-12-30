@@ -42,10 +42,14 @@ const BaseMenu: React.FC<Props> = ({ trigger, items, ...props }) => {
               >
                 {item.href ? (
                   <Link style={{ width: "100%" }} to={item.href}>
-                    <BaseText color="error">{item.label}</BaseText>
+                    <BaseText {...(item.danger && { color: "red" })}>
+                      {item.label}
+                    </BaseText>
                   </Link>
                 ) : (
-                  <BaseText color="red">{item.label}</BaseText>
+                  <BaseText {...(item.danger && { color: "red" })}>
+                    {item.label}
+                  </BaseText>
                 )}
               </MenuItemComponent>
             ))}

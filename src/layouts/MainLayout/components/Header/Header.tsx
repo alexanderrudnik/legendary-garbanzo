@@ -13,11 +13,14 @@ import BaseButton from "@/common/components/BaseButton/BaseButton";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import MenuDrawer from "../MenuDrawer/MenuDrawer";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
+import { useColorMode } from "@chakra-ui/react";
 
 const Header: React.FC = () => {
   const { data: user } = useMe();
 
   const { isOpen, onClose, onOpen } = useBaseDisclosure();
+
+  const { toggleColorMode, colorMode } = useColorMode();
 
   const signOut = () => {
     authService.signOut();
@@ -30,12 +33,16 @@ const Header: React.FC = () => {
         href: RouteEnum.INVITE,
       },
       {
+        label: `Toggle ${colorMode === "dark" ? "light" : "dark"}`,
+        onClick: () => toggleColorMode(),
+      },
+      {
         label: "Sign out",
         onClick: () => signOut(),
         danger: true,
       },
     ],
-    []
+    [colorMode, toggleColorMode]
   );
 
   const nav = useMemo(
