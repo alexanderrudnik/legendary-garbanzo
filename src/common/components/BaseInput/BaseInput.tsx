@@ -2,7 +2,7 @@ import React from "react";
 import { Input as ChakraInput, InputProps } from "@chakra-ui/react";
 
 const BaseInput = React.forwardRef<any, InputProps>(({ ...props }, ref) => {
-  return <ChakraInput ref={ref} focusBorderColor="primary" {...props} />;
+  return <ChakraInput ref={ref} focusBorderColor="primary.500" {...props} />;
 });
 
 export default BaseInput;
