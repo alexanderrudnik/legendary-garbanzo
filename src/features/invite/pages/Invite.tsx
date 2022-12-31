@@ -47,7 +47,7 @@ const Invite: React.FC = () => {
   };
 
   return (
-    <BaseSection padding="2rem 0">
+    <BaseSection>
       <form onSubmit={handleSubmit(onSubmit)}>
         <BaseFlex gap="1rem" direction="column">
           <BaseFormControl isInvalid={Boolean(errors.email)}>

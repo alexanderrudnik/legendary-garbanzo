@@ -47,20 +47,6 @@ const Header: React.FC = () => {
     [colorMode, toggleColorMode]
   );
 
-  const nav = useMemo(
-    () => [
-      {
-        label: "Requests",
-        href: RouteEnum.REQUESTS,
-      },
-      {
-        label: "Proposals",
-        href: RouteEnum.PROPOSALS,
-      },
-    ],
-    []
-  );
-
   const name = useMemo(() => `${user?.firstName} ${user?.lastName}`, [user]);
 
   return (
@@ -72,7 +58,7 @@ const Header: React.FC = () => {
       boxShadow="0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06)"
     >
       <BaseContainer>
-        <BaseFlex gap="5rem" align="center">
+        <BaseFlex justify="space-between" align="center">
           <Link to={RouteEnum.HOME}>
             <BaseImage
               transition="all 0.3s ease"
@@ -85,49 +71,31 @@ const Header: React.FC = () => {
             />
           </Link>
 
-          <BaseFlex flexGrow={1} justify="space-between" align="center">
-            <BaseFlex
-              display={{
-                base: "none",
-                md: "flex",
-              }}
-              gap="2rem"
-            >
-              {nav.map((item, i) => (
-                <Link key={i} to={item.href}>
-                  <BaseButton variant="link" _hover={{ color: "primary" }}>
-                    {item.label}
-                  </BaseButton>
-                </Link>
-              ))}
-            </BaseFlex>
+          <BaseButton
+            display={{
+              md: "none",
+            }}
+            variant="ghost"
+            onClick={onOpen}
+          >
+            <HamburgerIcon />
 
-            <BaseButton
-              display={{
-                md: "none",
-              }}
-              variant="ghost"
-              onClick={onOpen}
-            >
-              <HamburgerIcon />
+            <MenuDrawer
+              isOpen={isOpen}
+              onClose={onClose}
+              name={name}
+              menu={menu}
+            />
+          </BaseButton>
 
-              <MenuDrawer
-                isOpen={isOpen}
-                onClose={onClose}
-                name={name}
-                menu={[...nav, ...menu]}
-              />
-            </BaseButton>
-
-            <BaseBox
-              display={{
-                base: "none",
-                md: "block",
-              }}
-            >
-              <BaseMenu trigger={name} items={menu} />
-            </BaseBox>
-          </BaseFlex>
+          <BaseBox
+            display={{
+              base: "none",
+              md: "block",
+            }}
+          >
+            <BaseMenu trigger={name} items={menu} />
+          </BaseBox>
         </BaseFlex>
       </BaseContainer>
     </BaseBox>
