@@ -13,7 +13,7 @@ import BaseButton from "@/common/components/BaseButton/BaseButton";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import MenuDrawer from "../MenuDrawer/MenuDrawer";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
-import { useColorMode, useTheme } from "@chakra-ui/react";
+import { useColorMode, useColorModeValue, useTheme } from "@chakra-ui/react";
 
 const Header: React.FC = () => {
   const { data: user } = useMe();
@@ -21,6 +21,11 @@ const Header: React.FC = () => {
   const { isOpen, onClose, onOpen } = useBaseDisclosure();
 
   const { toggleColorMode, colorMode } = useColorMode();
+
+  const shadow = useColorModeValue(
+    "0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06)",
+    "0px 0px 4px rgba(255, 255, 255, 0.04), 0px 4px 8px rgba(255, 255, 255, 0.06)"
+  );
 
   const signOut = () => {
     authService.signOut();
@@ -55,7 +60,7 @@ const Header: React.FC = () => {
       as="header"
       position="sticky"
       padding="1rem 0"
-      boxShadow="0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06)"
+      boxShadow={shadow}
     >
       <BaseContainer>
         <BaseFlex justify="space-between" align="center">
