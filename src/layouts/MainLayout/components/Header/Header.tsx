@@ -68,7 +68,7 @@ const Header: React.FC = () => {
             <BaseImage
               transition="all 0.3s ease"
               _hover={{
-                filter: `drop-shadow(5px 5px 5px ${theme.colors.primary})`,
+                filter: `drop-shadow(5px 5px 5px ${theme.colors.primary[500]})`,
               }}
               width={200}
               src={logo}
