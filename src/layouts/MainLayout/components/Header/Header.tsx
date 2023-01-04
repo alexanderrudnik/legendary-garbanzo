@@ -36,6 +36,10 @@ const Header: React.FC = () => {
   const menu = useMemo(
     () => [
       {
+        label: "My Workspace",
+        href: RouteEnum.MY_WORKSPACE,
+      },
+      {
         label: "Invite a user",
         href: RouteEnum.INVITE,
       },

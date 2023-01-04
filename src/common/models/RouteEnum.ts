@@ -5,4 +5,5 @@ export enum RouteEnum {
   INVITE = "/invite",
   REQUESTS = "/requests",
   PROPOSALS = "/proposals",
+  MY_WORKSPACE = "/my-workspace",
 }
