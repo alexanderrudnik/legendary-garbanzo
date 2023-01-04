@@ -7,7 +7,6 @@ import { useAllInvitedUsers } from "@/features/home/hooks/useAllInvitedUsers";
 import Loading from "@/common/components/Loading/Loading";
 import BaseHeading from "@/common/components/BaseHeading/BaseHeading";
 import {
-  COMPANY_REQUIRED_ERROR,
   EMAIL_INVALID_ERROR,
   EMAIL_REQUIRED_ERROR,
   FIRST_NAME_REQUIRED_ERROR,
@@ -37,7 +36,6 @@ interface SignUpFormInputs {
   password: string;
   firstName: string;
   lastName: string;
-  company: string;
 }
 
 const schema = yup.object().shape({
@@ -51,7 +49,6 @@ const schema = yup.object().shape({
     .matches(PASSWORD_LOWER_CASE_REGEX, PASSWORD_LOWER_CASE_ERROR),
   firstName: yup.string().required(FIRST_NAME_REQUIRED_ERROR),
   lastName: yup.string().required(LAST_NAME_REQUIRED_ERROR),
-  company: yup.string().required(COMPANY_REQUIRED_ERROR),
 });
 
 const SignUp: React.FC = () => {
@@ -145,16 +142,6 @@ const SignUp: React.FC = () => {
           <BaseFormErrorMessage>
             {errors.password?.message}
           </BaseFormErrorMessage>
-        </BaseFormControl>
-
-        <BaseFormControl isInvalid={Boolean(errors.company)}>
-          <BaseFormLabel>Company</BaseFormLabel>
-          <BaseInput
-            variant="filled"
-            placeholder="Enter company"
-            {...register("company")}
-          />
-          <BaseFormErrorMessage>{errors.company?.message}</BaseFormErrorMessage>
         </BaseFormControl>
 
         <BaseButton isLoading={isSigningUp} variant="solid" type="submit">

@@ -8,5 +8,4 @@ export interface SignUpDetails {
   password: string;
   firstName: string;
   lastName: string;
-  company: string;
 }
