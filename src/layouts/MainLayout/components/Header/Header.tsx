@@ -40,6 +40,9 @@ const Header: React.FC = () => {
         href: RouteEnum.MY_WORKSPACE,
       },
       {
+        label: "Notifications",
+      },
+      {
         label: "Invite a user",
         href: RouteEnum.INVITE,
       },
