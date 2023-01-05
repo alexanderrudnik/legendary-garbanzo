@@ -16,7 +16,6 @@ const getWorkspace = async () => {
 
 export const useWorkspace = () => {
   return useQuery(QueryKeysEnum.WORKSPACE, getWorkspace, {
-    enabled: false,
     onError: (error: Error) =>
       notificationService.show({
         title: "An error occured",

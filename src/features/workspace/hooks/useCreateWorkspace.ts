@@ -19,11 +19,13 @@ const createWorkspace = async (details: CreateWorkspaceDetails) => {
 };
 
 export const useCreateWorkspace = () => {
-  const { refetch: getWorkspace } = useWorkspace();
+  const { refetch: getWorkspace, data: workspace } = useWorkspace();
 
   return useMutation(createWorkspace, {
     onSuccess: async (_, vars) => {
-      getWorkspace();
+      if (workspace) {
+        getWorkspace();
+      }
 
       await queryClient.setQueryData<User | undefined>(
         QueryKeysEnum.ME,
