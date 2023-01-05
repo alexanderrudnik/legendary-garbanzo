@@ -18,6 +18,7 @@ import Invite from "@/features/invite/pages/Invite";
 import { RouteEnum } from "@/common/models/RouteEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
 import { theme } from "./styles/theme/theme";
+import MyWorkspace from "@/features/workspace/pages/MyWorkspace";
 
 const { ToastContainer } = createStandaloneToast();
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: RouteEnum.INVITE,
         element: <Invite />,
+      },
+      {
+        path: RouteEnum.MY_WORKSPACE,
+        element: <MyWorkspace />,
       },
     ],
   },
