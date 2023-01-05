@@ -14,3 +14,5 @@ export const PASSWORD_LOWER_CASE_ERROR =
 export const FIRST_NAME_REQUIRED_ERROR = "First name is a required field!";
 
 export const LAST_NAME_REQUIRED_ERROR = "Last name is a required field!";
+
+export const WORKSPACE_REQUIRED_ERROR = "Workspace is a required field!";
