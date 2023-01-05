@@ -1,11 +1,10 @@
-import { auth } from "@/app/firebase/firebaseConfig";
 import { errorMapper } from "@/common/errorMapper/errorMapper";
-import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
-import { queryClient } from "@/common/queryClient/queryClient";
 import { notificationService } from "@/services/notification/notificationService";
-import { InvitedUser, InviteUserDetails } from "@/services/user/types";
+import { InviteUserDetails } from "@/services/user/types";
 import { userService } from "@/services/user/userService";
 import { useMutation } from "react-query";
+import { useAllInvitedUsers } from "./useAllInvitedUsers";
+import { useInvitedUsersByMe } from "./useInvitedUsersByMe";
 
 const inviteUser = async (details: InviteUserDetails) => {
   try {
@@ -18,23 +17,13 @@ const inviteUser = async (details: InviteUserDetails) => {
 };
 
 export const useInviteUser = () => {
+  const { refetch: getAllInvitedUsers } = useAllInvitedUsers();
+  const { refetch: getInvitedUsersByMe } = useInvitedUsersByMe();
+
   return useMutation(inviteUser, {
     onSuccess: async (_, vars) => {
-      let newUser: InvitedUser;
-
-      if (auth.currentUser?.uid) {
-        newUser = { email: vars.email, sender: auth.currentUser.uid };
-      }
-
-      await queryClient.setQueryData<InvitedUser[]>(
-        QueryKeysEnum.INVITED_USERS_BY_ME,
-        (old) => (old && newUser ? [...old, newUser] : [])
-      );
-
-      await queryClient.setQueryData<InvitedUser[]>(
-        QueryKeysEnum.INVITED_USERS,
-        (old) => (old && newUser ? [...old, newUser] : [])
-      );
+      getAllInvitedUsers();
+      getInvitedUsersByMe();
 
       notificationService.show({
         title: "Success",

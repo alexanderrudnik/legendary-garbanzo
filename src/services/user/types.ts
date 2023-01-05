@@ -3,8 +3,9 @@ export interface InviteUserDetails {
 }
 
 export interface InvitedUser {
+  id?: string;
   email: string;
-  sender: string;
+  sender: string | null;
 }
 
 export interface User {
@@ -12,4 +13,5 @@ export interface User {
   email: string;
   firstName: string;
   lastName: string;
+  workspace: string;
 }

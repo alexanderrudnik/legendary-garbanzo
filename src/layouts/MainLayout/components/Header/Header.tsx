@@ -36,7 +36,7 @@ const Header: React.FC = () => {
   const menu = useMemo(
     () => [
       {
-        label: "My Workspace",
+        label: "My workspace",
         href: RouteEnum.MY_WORKSPACE,
       },
       {

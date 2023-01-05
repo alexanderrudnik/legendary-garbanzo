@@ -1,24 +1,29 @@
 import {
-  addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
   query,
+  setDoc,
 } from "firebase/firestore";
 import { auth, db } from "@/app/firebase/firebaseConfig";
 import { FirestoreEnum } from "@/common/models/FirestoreEnum";
 import { InvitedUser, InviteUserDetails, User } from "./types";
+import { nanoid } from "nanoid";
 
 class UserService {
   inviteUser({ email }: InviteUserDetails) {
-    const dbRef = collection(db, FirestoreEnum.INVITED_EMAILS);
-    const data = {
+    const id = nanoid();
+
+    const dbRef = doc(db, FirestoreEnum.INVITED_EMAILS, id);
+
+    const data: InvitedUser = {
+      id,
       email,
-      sender: auth.currentUser?.uid,
+      sender: auth.currentUser?.uid ?? null,
     };
 
-    return addDoc(dbRef, data);
+    return setDoc(dbRef, data);
   }
 
   async getInvitedUsersByMe() {
