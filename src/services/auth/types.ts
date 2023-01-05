@@ -9,3 +9,7 @@ export interface SignUpDetails {
   firstName: string;
   lastName: string;
 }
+
+export interface ResetPasswordDetails {
+  email: string;
+}

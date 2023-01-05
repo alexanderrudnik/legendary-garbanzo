@@ -7,8 +7,9 @@ import {
   signOut,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { User } from "../user/types";
-import { SignInDetails, SignUpDetails } from "./types";
+import { ResetPasswordDetails, SignInDetails, SignUpDetails } from "./types";
 
 class AuthService {
   signIn({ email, password }: SignInDetails) {
@@ -43,6 +44,10 @@ class AuthService {
 
   signOut() {
     return signOut(auth);
+  }
+
+  resetPassword({ email }: ResetPasswordDetails) {
+    return sendPasswordResetEmail(auth, email);
   }
 }
 

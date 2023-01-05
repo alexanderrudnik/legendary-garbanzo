@@ -19,6 +19,7 @@ import { RouteEnum } from "@/common/models/RouteEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
 import { theme } from "./styles/theme/theme";
 import MyWorkspace from "@/features/workspace/pages/MyWorkspace";
+import ForgotPassword from "@/features/auth/pages/ForgotPassword";
 
 const { ToastContainer } = createStandaloneToast();
 
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: RouteEnum.SIGN_UP,
         element: <SignUp />,
+      },
+      {
+        path: RouteEnum.FORGOT_PASSWORD,
+        element: <ForgotPassword />,
       },
     ],
   },
