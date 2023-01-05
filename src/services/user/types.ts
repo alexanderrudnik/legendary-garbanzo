@@ -9,7 +9,7 @@ export interface InvitedUser {
 }
 
 export interface User {
-  uid: string;
+  id: string;
   email: string;
   firstName: string;
   lastName: string;
