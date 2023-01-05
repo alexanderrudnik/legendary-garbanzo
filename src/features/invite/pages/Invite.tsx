@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -10,13 +10,14 @@ import BaseInput from "@/common/components/BaseInput/BaseInput";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import { useInviteUser } from "../../home/hooks/useInviteUser";
-import { useInvitedUsersByMe } from "../../home/hooks/useInvitedUsersByMe";
 import {
   EMAIL_INVALID_ERROR,
   EMAIL_REQUIRED_ERROR,
 } from "@/app/messages/errors";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseFormHelperText from "@/common/components/BaseFormHelperText/BaseFormHelperText";
+import { useAllInvitedUsers } from "@/features/home/hooks/useAllInvitedUsers";
+import { useMe } from "@/common/hooks/useMe";
 
 interface InviteInputs {
   email: string;
@@ -40,7 +41,14 @@ const Invite: React.FC = () => {
   const { isLoading: isInvitingUser, mutateAsync: inviteUser } =
     useInviteUser();
 
-  const { data: invitedUsers } = useInvitedUsersByMe();
+  const { data } = useAllInvitedUsers();
+
+  const { data: me } = useMe();
+
+  const invitedUsers = useMemo(
+    () => (data || []).map((item) => item.sender === me?.uid),
+    [data, me?.uid]
+  );
 
   const onSubmit = (values: InviteInputs) => {
     inviteUser(values).finally(() => reset());
