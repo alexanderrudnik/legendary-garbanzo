@@ -19,10 +19,12 @@ import {
   PASSWORD_REQUIRED_ERROR,
 } from "@/app/messages/errors";
 import { RouteEnum } from "@/common/models/RouteEnum";
+import BaseCheckbox from "@/common/components/BaseCheckbox/BaseCheckbox";
 
 interface SignInFormInputs {
   email: string;
   password: string;
+  rememberMe: boolean;
 }
 
 const schema = yup.object().shape({
@@ -82,6 +84,12 @@ const SignIn: React.FC = () => {
             Forgot password?
           </BaseButton>
         </Link>
+
+        <BaseFormControl>
+          <BaseFlex align="center">
+            <BaseCheckbox {...register("rememberMe")}>Remember me</BaseCheckbox>
+          </BaseFlex>
+        </BaseFormControl>
 
         <BaseButton isLoading={isSigningIn} variant="solid" type="submit">
           Submit

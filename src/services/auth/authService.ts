@@ -1,8 +1,10 @@
 import { auth, db } from "@/app/firebase/firebaseConfig";
 import { FirestoreEnum } from "@/common/models/FirestoreEnum";
 import {
+  browserSessionPersistence,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  setPersistence,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
@@ -12,7 +14,11 @@ import { User } from "../user/types";
 import { ResetPasswordDetails, SignInDetails, SignUpDetails } from "./types";
 
 class AuthService {
-  signIn({ email, password }: SignInDetails) {
+  signIn({ email, password, rememberMe }: SignInDetails) {
+    if (!rememberMe) {
+      setPersistence(auth, browserSessionPersistence);
+    }
+
     return signInWithEmailAndPassword(auth, email, password);
   }
 

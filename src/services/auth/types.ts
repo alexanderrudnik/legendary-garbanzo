@@ -1,6 +1,7 @@
 export interface SignInDetails {
   email: string;
   password: string;
+  rememberMe: boolean;
 }
 
 export interface SignUpDetails {
