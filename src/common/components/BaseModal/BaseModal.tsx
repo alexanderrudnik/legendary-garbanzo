@@ -29,7 +29,9 @@ const BaseModal: React.FC<Props> = ({
       <ModalContent>
         {header && <ModalHeader>{header}</ModalHeader>}
         {close && <ModalCloseButton />}
-        <ModalBody>{children}</ModalBody>
+        <ModalBody paddingTop="1rem" paddingBottom="1rem">
+          {children}
+        </ModalBody>
 
         {footer && <ModalFooter>{footer}</ModalFooter>}
       </ModalContent>

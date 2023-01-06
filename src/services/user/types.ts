@@ -14,4 +14,5 @@ export interface User {
   firstName: string;
   lastName: string;
   workspace: string;
+  telegram?: string;
 }

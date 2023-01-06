@@ -22,7 +22,13 @@ class AuthService {
     return signInWithEmailAndPassword(auth, email, password);
   }
 
-  async signUp({ email, password, firstName, lastName }: SignUpDetails) {
+  async signUp({
+    email,
+    password,
+    firstName,
+    lastName,
+    telegram,
+  }: SignUpDetails) {
     const response = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -37,6 +43,7 @@ class AuthService {
       firstName,
       lastName,
       workspace: "",
+      telegram,
     };
 
     await setDoc(dbRef, data);

@@ -3,7 +3,10 @@ import * as yup from "yup";
 import { useCreateWorkspace } from "../../hooks/useCreateWorkspace";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { WORKSPACE_REQUIRED_ERROR } from "@/app/messages/errors";
+import {
+  WEBSITE_REQUIRED_ERROR,
+  WORKSPACE_REQUIRED_ERROR,
+} from "@/app/messages/errors";
 import { useMe } from "@/common/hooks/useMe";
 import BaseModal from "@/common/components/BaseModal/BaseModal";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
@@ -16,11 +19,12 @@ import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 
 interface WorkspaceInputs {
   workspace: string;
-  website?: string;
+  website: string;
 }
 
 const schema = yup.object().shape({
   workspace: yup.string().required(WORKSPACE_REQUIRED_ERROR),
+  website: yup.string().required(WEBSITE_REQUIRED_ERROR),
 });
 
 const CreateWorkspaceModal: React.FC = () => {
@@ -71,13 +75,16 @@ const CreateWorkspaceModal: React.FC = () => {
             </BaseFormErrorMessage>
           </BaseFormControl>
 
-          <BaseFormControl>
+          <BaseFormControl isInvalid={Boolean(errors.website)}>
             <BaseFormLabel>Website</BaseFormLabel>
             <BaseInput
               variant="filled"
               placeholder="Enter your website"
               {...register("website")}
             />
+            <BaseFormErrorMessage>
+              {errors.website?.message}
+            </BaseFormErrorMessage>
           </BaseFormControl>
 
           <BaseButton

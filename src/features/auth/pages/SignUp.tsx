@@ -36,6 +36,7 @@ interface SignUpFormInputs {
   password: string;
   firstName: string;
   lastName: string;
+  telegram?: string;
 }
 
 const schema = yup.object().shape({
@@ -117,6 +118,18 @@ const SignUp: React.FC = () => {
           />
           <BaseFormErrorMessage>
             {errors.lastName?.message}
+          </BaseFormErrorMessage>
+        </BaseFormControl>
+
+        <BaseFormControl isInvalid={Boolean(errors.telegram)}>
+          <BaseFormLabel>Telegram</BaseFormLabel>
+          <BaseInput
+            variant="filled"
+            placeholder="Enter your telegram"
+            {...register("telegram")}
+          />
+          <BaseFormErrorMessage>
+            {errors.telegram?.message}
           </BaseFormErrorMessage>
         </BaseFormControl>
 

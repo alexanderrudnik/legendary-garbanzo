@@ -9,6 +9,7 @@ export interface SignUpDetails {
   password: string;
   firstName: string;
   lastName: string;
+  telegram?: string;
 }
 
 export interface ResetPasswordDetails {
