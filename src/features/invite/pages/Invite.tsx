@@ -9,15 +9,15 @@ import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
 import BaseInput from "@/common/components/BaseInput/BaseInput";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
-import { useInviteUser } from "../../home/hooks/useInviteUser";
 import {
   EMAIL_INVALID_ERROR,
   EMAIL_REQUIRED_ERROR,
 } from "@/app/messages/errors";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseFormHelperText from "@/common/components/BaseFormHelperText/BaseFormHelperText";
-import { useAllInvitedUsers } from "@/features/home/hooks/useAllInvitedUsers";
+import { useAllInvitedUsers } from "@/features/invite/hooks/useAllInvitedUsers";
 import { useMe } from "@/common/hooks/useMe";
+import { useInviteUser } from "../hooks/useInviteUser";
 
 interface InviteInputs {
   email: string;

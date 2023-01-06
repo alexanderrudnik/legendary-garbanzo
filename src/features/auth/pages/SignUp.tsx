@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useAllInvitedUsers } from "@/features/home/hooks/useAllInvitedUsers";
+import { useAllInvitedUsers } from "@/features/invite/hooks/useAllInvitedUsers";
 import Loading from "@/common/components/Loading/Loading";
 import BaseHeading from "@/common/components/BaseHeading/BaseHeading";
 import {

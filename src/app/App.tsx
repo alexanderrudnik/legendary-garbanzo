@@ -8,18 +8,19 @@ import {
 import { QueryClientProvider } from "react-query";
 import { createStandaloneToast } from "@chakra-ui/toast";
 
-import Home from "@/features/home/pages/Home";
 import SignIn from "@/features/auth/pages/SignIn";
 import AuthLayout from "@/layouts/AuthLayout/AuthLayout";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import SignUp from "@/features/auth/pages/SignUp";
 import Invite from "@/features/invite/pages/Invite";
+import MyWorkspace from "@/features/workspace/pages/MyWorkspace";
+import ForgotPassword from "@/features/auth/pages/ForgotPassword";
+import Proposals from "@/features/proposals/pages/Proposals";
+import Requests from "@/features/requests/pages/Requests";
 
 import { RouteEnum } from "@/common/models/RouteEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
 import { theme } from "./styles/theme/theme";
-import MyWorkspace from "@/features/workspace/pages/MyWorkspace";
-import ForgotPassword from "@/features/auth/pages/ForgotPassword";
 
 const { ToastContainer } = createStandaloneToast();
 
@@ -29,7 +30,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: RouteEnum.HOME,
-        element: <Home />,
+        element: <Navigate to={RouteEnum.REQUESTS} />,
+      },
+      {
+        path: RouteEnum.PROPOSALS,
+        element: <Proposals />,
+      },
+      {
+        path: RouteEnum.REQUESTS,
+        element: <Requests />,
       },
       {
         path: RouteEnum.INVITE,

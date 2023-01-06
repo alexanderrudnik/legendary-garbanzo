@@ -33,6 +33,20 @@ const Header: React.FC = () => {
 
   const theme = useTheme();
 
+  const nav = useMemo(
+    () => [
+      {
+        label: "Requests",
+        href: RouteEnum.REQUESTS,
+      },
+      {
+        label: "Proposals",
+        href: RouteEnum.PROPOSALS,
+      },
+    ],
+    []
+  );
+
   const menu = useMemo(
     () => [
       {
@@ -71,17 +85,47 @@ const Header: React.FC = () => {
     >
       <BaseContainer>
         <BaseFlex justify="space-between" align="center">
-          <Link to={RouteEnum.HOME}>
-            <BaseImage
-              transition="all 0.3s ease"
-              _hover={{
-                filter: `drop-shadow(5px 5px 5px ${theme.colors.primary[500]})`,
+          <BaseFlex
+            align="center"
+            gap={{
+              base: "5rem",
+              xl: "10rem",
+            }}
+          >
+            <Link to={RouteEnum.HOME}>
+              <BaseImage
+                transition="all 0.3s ease"
+                _hover={{
+                  filter: `drop-shadow(5px 5px 5px ${theme.colors.primary[500]})`,
+                }}
+                width={200}
+                src={logo}
+                alt="logo"
+              />
+            </Link>
+
+            <BaseFlex
+              display={{
+                base: "none",
+                md: "flex",
               }}
-              width={200}
-              src={logo}
-              alt="logo"
-            />
-          </Link>
+              gap={{
+                base: "2rem",
+                xl: "5rem",
+              }}
+            >
+              {nav.map((item) => (
+                <Link key={item.label} to={item.href}>
+                  <BaseButton
+                    variant="unstyled"
+                    _hover={{ color: "primary.500" }}
+                  >
+                    {item.label}
+                  </BaseButton>
+                </Link>
+              ))}
+            </BaseFlex>
+          </BaseFlex>
 
           <BaseButton
             display={{
@@ -96,7 +140,7 @@ const Header: React.FC = () => {
               isOpen={isOpen}
               onClose={onClose}
               name={name}
-              menu={menu}
+              menu={[...nav, ...menu]}
             />
           </BaseButton>
 

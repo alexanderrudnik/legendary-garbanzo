@@ -35,7 +35,7 @@ const MenuDrawer: React.FC<Props> = ({ isOpen, onClose, name, menu }) => {
             key={i}
             width="100%"
             {...(item.danger && { color: "red" })}
-            variant="ghost"
+            variant="unstyled"
             onClick={handleClick(item.onClick, item.href)}
           >
             {item.label}
