@@ -1,4 +1,5 @@
 import BaseButton from "@/common/components/BaseButton/BaseButton";
+import BaseModal from "@/common/components/BaseModal/BaseModal";
 import BaseSection from "@/common/components/BaseSection/BaseSection";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import React from "react";
@@ -14,7 +15,9 @@ const Requests: React.FC = () => {
           Add new request
         </BaseButton>
 
-        <CreateRequest isOpen={isOpen} onClose={onClose} />
+        <BaseModal header="Create request" isOpen={isOpen} onClose={onClose}>
+          <CreateRequest />
+        </BaseModal>
       </BaseSection>
 
       <BaseSection>list</BaseSection>

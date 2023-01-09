@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import * as yup from "yup";
 import { useCreateWorkspace } from "../../hooks/useCreateWorkspace";
 import { useForm } from "react-hook-form";
@@ -7,15 +7,12 @@ import {
   WEBSITE_REQUIRED_ERROR,
   WORKSPACE_REQUIRED_ERROR,
 } from "@/app/messages/errors";
-import { useMe } from "@/common/hooks/useMe";
-import BaseModal from "@/common/components/BaseModal/BaseModal";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseFormControl from "@/common/components/BaseFormControl/BaseFormControl";
 import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
 import BaseInput from "@/common/components/BaseInput/BaseInput";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
-import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 
 interface WorkspaceInputs {
   workspace: string;
@@ -27,19 +24,13 @@ const schema = yup.object().shape({
   website: yup.string().required(WEBSITE_REQUIRED_ERROR),
 });
 
-const CreateWorkspaceModal: React.FC = () => {
-  const { isOpen, onOpen, onClose } = useBaseDisclosure();
+interface Props {
+  cb?: () => void;
+}
 
+const CreateWorkspaceModal: React.FC<Props> = ({ cb }) => {
   const { mutateAsync: createWorkspace, isLoading: isCreatingWorkspace } =
     useCreateWorkspace();
-
-  const { data: user } = useMe();
-
-  useEffect(() => {
-    if (!user?.workspace) {
-      onOpen();
-    }
-  }, [user?.workspace, onOpen]);
 
   const {
     handleSubmit,
@@ -51,52 +42,47 @@ const CreateWorkspaceModal: React.FC = () => {
   });
 
   const onSubmit = (values: WorkspaceInputs) => {
-    createWorkspace(values).then(() => onClose());
+    createWorkspace(values).then(() => {
+      if (cb) {
+        cb();
+      }
+    });
   };
 
   return (
-    <BaseModal
-      close={false}
-      header="Let us know more about you"
-      isOpen={isOpen}
-      onClose={user?.workspace ? onClose : () => {}}
-    >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <BaseFlex gap="1rem" direction="column">
-          <BaseFormControl isInvalid={Boolean(errors.workspace)}>
-            <BaseFormLabel>Workspace</BaseFormLabel>
-            <BaseInput
-              variant="filled"
-              placeholder="Enter your workspace"
-              {...register("workspace")}
-            />
-            <BaseFormErrorMessage>
-              {errors.workspace?.message}
-            </BaseFormErrorMessage>
-          </BaseFormControl>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <BaseFlex gap="1rem" direction="column">
+        <BaseFormControl isInvalid={Boolean(errors.workspace)}>
+          <BaseFormLabel>Workspace</BaseFormLabel>
+          <BaseInput
+            variant="filled"
+            placeholder="Enter your workspace"
+            {...register("workspace")}
+          />
+          <BaseFormErrorMessage>
+            {errors.workspace?.message}
+          </BaseFormErrorMessage>
+        </BaseFormControl>
 
-          <BaseFormControl isInvalid={Boolean(errors.website)}>
-            <BaseFormLabel>Website</BaseFormLabel>
-            <BaseInput
-              variant="filled"
-              placeholder="Enter your website"
-              {...register("website")}
-            />
-            <BaseFormErrorMessage>
-              {errors.website?.message}
-            </BaseFormErrorMessage>
-          </BaseFormControl>
+        <BaseFormControl isInvalid={Boolean(errors.website)}>
+          <BaseFormLabel>Website</BaseFormLabel>
+          <BaseInput
+            variant="filled"
+            placeholder="Enter your website"
+            {...register("website")}
+          />
+          <BaseFormErrorMessage>{errors.website?.message}</BaseFormErrorMessage>
+        </BaseFormControl>
 
-          <BaseButton
-            isLoading={isCreatingWorkspace}
-            variant="solid"
-            type="submit"
-          >
-            Submit
-          </BaseButton>
-        </BaseFlex>
-      </form>
-    </BaseModal>
+        <BaseButton
+          isLoading={isCreatingWorkspace}
+          variant="solid"
+          type="submit"
+        >
+          Submit
+        </BaseButton>
+      </BaseFlex>
+    </form>
   );
 };
 
