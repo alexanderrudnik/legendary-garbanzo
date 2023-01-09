@@ -21,6 +21,7 @@ import Requests from "@/features/requests/pages/Requests";
 import { RouteEnum } from "@/common/models/RouteEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
 import { theme } from "./styles/theme/theme";
+import ContactUs from "@/features/contact-us/pages/ContactUs";
 
 const { ToastContainer } = createStandaloneToast();
 
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: RouteEnum.MY_WORKSPACE,
         element: <MyWorkspace />,
+      },
+      {
+        path: RouteEnum.CONTACT_US,
+        element: <ContactUs />,
       },
     ],
   },
