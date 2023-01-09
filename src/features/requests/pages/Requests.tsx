@@ -11,7 +11,7 @@ const Requests: React.FC = () => {
     <>
       <BaseSection>
         <BaseButton width="100%" onClick={onOpen}>
-          Add new proposal
+          Add new request
         </BaseButton>
 
         <CreateRequest isOpen={isOpen} onClose={onClose} />
