@@ -6,6 +6,8 @@ import {
   useTheme,
 } from "@chakra-ui/react";
 
+export interface BaseInputProps extends InputProps {}
+
 const BaseInput = React.forwardRef<any, InputProps>(({ ...props }, ref) => {
   const theme = useTheme();
 

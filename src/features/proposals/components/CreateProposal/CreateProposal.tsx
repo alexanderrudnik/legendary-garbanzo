@@ -30,6 +30,7 @@ import BaseButton from "@/common/components/BaseButton/BaseButton";
 import BaseMultiSelect from "@/common/components/BaseMultiSelect/BaseMultiSelect";
 import BaseSelect from "@/common/components/BaseSelect/BaseSelect";
 import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
+import BaseTagInput from "@/common/components/BaseTagInput/BaseTagInput";
 
 const countries = countryList.getData();
 
@@ -83,7 +84,7 @@ const CreateProposal: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <BaseFlex gap="1rem" flexDirection="column">
         <BaseFormControl isInvalid={Boolean(errors.firstName)}>
           <BaseFormLabel>First name</BaseFormLabel>
@@ -139,12 +140,13 @@ const CreateProposal: React.FC = () => {
             name="skills"
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <BaseMultiSelect
+              <BaseTagInput
+                variant="filled"
                 placeholder="Enter skill e.g. React"
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
-                invalid={Boolean(errors.skills)}
+                isInvalid={Boolean(errors.skills)}
               />
             )}
           />
@@ -262,7 +264,7 @@ const CreateProposal: React.FC = () => {
           </BaseFormErrorMessage>
         </BaseFormControl>
 
-        <BaseButton type="submit" variant="solid">
+        <BaseButton onClick={handleSubmit(onSubmit)} variant="solid">
           Submit
         </BaseButton>
       </BaseFlex>
