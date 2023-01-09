@@ -22,16 +22,18 @@ const Header: React.FC = () => {
 
   const { toggleColorMode, colorMode } = useColorMode();
 
+  const theme = useTheme();
+
   const shadow = useColorModeValue(
     "0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06)",
-    "0px 0px 4px rgba(255, 255, 255, 0.04), 0px 4px 8px rgba(255, 255, 255, 0.06)"
+    "none"
   );
+
+  const bg = useColorModeValue(theme.colors.white, theme.colors.gray[700]);
 
   const signOut = () => {
     authService.signOut();
   };
-
-  const theme = useTheme();
 
   const nav = useMemo(
     () => [
@@ -42,6 +44,10 @@ const Header: React.FC = () => {
       {
         label: "Proposals",
         href: RouteEnum.PROPOSALS,
+      },
+      {
+        label: "Contact us",
+        href: RouteEnum.CONTACT_US,
       },
     ],
     []
@@ -82,13 +88,14 @@ const Header: React.FC = () => {
       position="sticky"
       padding="1rem 0"
       boxShadow={shadow}
+      background={bg}
     >
       <BaseContainer>
         <BaseFlex justify="space-between" align="center">
           <BaseFlex
             align="center"
             gap={{
-              base: "5rem",
+              base: "2rem",
               xl: "10rem",
             }}
           >
