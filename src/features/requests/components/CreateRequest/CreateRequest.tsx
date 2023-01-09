@@ -80,7 +80,7 @@ const CreateRequest: React.FC<Props> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <BaseModal isOpen={isOpen} onClose={onClose}>
+    <BaseModal header="Create request" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <BaseFlex gap="1rem" flexDirection="column">
           <BaseFormControl isInvalid={Boolean(errors.rate)}>
