@@ -14,11 +14,11 @@ const MainLayout: React.FC = () => {
   const { isOpen, onOpen, onClose } = useBaseDisclosure();
   const { data: user } = useMe();
 
-  useEffect(() => {
-    if (!user?.workspace) {
-      onOpen();
-    }
-  }, [user?.workspace, onOpen]);
+  // useEffect(() => {
+  //   if (!user?.workspace) {
+  //     onOpen();
+  //   }
+  // }, [user?.workspace, onOpen]);
 
   return (
     <>
@@ -26,14 +26,14 @@ const MainLayout: React.FC = () => {
       <main>
         <BaseContainer>
           <Outlet />
-          <BaseModal
+          {/* <BaseModal
             close={false}
             header="Let us know more about you"
             isOpen={isOpen}
             onClose={() => {}}
           >
             <CreateWorkspaceModal cb={onClose} />
-          </BaseModal>
+          </BaseModal> */}
         </BaseContainer>
       </main>
     </>

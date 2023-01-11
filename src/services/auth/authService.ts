@@ -1,6 +1,5 @@
 import { auth } from "@/app/firebase/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { sendPasswordResetEmail } from "firebase/auth";
 import { ResetPasswordDetails, SignInDetails, SignUpDetails } from "./types";
 import { axiosInstance } from "../base/baseService";
 
@@ -26,7 +25,9 @@ class AuthService {
   }
 
   resetPassword({ email }: ResetPasswordDetails) {
-    return sendPasswordResetEmail(auth, email);
+    return axiosInstance.post("/reset-password", {
+      email,
+    });
   }
 }
 

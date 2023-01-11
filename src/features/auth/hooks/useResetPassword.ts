@@ -1,4 +1,3 @@
-import { errorMapper } from "@/common/errorMapper/errorMapper";
 import { authService } from "@/services/auth/authService";
 import { ResetPasswordDetails } from "@/services/auth/types";
 import { notificationService } from "@/services/notification/notificationService";
@@ -8,7 +7,7 @@ const resetPassword = async (details: ResetPasswordDetails) => {
   try {
     const response = await authService.resetPassword(details);
 
-    return response;
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -19,7 +18,7 @@ export const useResetPassword = () => {
     onError: (error: Error) =>
       notificationService.show({
         title: "An error occured",
-        description: errorMapper(error.message),
+        description: error.message,
         status: "error",
       }),
   });

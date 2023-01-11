@@ -3,7 +3,6 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import BaseMenu from "@/common/components/BaseMenu/BaseMenu";
 import { useMe } from "@/common/hooks/useMe";
 import BaseContainer from "@/common/components/BaseContainer/BaseContainer";
-import { authService } from "@/services/auth/authService";
 import BaseBox from "@/common/components/BaseBox/BaseBox";
 import { RouteEnum } from "@/common/models/RouteEnum";
 import BaseImage from "@/common/components/BaseImage/BaseImage";
@@ -37,7 +36,7 @@ const Header: React.FC = () => {
 
   const signOut = () => {
     storageService.remove(StorageEnum.ACCESS_TOKEN);
-    queryClient.setQueryData(QueryKeysEnum.ME, () => null);
+    queryClient.setQueryData(QueryKeysEnum.ME, () => undefined);
   };
 
   const nav = useMemo(
