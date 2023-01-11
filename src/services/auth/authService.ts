@@ -25,7 +25,7 @@ class AuthService {
     lastName,
     telegram,
   }: SignUpDetails) {
-    return axiosInstance.post("/users", {
+    return axiosInstance.post("/signup", {
       email,
       password,
       firstName,
