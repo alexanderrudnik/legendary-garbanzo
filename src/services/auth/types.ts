@@ -4,6 +4,10 @@ export interface SignInDetails {
   rememberMe: boolean;
 }
 
+export interface SignInResponse {
+  accessToken: string;
+}
+
 export interface SignUpDetails {
   email: string;
   password: string;

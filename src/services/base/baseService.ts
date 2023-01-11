@@ -1,23 +1,23 @@
+import { StorageEnum } from "@/common/models/StorageEnum";
 import axios from "axios";
+import { storageService } from "../storage/storageService";
 
 export const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
 });
 
-// axiosInstance.interceptors.request.use(async (config) => {
-//   const accessToken = await Preferences.get({
-//     key: StorageKeysEnum.ACCESS_TOKEN,
-//   });
+axiosInstance.interceptors.request.use(async (config) => {
+  const accessToken = storageService.get(StorageEnum.ACCESS_TOKEN);
 
-//   return {
-//     ...config,
-//     headers: {
-//       ...config.headers,
-//       "Content-Type": "application/json",
-//       Authorization: accessToken.value ? `Bearer ${accessToken.value}` : "",
-//     },
-//   };
-// });
+  return {
+    ...config,
+    headers: {
+      ...config.headers,
+      "Content-Type": "application/json",
+      Authorization: accessToken ? `Bearer ${accessToken}` : "",
+    },
+  } as any;
+});
 
 axiosInstance.interceptors.response.use(
   (response) => response,

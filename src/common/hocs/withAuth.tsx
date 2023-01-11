@@ -1,8 +1,6 @@
 import { ComponentType, useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading/Loading";
-import { auth } from "@/app/firebase/firebaseConfig";
 import { RouteEnum } from "../models/RouteEnum";
 import { useMe } from "../hooks/useMe";
 
@@ -10,23 +8,21 @@ function withAuth<T extends {}>(Component: ComponentType<T>) {
   return (props: T) => {
     const [isAccessed, setIsAccessed] = useState(false);
 
-    const [user, isLoading] = useAuthState(auth);
-
-    const { refetch: getMe, data } = useMe();
+    const { refetch: getMe, data: user } = useMe();
 
     const navigate = useNavigate();
 
     useEffect(() => {
+      if (user === undefined) {
+        getMe();
+      }
+
       if (user) {
-        if (!data) {
-          getMe();
-        } else {
-          setIsAccessed(true);
-        }
-      } else if (!isLoading && !user) {
+        setIsAccessed(true);
+      } else if (user === null) {
         navigate(RouteEnum.SIGN_IN);
       }
-    }, [user, isLoading, navigate, data, getMe]);
+    }, [user, navigate, getMe]);
 
     return !isAccessed ? <Loading /> : <Component {...props} />;
   };

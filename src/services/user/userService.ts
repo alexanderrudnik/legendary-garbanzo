@@ -1,15 +1,9 @@
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  setDoc,
-} from "firebase/firestore";
+import { collection, doc, getDocs, query, setDoc } from "firebase/firestore";
 import { auth, db } from "@/app/firebase/firebaseConfig";
 import { FirestoreEnum } from "@/common/models/FirestoreEnum";
 import { InvitedUser, InviteUserDetails, User } from "./types";
 import { nanoid } from "nanoid";
+import { axiosInstance } from "../base/baseService";
 
 class UserService {
   inviteUser({ email }: InviteUserDetails) {
@@ -42,14 +36,7 @@ class UserService {
   }
 
   async getMe() {
-    if (auth.currentUser) {
-      const docRef = doc(db, FirestoreEnum.USERS, auth.currentUser.uid);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        return docSnap.data() as User;
-      }
-    }
+    return axiosInstance.get<User>("/me");
   }
 }
 

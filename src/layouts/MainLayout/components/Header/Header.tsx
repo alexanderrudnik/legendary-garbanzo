@@ -14,6 +14,10 @@ import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import MenuDrawer from "../MenuDrawer/MenuDrawer";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import { useColorMode, useColorModeValue, useTheme } from "@chakra-ui/react";
+import { storageService } from "@/services/storage/storageService";
+import { StorageEnum } from "@/common/models/StorageEnum";
+import { queryClient } from "@/common/queryClient/queryClient";
+import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 
 const Header: React.FC = () => {
   const { data: user } = useMe();
@@ -32,7 +36,8 @@ const Header: React.FC = () => {
   const bg = useColorModeValue(theme.colors.white, theme.colors.gray[700]);
 
   const signOut = () => {
-    authService.signOut();
+    storageService.remove(StorageEnum.ACCESS_TOKEN);
+    queryClient.setQueryData(QueryKeysEnum.ME, () => null);
   };
 
   const nav = useMemo(

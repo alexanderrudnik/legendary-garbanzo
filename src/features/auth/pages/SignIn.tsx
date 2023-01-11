@@ -87,7 +87,9 @@ const SignIn: React.FC = () => {
 
         <BaseFormControl>
           <BaseFlex align="center">
-            <BaseCheckbox {...register("rememberMe")}>Remember me</BaseCheckbox>
+            <BaseCheckbox disabled {...register("rememberMe")}>
+              Remember me (AVAILABLE SOON)
+            </BaseCheckbox>
           </BaseFlex>
         </BaseFormControl>
 

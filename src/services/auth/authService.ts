@@ -1,20 +1,11 @@
 import { auth } from "@/app/firebase/firebaseConfig";
-import {
-  browserSessionPersistence,
-  setPersistence,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { ResetPasswordDetails, SignInDetails, SignUpDetails } from "./types";
 import { axiosInstance } from "../base/baseService";
 
 class AuthService {
   signIn({ email, password, rememberMe }: SignInDetails) {
-    if (!rememberMe) {
-      setPersistence(auth, browserSessionPersistence);
-    }
-
     return signInWithEmailAndPassword(auth, email, password);
   }
 
@@ -32,10 +23,6 @@ class AuthService {
       lastName,
       telegram,
     });
-  }
-
-  signOut() {
-    return signOut(auth);
   }
 
   resetPassword({ email }: ResetPasswordDetails) {

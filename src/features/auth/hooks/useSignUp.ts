@@ -7,8 +7,8 @@ const signUp = async (details: SignUpDetails) => {
   try {
     const response = await authService.signUp(details);
 
-    return response;
-  } catch (error: any) {
+    return response.data;
+  } catch (error) {
     throw error;
   }
 };
