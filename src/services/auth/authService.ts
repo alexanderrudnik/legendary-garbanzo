@@ -1,17 +1,13 @@
-import { auth, db } from "@/app/firebase/firebaseConfig";
-import { FirestoreEnum } from "@/common/models/FirestoreEnum";
+import { auth } from "@/app/firebase/firebaseConfig";
 import {
   browserSessionPersistence,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
   setPersistence,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { User } from "../user/types";
 import { ResetPasswordDetails, SignInDetails, SignUpDetails } from "./types";
+import { axiosInstance } from "../base/baseService";
 
 class AuthService {
   signIn({ email, password, rememberMe }: SignInDetails) {
@@ -29,30 +25,13 @@ class AuthService {
     lastName,
     telegram,
   }: SignUpDetails) {
-    const response = await createUserWithEmailAndPassword(
-      auth,
+    return axiosInstance.post("/users", {
       email,
-      password
-    );
-
-    const dbRef = doc(db, FirestoreEnum.USERS, response.user.uid);
-
-    const data: User = {
-      id: response.user.uid,
-      email,
+      password,
       firstName,
       lastName,
-      workspace: "",
       telegram,
-    };
-
-    await setDoc(dbRef, data);
-
-    await sendEmailVerification(response.user);
-
-    await auth.signOut();
-
-    return response;
+    });
   }
 
   signOut() {

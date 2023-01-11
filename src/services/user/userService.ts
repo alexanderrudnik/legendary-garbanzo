@@ -26,21 +26,6 @@ class UserService {
     return setDoc(dbRef, data);
   }
 
-  async getInvitedUsersByMe() {
-    const array: InvitedUser[] = [];
-
-    const q = query(collection(db, FirestoreEnum.INVITED_EMAILS));
-
-    const querySnapshot = await getDocs(q);
-
-    querySnapshot.forEach((doc) => {
-      const item = doc.data() as InvitedUser;
-      array.push(item);
-    });
-
-    return array.filter((user) => user.sender === auth.currentUser?.uid);
-  }
-
   async getAllInvitedUsers() {
     const array: InvitedUser[] = [];
 

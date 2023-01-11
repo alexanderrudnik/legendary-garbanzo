@@ -3,7 +3,7 @@ export interface InviteUserDetails {
 }
 
 export interface InvitedUser {
-  id?: string;
+  id: string;
   email: string;
   sender: string | null;
 }

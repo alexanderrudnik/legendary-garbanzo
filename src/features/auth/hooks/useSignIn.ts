@@ -9,18 +9,18 @@ const signIn = async (details: SignInDetails) => {
   try {
     const response = await authService.signIn(details);
 
-    return response.user;
+    return response;
   } catch (error) {
     throw error;
   }
 };
 
 export const useSignIn = () => {
-  const { refetch: getMe } = useMe();
+  // const { refetch: getMe } = useMe();
 
   return useMutation(signIn, {
     onSuccess: () => {
-      getMe();
+      // getMe();
     },
     onError: (error: Error) =>
       notificationService.show({

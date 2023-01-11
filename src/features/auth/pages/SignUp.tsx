@@ -77,7 +77,7 @@ const SignUp: React.FC = () => {
     isLoading: isSigningUp,
     mutateAsync: signUp,
     isSuccess,
-    data,
+    variables,
   } = useSignUp();
 
   useEffect(() => {
@@ -93,7 +93,9 @@ const SignUp: React.FC = () => {
   return isLoading ? (
     <Loading />
   ) : isSuccess ? (
-    <BaseText>A verification email has been sent to the {data.email}</BaseText>
+    <BaseText>
+      A verification email has been sent to the <b>{variables?.email}</b>
+    </BaseText>
   ) : isSignUpAccessed ? (
     <form onSubmit={handleSubmit(onSubmit)}>
       <BaseFlex gap="1rem" direction="column">
