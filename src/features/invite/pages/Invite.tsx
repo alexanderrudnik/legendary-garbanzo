@@ -46,7 +46,7 @@ const Invite: React.FC = () => {
   const { data: me } = useMe();
 
   const invitedUsers = useMemo(
-    () => (data || []).map((item) => item.sender === me?.id),
+    () => (data || []).filter((item) => item.sender === me?.id),
     [data, me?.id]
   );
 

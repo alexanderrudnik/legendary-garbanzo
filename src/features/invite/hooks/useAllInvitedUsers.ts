@@ -8,7 +8,7 @@ const getAllInvitedUsers = async () => {
   try {
     const response = await userService.getAllInvitedUsers();
 
-    return response;
+    return response.data;
   } catch (error) {
     throw error;
   }

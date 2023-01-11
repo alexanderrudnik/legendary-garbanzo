@@ -1,26 +1,34 @@
 import { errorMapper } from "@/common/errorMapper/errorMapper";
+import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
+import { queryClient } from "@/common/queryClient/queryClient";
 import { notificationService } from "@/services/notification/notificationService";
-import { InviteUserDetails } from "@/services/user/types";
+import { InvitedUser, InviteUserDetails } from "@/services/user/types";
 import { userService } from "@/services/user/userService";
 import { useMutation } from "react-query";
-import { useAllInvitedUsers } from "./useAllInvitedUsers";
 
 const inviteUser = async (details: InviteUserDetails) => {
   try {
     const response = await userService.inviteUser(details);
 
-    return response;
+    return response.data;
   } catch (error) {
     throw error;
   }
 };
 
 export const useInviteUser = () => {
-  const { refetch: getAllInvitedUsers } = useAllInvitedUsers();
-
   return useMutation(inviteUser, {
-    onSuccess: async (_, vars) => {
-      getAllInvitedUsers();
+    onSuccess: async (data, vars) => {
+      await queryClient.setQueryData<InvitedUser[]>(
+        QueryKeysEnum.INVITED_USERS,
+        (old) => {
+          if (old?.length) {
+            return [...old, data];
+          }
+
+          return [];
+        }
+      );
 
       notificationService.show({
         title: "Success",

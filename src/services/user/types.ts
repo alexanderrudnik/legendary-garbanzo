@@ -15,4 +15,5 @@ export interface User {
   lastName: string;
   workspace: string;
   telegram?: string;
+  isStaff?: boolean;
 }
