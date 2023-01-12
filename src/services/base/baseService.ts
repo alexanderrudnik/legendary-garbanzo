@@ -35,7 +35,6 @@ axiosInstance.interceptors.response.use(
       });
       await storageService.remove(StorageEnum.ACCESS_TOKEN);
       await queryClient.setQueryData(QueryKeysEnum.ME, null);
-      await queryClient.clear();
     }
 
     const responseError = {
