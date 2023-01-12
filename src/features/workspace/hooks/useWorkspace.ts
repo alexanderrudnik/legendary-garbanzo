@@ -1,4 +1,3 @@
-import { errorMapper } from "@/common/errorMapper/errorMapper";
 import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { notificationService } from "@/services/notification/notificationService";
 import { workspaceService } from "@/services/workspace/workspaceService";
@@ -8,7 +7,7 @@ const getWorkspace = async () => {
   try {
     const response = await workspaceService.getWorkspace();
 
-    return response;
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -16,10 +15,11 @@ const getWorkspace = async () => {
 
 export const useWorkspace = () => {
   return useQuery(QueryKeysEnum.WORKSPACE, getWorkspace, {
+    enabled: false,
     onError: (error: Error) =>
       notificationService.show({
         title: "An error occured",
-        description: errorMapper(error.message),
+        description: error.message,
         status: "error",
       }),
   });
