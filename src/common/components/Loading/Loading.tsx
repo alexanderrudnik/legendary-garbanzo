@@ -6,11 +6,17 @@ import { keyframes } from "@emotion/react";
 import BaseContainer from "../BaseContainer/BaseContainer";
 
 const animation = keyframes`
-  from {
-    opacity: 1;
-  } to {
-    opacity: 0;
-  }
+0% {
+  opacity: 1;
+}
+
+50% {
+  opacity: 0;
+}
+
+100% {
+  opacity: 1;
+}
 `;
 
 const Loading: React.FC = () => {
@@ -20,7 +26,7 @@ const Loading: React.FC = () => {
         <BaseImage
           src={logoBig}
           alt="Logo"
-          animation={`${animation} 1s infinite reverse`}
+          animation={`${animation} 2s linear reverse infinite`}
         />
       </BaseCenter>
     </BaseContainer>
