@@ -14,10 +14,7 @@ import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
 import { MESSAGE_REQUIRED_ERROR } from "@/app/messages/errors";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import { useContact } from "../hooks/useContact";
-
-interface ContactUsInputs {
-  message: string;
-}
+import { ContactDetails } from "@/services/contact/types";
 
 const schema = yup.object().shape({
   message: yup.string().required(MESSAGE_REQUIRED_ERROR),
@@ -29,14 +26,14 @@ const ContactUs: React.FC = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm<ContactUsInputs>({
+  } = useForm<ContactDetails>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
 
   const { isLoading: isContacting, mutateAsync: contact } = useContact();
 
-  const onSubmit = (values: ContactUsInputs) => {
+  const onSubmit = (values: ContactDetails) => {
     contact(values).then(() => reset());
   };
 

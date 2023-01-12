@@ -18,10 +18,7 @@ import BaseFormHelperText from "@/common/components/BaseFormHelperText/BaseFormH
 import { useAllInvitedUsers } from "@/features/invite/hooks/useAllInvitedUsers";
 import { useMe } from "@/common/hooks/useMe";
 import { useInviteUser } from "../hooks/useInviteUser";
-
-interface InviteInputs {
-  email: string;
-}
+import { InviteUserDetails } from "@/services/user/types";
 
 const schema = yup.object().shape({
   email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
@@ -33,7 +30,7 @@ const Invite: React.FC = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm<InviteInputs>({
+  } = useForm<InviteUserDetails>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
@@ -50,7 +47,7 @@ const Invite: React.FC = () => {
     [data, me?.id]
   );
 
-  const onSubmit = (values: InviteInputs) => {
+  const onSubmit = (values: InviteUserDetails) => {
     inviteUser(values).finally(() => reset());
   };
 

@@ -13,11 +13,7 @@ import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
 import BaseInput from "@/common/components/BaseInput/BaseInput";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
-
-interface WorkspaceInputs {
-  workspace: string;
-  website: string;
-}
+import { CreateWorkspaceDetails } from "@/services/workspace/types";
 
 const schema = yup.object().shape({
   workspace: yup.string().required(WORKSPACE_REQUIRED_ERROR),
@@ -36,12 +32,12 @@ const CreateWorkspaceModal: React.FC<Props> = ({ cb }) => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<WorkspaceInputs>({
+  } = useForm<CreateWorkspaceDetails>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
 
-  const onSubmit = (values: WorkspaceInputs) => {
+  const onSubmit = (values: CreateWorkspaceDetails) => {
     createWorkspace(values).then(() => {
       if (cb) {
         cb();

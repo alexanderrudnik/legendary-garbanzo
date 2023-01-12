@@ -20,12 +20,7 @@ import {
 } from "@/app/messages/errors";
 import { RouteEnum } from "@/common/models/RouteEnum";
 import BaseCheckbox from "@/common/components/BaseCheckbox/BaseCheckbox";
-
-interface SignInFormInputs {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-}
+import { SignInDetails } from "@/services/auth/types";
 
 const schema = yup.object().shape({
   email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
@@ -37,7 +32,7 @@ const SignIn: React.FC = () => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<SignInFormInputs>({
+  } = useForm<SignInDetails>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
@@ -46,7 +41,7 @@ const SignIn: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = (values: SignInFormInputs) => {
+  const onSubmit = (values: SignInDetails) => {
     signIn(values).then(() => {
       navigate(RouteEnum.HOME);
     });

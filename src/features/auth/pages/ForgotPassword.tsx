@@ -19,10 +19,7 @@ import BaseText from "@/common/components/BaseText/BaseText";
 import { Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { RouteEnum } from "@/common/models/RouteEnum";
-
-interface ForgotPasswordInputs {
-  email: string;
-}
+import { ResetPasswordDetails } from "@/services/auth/types";
 
 const schema = yup.object().shape({
   email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
@@ -33,7 +30,7 @@ const ForgotPassword: React.FC = () => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<ForgotPasswordInputs>({
+  } = useForm<ResetPasswordDetails>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
@@ -45,7 +42,7 @@ const ForgotPassword: React.FC = () => {
     variables,
   } = useResetPassword();
 
-  const onSubmit = (values: ForgotPasswordInputs) => {
+  const onSubmit = (values: ResetPasswordDetails) => {
     resetPassword(values);
   };
 

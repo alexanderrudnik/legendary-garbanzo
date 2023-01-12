@@ -30,14 +30,7 @@ import {
 } from "@/common/regex/regex";
 import { useSignUp } from "../hooks/useSignUp";
 import BaseText from "@/common/components/BaseText/BaseText";
-
-interface SignUpFormInputs {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  telegram?: string;
-}
+import { SignUpDetails } from "@/services/auth/types";
 
 const schema = yup.object().shape({
   email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
@@ -65,7 +58,7 @@ const SignUp: React.FC = () => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<SignUpFormInputs>({
+  } = useForm<SignUpDetails>({
     resolver: yupResolver(schema),
     mode: "onBlur",
     defaultValues: {
@@ -86,7 +79,7 @@ const SignUp: React.FC = () => {
     }
   }, [invitedUsers, email]);
 
-  const onSubmit = (values: SignUpFormInputs) => {
+  const onSubmit = (values: SignUpDetails) => {
     signUp(values);
   };
 

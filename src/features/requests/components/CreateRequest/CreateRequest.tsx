@@ -10,7 +10,6 @@ import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
 import BaseInput from "@/common/components/BaseInput/BaseInput";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import { EngLevelEnum } from "@/common/models/EngLevelEnum";
-import { AppDate } from "@/services/date/dateService";
 import { PositionEnum } from "@/common/models/PositionEnum";
 import {
   DURATION_REQUIRED_ERROR,
@@ -24,25 +23,12 @@ import {
   YEARS_OF_EXPERIENCE_REQUIRED_ERROR,
 } from "@/app/messages/errors";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
-import BaseMultiSelect from "@/common/components/BaseMultiSelect/BaseMultiSelect";
 import BaseSelect from "@/common/components/BaseSelect/BaseSelect";
 import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
 import BaseTagInput from "@/common/components/BaseTagInput/BaseTagInput";
+import { IRequest } from "@/services/request/types";
 
 const countries = countryList.getData();
-
-interface CreateRequestInputs {
-  rate: number;
-  yearsOfExperience: number;
-  skills: string[];
-  engLevel: EngLevelEnum;
-  description: string;
-  startDate: AppDate;
-  duration: number;
-  weeklyEmployment: number;
-  location: string;
-  position: PositionEnum;
-}
 
 const schema = yup.object().shape({
   rate: yup.string().required(RATE_REQUIRED_ERROR),
@@ -62,7 +48,7 @@ const CreateRequest: React.FC = () => {
     control,
     register,
     formState: { errors },
-  } = useForm<CreateRequestInputs>({
+  } = useForm<IRequest>({
     resolver: yupResolver(schema),
     mode: "onBlur",
     defaultValues: {
@@ -70,7 +56,7 @@ const CreateRequest: React.FC = () => {
     },
   });
 
-  const onSubmit = (values: CreateRequestInputs) => {
+  const onSubmit = (values: IRequest) => {
     console.log(values);
   };
 
