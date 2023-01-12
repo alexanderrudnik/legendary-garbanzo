@@ -36,7 +36,7 @@ const Header: React.FC = () => {
 
   const signOut = () => {
     storageService.remove(StorageEnum.ACCESS_TOKEN);
-    queryClient.setQueryData(QueryKeysEnum.ME, () => undefined);
+    queryClient.setQueryData(QueryKeysEnum.ME, () => null);
   };
 
   const nav = useMemo(
