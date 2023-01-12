@@ -27,8 +27,14 @@ import BaseSelect from "@/common/components/BaseSelect/BaseSelect";
 import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
 import BaseTagInput from "@/common/components/BaseTagInput/BaseTagInput";
 import { IRequest } from "@/services/request/types";
+import { dateService } from "@/services/date/dateService";
+import { useCreateRequest } from "../../hooks/useCreateRequest";
 
 const countries = countryList.getData();
+
+interface RequestInputs extends Omit<IRequest, "startDate"> {
+  startDate: string;
+}
 
 const schema = yup.object().shape({
   rate: yup.string().required(RATE_REQUIRED_ERROR),
@@ -42,13 +48,17 @@ const schema = yup.object().shape({
   position: yup.string().required(POSITION_REQUIRED_ERROR),
 });
 
-const CreateRequest: React.FC = () => {
+interface Props {
+  cb?: () => void;
+}
+
+const CreateRequest: React.FC<Props> = ({ cb }) => {
   const {
     handleSubmit,
     control,
     register,
     formState: { errors },
-  } = useForm<IRequest>({
+  } = useForm<RequestInputs>({
     resolver: yupResolver(schema),
     mode: "onBlur",
     defaultValues: {
@@ -56,8 +66,18 @@ const CreateRequest: React.FC = () => {
     },
   });
 
-  const onSubmit = (values: IRequest) => {
-    console.log(values);
+  const { mutateAsync: createRequest, isLoading: isCreatingRequest } =
+    useCreateRequest();
+
+  const onSubmit = (values: RequestInputs) => {
+    createRequest({
+      ...values,
+      startDate: dateService.getDate(values.startDate).valueOf(),
+    }).then(() => {
+      if (cb) {
+        cb();
+      }
+    });
   };
 
   return (
@@ -207,7 +227,11 @@ const CreateRequest: React.FC = () => {
           </BaseFormErrorMessage>
         </BaseFormControl>
 
-        <BaseButton onClick={handleSubmit(onSubmit)} variant="solid">
+        <BaseButton
+          isLoading={isCreatingRequest}
+          onClick={handleSubmit(onSubmit)}
+          variant="solid"
+        >
           Submit
         </BaseButton>
       </BaseFlex>
