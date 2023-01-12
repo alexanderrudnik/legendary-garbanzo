@@ -1,4 +1,6 @@
+import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { StorageEnum } from "@/common/models/StorageEnum";
+import { queryClient } from "@/common/queryClient/queryClient";
 import axios from "axios";
 import { storageService } from "../storage/storageService";
 
@@ -24,10 +26,11 @@ axiosInstance.interceptors.response.use(
   async (e) => {
     const error = JSON.parse(JSON.stringify(e));
 
-    // if (error.status === 401) {
-    //   await Preferences.remove({ key: StorageKeysEnum.ACCESS_TOKEN });
-    //   await queryClient.setQueryData(QueryKeysEnum.USER, null);
-    // }
+    if (error.status === 401) {
+      await storageService.remove(StorageEnum.ACCESS_TOKEN);
+      await queryClient.setQueryData(QueryKeysEnum.ME, undefined);
+      await queryClient.clear();
+    }
 
     const responseError = {
       ...error,

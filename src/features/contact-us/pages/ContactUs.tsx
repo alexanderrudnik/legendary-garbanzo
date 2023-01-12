@@ -9,25 +9,17 @@ import BaseText from "@/common/components/BaseText/BaseText";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseFormControl from "@/common/components/BaseFormControl/BaseFormControl";
 import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
-import BaseInput from "@/common/components/BaseInput/BaseInput";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
-import {
-  FIRST_NAME_REQUIRED_ERROR,
-  LAST_NAME_REQUIRED_ERROR,
-  MESSAGE_REQUIRED_ERROR,
-} from "@/app/messages/errors";
+import { MESSAGE_REQUIRED_ERROR } from "@/app/messages/errors";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
+import { useContact } from "../hooks/useContact";
 
 interface ContactUsInputs {
-  firstName: string;
-  lastName: string;
   message: string;
 }
 
 const schema = yup.object().shape({
-  firstName: yup.string().required(FIRST_NAME_REQUIRED_ERROR),
-  lastName: yup.string().required(LAST_NAME_REQUIRED_ERROR),
   message: yup.string().required(MESSAGE_REQUIRED_ERROR),
 });
 
@@ -35,14 +27,17 @@ const ContactUs: React.FC = () => {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<ContactUsInputs>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
 
+  const { isLoading: isContacting, mutateAsync: contact } = useContact();
+
   const onSubmit = (values: ContactUsInputs) => {
-    console.log(values);
+    contact(values).then(() => reset());
   };
 
   return (
@@ -60,30 +55,6 @@ const ContactUs: React.FC = () => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <BaseFlex direction="column" gap="1rem">
-            <BaseFormControl isInvalid={Boolean(errors.firstName)}>
-              <BaseFormLabel>First name</BaseFormLabel>
-              <BaseInput
-                variant="filled"
-                placeholder="Enter first name"
-                {...register("firstName")}
-              />
-              <BaseFormErrorMessage>
-                {errors.firstName?.message}
-              </BaseFormErrorMessage>
-            </BaseFormControl>
-
-            <BaseFormControl isInvalid={Boolean(errors.lastName)}>
-              <BaseFormLabel>Last name</BaseFormLabel>
-              <BaseInput
-                variant="filled"
-                placeholder="Enter last name"
-                {...register("lastName")}
-              />
-              <BaseFormErrorMessage>
-                {errors.lastName?.message}
-              </BaseFormErrorMessage>
-            </BaseFormControl>
-
             <BaseFormControl isInvalid={Boolean(errors.message)}>
               <BaseFormLabel>Message</BaseFormLabel>
               <BaseTextArea
@@ -96,7 +67,7 @@ const ContactUs: React.FC = () => {
               </BaseFormErrorMessage>
             </BaseFormControl>
 
-            <BaseButton variant="solid" type="submit">
+            <BaseButton isLoading={isContacting} variant="solid" type="submit">
               Send
             </BaseButton>
           </BaseFlex>
