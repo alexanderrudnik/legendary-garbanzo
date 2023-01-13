@@ -14,23 +14,28 @@ import { AppDate } from "@/services/date/dateService";
 import { PositionEnum } from "@/common/models/PositionEnum";
 import {
   CV_LINK_REQUIRED_ERROR,
+  DURATION_MIN_ERROR,
   DURATION_REQUIRED_ERROR,
   ENG_LEVEL_REQUIRED_ERROR,
   FIRST_NAME_REQUIRED_ERROR,
   LAST_NAME_REQUIRED_ERROR,
   LOCATION_REQUIRED_ERROR,
   POSITION_REQUIRED_ERROR,
+  RATE_MIN_ERROR,
   RATE_REQUIRED_ERROR,
   SKILLS_REQUIRED_ERROR,
   START_DATE_REQUIRED_ERROR,
+  WEEKLY_EMPLOYMENT_MIN_ERROR,
   WEEKLY_EMPLOYMENT_REQUIRED_ERROR,
+  YEARS_OF_EXPERIENCE_MIN_ERROR,
   YEARS_OF_EXPERIENCE_REQUIRED_ERROR,
 } from "@/app/messages/errors";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
-import BaseMultiSelect from "@/common/components/BaseMultiSelect/BaseMultiSelect";
 import BaseSelect from "@/common/components/BaseSelect/BaseSelect";
 import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
 import BaseTagInput from "@/common/components/BaseTagInput/BaseTagInput";
+import BaseInputGroup from "@/common/components/BaseInputGroup/BaseInputGroup";
+import BaseInputRightElement from "@/common/components/BaseInputRightElement/BaseInputRightElement";
 
 const countries = countryList.getData();
 
@@ -53,14 +58,23 @@ interface CreateProposalInputs {
 const schema = yup.object().shape({
   firstName: yup.string().required(FIRST_NAME_REQUIRED_ERROR),
   lastName: yup.string().required(LAST_NAME_REQUIRED_ERROR),
-  rate: yup.string().required(RATE_REQUIRED_ERROR),
-  yearsOfExperience: yup.string().required(YEARS_OF_EXPERIENCE_REQUIRED_ERROR),
+  rate: yup.number().required(RATE_REQUIRED_ERROR).min(0, RATE_MIN_ERROR),
+  yearsOfExperience: yup
+    .number()
+    .required(YEARS_OF_EXPERIENCE_REQUIRED_ERROR)
+    .min(0, YEARS_OF_EXPERIENCE_MIN_ERROR),
   skills: yup.array().required(SKILLS_REQUIRED_ERROR),
   engLevel: yup.string().required(ENG_LEVEL_REQUIRED_ERROR),
   CVLink: yup.string().required(CV_LINK_REQUIRED_ERROR),
   startDate: yup.string().required(START_DATE_REQUIRED_ERROR),
-  duration: yup.string().required(DURATION_REQUIRED_ERROR),
-  weeklyEmployment: yup.string().required(WEEKLY_EMPLOYMENT_REQUIRED_ERROR),
+  duration: yup
+    .number()
+    .required(DURATION_REQUIRED_ERROR)
+    .min(0, DURATION_MIN_ERROR),
+  weeklyEmployment: yup
+    .number()
+    .required(WEEKLY_EMPLOYMENT_REQUIRED_ERROR)
+    .min(0, WEEKLY_EMPLOYMENT_MIN_ERROR),
   location: yup.string().required(LOCATION_REQUIRED_ERROR),
   position: yup.string().required(POSITION_REQUIRED_ERROR),
 });
@@ -111,24 +125,31 @@ const CreateProposal: React.FC = () => {
         </BaseFormControl>
 
         <BaseFormControl isInvalid={Boolean(errors.rate)}>
-          <BaseFormLabel>Rate (USD)</BaseFormLabel>
-          <BaseInput
-            type="number"
-            variant="filled"
-            placeholder="Enter rate e.g. 40"
-            {...register("rate")}
-          />
+          <BaseFormLabel>Rate</BaseFormLabel>
+          <BaseInputGroup>
+            <BaseInput
+              type="number"
+              variant="filled"
+              placeholder="Enter rate e.g. 40"
+              {...register("rate")}
+            />
+            <BaseInputRightElement>$</BaseInputRightElement>
+          </BaseInputGroup>
           <BaseFormErrorMessage>{errors.rate?.message}</BaseFormErrorMessage>
         </BaseFormControl>
 
         <BaseFormControl isInvalid={Boolean(errors.yearsOfExperience)}>
           <BaseFormLabel>Years of experience</BaseFormLabel>
-          <BaseInput
-            type="number"
-            variant="filled"
-            placeholder="Enter years of experience"
-            {...register("yearsOfExperience")}
-          />
+
+          <BaseInputGroup>
+            <BaseInput
+              variant="filled"
+              type="number"
+              placeholder="Enter years of experience"
+              {...register("yearsOfExperience")}
+            />
+            <BaseInputRightElement width="4rem">years</BaseInputRightElement>
+          </BaseInputGroup>
           <BaseFormErrorMessage>
             {errors.yearsOfExperience?.message}
           </BaseFormErrorMessage>
@@ -203,26 +224,32 @@ const CreateProposal: React.FC = () => {
         </BaseFormControl>
 
         <BaseFormControl isInvalid={Boolean(errors.duration)}>
-          <BaseFormLabel>Duration (months)</BaseFormLabel>
-          <BaseInput
-            type="number"
-            variant="filled"
-            placeholder="Enter duration"
-            {...register("duration")}
-          />
+          <BaseFormLabel>Duration</BaseFormLabel>
+          <BaseInputGroup>
+            <BaseInput
+              type="number"
+              variant="filled"
+              placeholder="Enter duration"
+              {...register("duration")}
+            />
+            <BaseInputRightElement width="5rem">months</BaseInputRightElement>
+          </BaseInputGroup>
           <BaseFormErrorMessage>
             {errors.duration?.message}
           </BaseFormErrorMessage>
         </BaseFormControl>
 
         <BaseFormControl isInvalid={Boolean(errors.weeklyEmployment)}>
-          <BaseFormLabel>Weekly Employment (hours)</BaseFormLabel>
-          <BaseInput
-            type="number"
-            variant="filled"
-            placeholder="Enter weekly employment"
-            {...register("weeklyEmployment")}
-          />
+          <BaseFormLabel>Weekly Employment</BaseFormLabel>
+          <BaseInputGroup>
+            <BaseInput
+              type="number"
+              variant="filled"
+              placeholder="Enter weekly employment"
+              {...register("weeklyEmployment")}
+            />
+            <BaseInputRightElement width="5rem">hours</BaseInputRightElement>
+          </BaseInputGroup>
           <BaseFormErrorMessage>
             {errors.weeklyEmployment?.message}
           </BaseFormErrorMessage>

@@ -20,9 +20,12 @@ export const WORKSPACE_REQUIRED_ERROR = "Workspace is a required field!";
 export const WEBSITE_REQUIRED_ERROR = "Website is a required field!";
 
 export const RATE_REQUIRED_ERROR = "Rate is a required field!";
+export const RATE_MIN_ERROR = "Rate must be greater than or equal to 0";
 
 export const YEARS_OF_EXPERIENCE_REQUIRED_ERROR =
   "Years of experience is a required field!";
+export const YEARS_OF_EXPERIENCE_MIN_ERROR =
+  "Years of experience must be greater than or equal to 0";
 
 export const SKILLS_REQUIRED_ERROR = "Skills is a required field!";
 
@@ -31,9 +34,12 @@ export const ENG_LEVEL_REQUIRED_ERROR = "English level is a required field!";
 export const START_DATE_REQUIRED_ERROR = "Start date is a required field!";
 
 export const DURATION_REQUIRED_ERROR = "Duration is a required field!";
+export const DURATION_MIN_ERROR = "Duration must be greater than or equal to 0";
 
 export const WEEKLY_EMPLOYMENT_REQUIRED_ERROR =
   "Weekly employment is a required field!";
+export const WEEKLY_EMPLOYMENT_MIN_ERROR =
+  "Weekly employment must be greater than or equal to 0";
 
 export const LOCATION_REQUIRED_ERROR = "Location is a required field!";
 
