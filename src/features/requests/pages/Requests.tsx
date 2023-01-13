@@ -10,7 +10,7 @@ import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseText from "@/common/components/BaseText/BaseText";
 import BaseSimpleGrid from "@/common/components/BaseSimpleGrid/BaseSimpleGrid";
 import RequestCard from "../components/RequestCard/RequestCard";
-import Contact from "../components/Contact/Contact";
+import Contact from "../../../common/components/Contact/Contact";
 import { IRequest } from "@/services/request/types";
 
 const Requests: React.FC = () => {

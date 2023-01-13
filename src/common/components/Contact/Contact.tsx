@@ -6,9 +6,10 @@ import { IRequest } from "@/services/request/types";
 import { CopyIcon } from "@chakra-ui/icons";
 import BaseTooltip from "@/common/components/BaseTooltip/BaseTooltip";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
+import { Proposal } from "@/services/proposal/types";
 
 interface Props {
-  contact: IRequest["contact"] | null;
+  contact: IRequest["contact"] | Proposal["contact"] | null;
 }
 
 const Contact: React.FC<Props> = ({ contact }) => {

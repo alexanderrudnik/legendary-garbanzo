@@ -4,4 +4,5 @@ export enum QueryKeysEnum {
   ME = "me",
   WORKSPACE = "workspace",
   REQUESTS = "requests",
+  PROPOSALS = "proposals",
 }

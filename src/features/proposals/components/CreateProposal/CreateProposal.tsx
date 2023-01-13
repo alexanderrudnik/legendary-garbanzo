@@ -10,7 +10,7 @@ import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
 import BaseInput from "@/common/components/BaseInput/BaseInput";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import { EngLevelEnum } from "@/common/models/EngLevelEnum";
-import { AppDate } from "@/services/date/dateService";
+import { dateService } from "@/services/date/dateService";
 import { PositionEnum } from "@/common/models/PositionEnum";
 import {
   CV_LINK_REQUIRED_ERROR,
@@ -36,23 +36,13 @@ import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
 import BaseTagInput from "@/common/components/BaseTagInput/BaseTagInput";
 import BaseInputGroup from "@/common/components/BaseInputGroup/BaseInputGroup";
 import BaseInputRightElement from "@/common/components/BaseInputRightElement/BaseInputRightElement";
+import { Proposal } from "@/services/proposal/types";
+import { useCreateProposal } from "../../hooks/useCreateProposal";
 
 const countries = countryList.getData();
 
-interface CreateProposalInputs {
-  firstName: string;
-  lastName: string;
-  rate: number;
-  yearsOfExperience: number;
-  skills: string[];
-  engLevel: EngLevelEnum;
-  description: string;
-  CVLink: string;
-  startDate: AppDate;
-  duration: number;
-  weeklyEmployment: number;
-  location: string;
-  position: PositionEnum;
+interface ProposalsInputs extends Omit<Proposal, "startDate"> {
+  startDate: string;
 }
 
 const schema = yup.object().shape({
@@ -79,13 +69,17 @@ const schema = yup.object().shape({
   position: yup.string().required(POSITION_REQUIRED_ERROR),
 });
 
-const CreateProposal: React.FC = () => {
+interface Props {
+  cb?: () => void;
+}
+
+const CreateProposal: React.FC<Props> = ({ cb }) => {
   const {
     handleSubmit,
     control,
     register,
     formState: { errors },
-  } = useForm<CreateProposalInputs>({
+  } = useForm<ProposalsInputs>({
     resolver: yupResolver(schema),
     mode: "onBlur",
     defaultValues: {
@@ -93,8 +87,19 @@ const CreateProposal: React.FC = () => {
     },
   });
 
-  const onSubmit = (values: CreateProposalInputs) => {
-    console.log(values);
+  const { mutateAsync: createProposal, isLoading: isCreatingProposal } =
+    useCreateProposal();
+
+  const onSubmit = (values: ProposalsInputs) => {
+    createProposal({
+      ...values,
+      startDate: dateService.getDate(values.startDate).valueOf(),
+      skills: values.skills.map((skill) => skill.trim()),
+    }).then(() => {
+      if (cb) {
+        cb();
+      }
+    });
   };
 
   return (
@@ -180,7 +185,9 @@ const CreateProposal: React.FC = () => {
             {(
               Object.keys(EngLevelEnum) as Array<keyof typeof EngLevelEnum>
             ).map((key) => (
-              <option key={key}>{EngLevelEnum[key]}</option>
+              <option key={key} value={key}>
+                {EngLevelEnum[key]}
+              </option>
             ))}
           </BaseSelect>
           <BaseFormErrorMessage>
@@ -283,7 +290,9 @@ const CreateProposal: React.FC = () => {
             {(
               Object.keys(PositionEnum) as Array<keyof typeof PositionEnum>
             ).map((key) => (
-              <option key={key}>{PositionEnum[key]}</option>
+              <option key={key} value={key}>
+                {PositionEnum[key]}
+              </option>
             ))}
           </BaseSelect>
           <BaseFormErrorMessage>
@@ -291,7 +300,11 @@ const CreateProposal: React.FC = () => {
           </BaseFormErrorMessage>
         </BaseFormControl>
 
-        <BaseButton onClick={handleSubmit(onSubmit)} variant="solid">
+        <BaseButton
+          isLoading={isCreatingProposal}
+          onClick={handleSubmit(onSubmit)}
+          variant="solid"
+        >
           Submit
         </BaseButton>
       </BaseFlex>

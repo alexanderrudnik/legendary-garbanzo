@@ -1,3 +1,4 @@
+import { Proposal } from "../proposal/types";
 import { IRequest } from "../request/types";
 
 export interface CreateWorkspaceDetails {
@@ -11,5 +12,5 @@ export interface Workspace {
   owner: string;
   website: string;
   requests: IRequest[];
-  proposals: [];
+  proposals: Proposal[];
 }
