@@ -2,14 +2,19 @@ import { EngLevelEnum } from "@/common/models/EngLevelEnum";
 import { PositionEnum } from "@/common/models/PositionEnum";
 
 export interface IRequest {
-  rate: number;
-  yearsOfExperience: number;
+  rate: string;
+  yearsOfExperience: string;
   skills: string[];
   engLevel: EngLevelEnum;
   description?: string;
   startDate: number;
-  duration: number;
-  weeklyEmployment: number;
+  duration: string;
+  weeklyEmployment: string;
   location: string;
-  position: PositionEnum;
+  position: keyof typeof PositionEnum;
+  createdAt: number;
+  contact: {
+    email: string;
+    telegram?: string;
+  };
 }

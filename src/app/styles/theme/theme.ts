@@ -11,6 +11,13 @@ import { fontSizes } from "./fonts";
 
 export const theme = extendTheme(
   {
+    styles: {
+      global: {
+        body: {
+          minWidth: breakpoints.sm,
+        },
+      },
+    },
     colors: {
       primary: {
         50: "#bde3e2",

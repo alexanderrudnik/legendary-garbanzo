@@ -24,6 +24,11 @@ export const useCreateRequest = () => {
         (old) =>
           old ? { ...old, requests: [...old.requests, data] } : undefined
       );
+
+      await queryClient.setQueryData<IRequest[]>(
+        QueryKeysEnum.REQUESTS,
+        (old) => (old ? [...old, data] : [])
+      );
     },
     onError: (error: Error) =>
       notificationService.show({

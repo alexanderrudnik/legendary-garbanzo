@@ -29,6 +29,8 @@ import BaseTagInput from "@/common/components/BaseTagInput/BaseTagInput";
 import { IRequest } from "@/services/request/types";
 import { dateService } from "@/services/date/dateService";
 import { useCreateRequest } from "../../hooks/useCreateRequest";
+import BaseInputGroup from "@/common/components/BaseInputGroup/BaseInputGroup";
+import BaseInputRightElement from "@/common/components/BaseInputRightElement/BaseInputRightElement";
 
 const countries = countryList.getData();
 
@@ -73,6 +75,7 @@ const CreateRequest: React.FC<Props> = ({ cb }) => {
     createRequest({
       ...values,
       startDate: dateService.getDate(values.startDate).valueOf(),
+      skills: values.skills.map((skill) => skill.trim()),
     }).then(() => {
       if (cb) {
         cb();
@@ -80,28 +83,37 @@ const CreateRequest: React.FC<Props> = ({ cb }) => {
     });
   };
 
+  console.log(Object.keys(PositionEnum));
+
   return (
     <form>
       <BaseFlex gap="1rem" flexDirection="column">
         <BaseFormControl isInvalid={Boolean(errors.rate)}>
-          <BaseFormLabel>Rate (USD)</BaseFormLabel>
-          <BaseInput
-            type="number"
-            variant="filled"
-            placeholder="Enter rate e.g. 40"
-            {...register("rate")}
-          />
+          <BaseFormLabel>Rate</BaseFormLabel>
+          <BaseInputGroup>
+            <BaseInput
+              type="number"
+              variant="filled"
+              placeholder="Enter rate e.g. 40"
+              {...register("rate")}
+            />
+            <BaseInputRightElement>$</BaseInputRightElement>
+          </BaseInputGroup>
           <BaseFormErrorMessage>{errors.rate?.message}</BaseFormErrorMessage>
         </BaseFormControl>
 
         <BaseFormControl isInvalid={Boolean(errors.yearsOfExperience)}>
           <BaseFormLabel>Years of experience</BaseFormLabel>
-          <BaseInput
-            type="number"
-            variant="filled"
-            placeholder="Enter years of experience"
-            {...register("yearsOfExperience")}
-          />
+
+          <BaseInputGroup>
+            <BaseInput
+              variant="filled"
+              type="number"
+              placeholder="Enter years of experience"
+              {...register("yearsOfExperience")}
+            />
+            <BaseInputRightElement width="4rem">years</BaseInputRightElement>
+          </BaseInputGroup>
           <BaseFormErrorMessage>
             {errors.yearsOfExperience?.message}
           </BaseFormErrorMessage>
@@ -166,26 +178,32 @@ const CreateRequest: React.FC<Props> = ({ cb }) => {
         </BaseFormControl>
 
         <BaseFormControl isInvalid={Boolean(errors.duration)}>
-          <BaseFormLabel>Duration (months)</BaseFormLabel>
-          <BaseInput
-            type="number"
-            variant="filled"
-            placeholder="Enter duration"
-            {...register("duration")}
-          />
+          <BaseFormLabel>Duration</BaseFormLabel>
+          <BaseInputGroup>
+            <BaseInput
+              type="number"
+              variant="filled"
+              placeholder="Enter duration"
+              {...register("duration")}
+            />
+            <BaseInputRightElement width="5rem">months</BaseInputRightElement>
+          </BaseInputGroup>
           <BaseFormErrorMessage>
             {errors.duration?.message}
           </BaseFormErrorMessage>
         </BaseFormControl>
 
         <BaseFormControl isInvalid={Boolean(errors.weeklyEmployment)}>
-          <BaseFormLabel>Weekly Employment (hours)</BaseFormLabel>
-          <BaseInput
-            type="number"
-            variant="filled"
-            placeholder="Enter weekly employment"
-            {...register("weeklyEmployment")}
-          />
+          <BaseFormLabel>Weekly Employment</BaseFormLabel>
+          <BaseInputGroup>
+            <BaseInput
+              type="number"
+              variant="filled"
+              placeholder="Enter weekly employment"
+              {...register("weeklyEmployment")}
+            />
+            <BaseInputRightElement width="5rem">hours</BaseInputRightElement>
+          </BaseInputGroup>
           <BaseFormErrorMessage>
             {errors.weeklyEmployment?.message}
           </BaseFormErrorMessage>
@@ -219,7 +237,9 @@ const CreateRequest: React.FC<Props> = ({ cb }) => {
             {(
               Object.keys(PositionEnum) as Array<keyof typeof PositionEnum>
             ).map((key) => (
-              <option key={key}>{PositionEnum[key]}</option>
+              <option key={key} value={key}>
+                {PositionEnum[key]}
+              </option>
             ))}
           </BaseSelect>
           <BaseFormErrorMessage>

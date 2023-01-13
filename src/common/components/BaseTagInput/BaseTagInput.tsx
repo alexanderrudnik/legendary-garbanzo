@@ -31,9 +31,11 @@ const BaseTagInput = React.forwardRef<any, Props>(
     });
 
     const handleAdd = useCallback(() => {
-      if (inputValue.trim()) {
-        if (!value?.includes(inputValue)) {
-          onChange([...value, inputValue]);
+      const trimmedValue = inputValue.trim();
+
+      if (trimmedValue) {
+        if (!value?.includes(trimmedValue)) {
+          onChange([...value, trimmedValue]);
         }
       }
       setInputValue("");
