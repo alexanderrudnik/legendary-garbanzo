@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import BaseModal from "@/common/components/BaseModal/BaseModal";
 import BaseSection from "@/common/components/BaseSection/BaseSection";
@@ -12,6 +12,7 @@ import BaseSimpleGrid from "@/common/components/BaseSimpleGrid/BaseSimpleGrid";
 import RequestCard from "../components/RequestCard/RequestCard";
 import Contact from "../../../common/components/Contact/Contact";
 import { IRequest } from "@/services/request/types";
+import { dateService } from "@/services/date/dateService";
 
 const Requests: React.FC = () => {
   const [contact, setContact] = useState<IRequest["contact"] | null>(null);
@@ -28,6 +29,20 @@ const Requests: React.FC = () => {
   } = useBaseDisclosure();
 
   const { data: requests, isLoading } = useRequests();
+
+  const sortedRequests = useMemo(
+    () =>
+      requests
+        ? requests.sort((a, b) =>
+            dateService
+              .getDate(a.createdAt)
+              .isAfter(dateService.getDate(b.createdAt))
+              ? -1
+              : 1
+          )
+        : [],
+    [requests]
+  );
 
   return (
     <>
@@ -50,7 +65,7 @@ const Requests: React.FC = () => {
           <BaseFlex justify="center">
             <BaseSpinner />
           </BaseFlex>
-        ) : requests?.length ? (
+        ) : sortedRequests?.length ? (
           <>
             <BaseSimpleGrid
               spacing="1rem"
@@ -59,7 +74,7 @@ const Requests: React.FC = () => {
                 md: "repeat(auto-fill, minmax(500px, 1fr))",
               }}
             >
-              {requests.map((request, i) => (
+              {sortedRequests.map((request, i) => (
                 <RequestCard
                   key={i}
                   {...request}

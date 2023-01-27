@@ -7,8 +7,9 @@ import BaseSpinner from "@/common/components/BaseSpinner/BaseSpinner";
 import BaseText from "@/common/components/BaseText/BaseText";
 import Contact from "@/common/components/Contact/Contact";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
+import { dateService } from "@/services/date/dateService";
 import { Proposal } from "@/services/proposal/types";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import CreateProposal from "../components/CreateProposal/CreateProposal";
 import ProposalCard from "../components/ProposalCard/ProposalCard";
 import { useProposals } from "../hooks/useProposals";
@@ -29,7 +30,19 @@ const Proposals: React.FC = () => {
 
   const { data: proposals, isLoading } = useProposals();
 
-  console.log(proposals);
+  const sortedProposals = useMemo(
+    () =>
+      proposals
+        ? proposals.sort((a, b) =>
+            dateService
+              .getDate(a.createdAt)
+              .isAfter(dateService.getDate(b.createdAt))
+              ? -1
+              : 1
+          )
+        : [],
+    [proposals]
+  );
 
   return (
     <>
@@ -61,7 +74,7 @@ const Proposals: React.FC = () => {
                 md: "repeat(auto-fill, minmax(500px, 1fr))",
               }}
             >
-              {proposals.map((proposal, i) => (
+              {sortedProposals.map((proposal, i) => (
                 <ProposalCard
                   key={i}
                   {...proposal}
