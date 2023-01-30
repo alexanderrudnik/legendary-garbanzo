@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import BaseModal from "@/common/components/BaseModal/BaseModal";
 import BaseSection from "@/common/components/BaseSection/BaseSection";
@@ -13,9 +13,21 @@ import RequestCard from "../components/RequestCard/RequestCard";
 import Contact from "../../../common/components/Contact/Contact";
 import { IRequest } from "@/services/request/types";
 import { dateService } from "@/services/date/dateService";
+import BaseDrawer from "@/common/components/BaseDrawer/BaseDrawer";
+import Filters from "../../../common/components/Filters/Filters";
+import { getFilteredData } from "@/services/filter/filterService";
+import { Filters as IFilters } from "@/common/models/Filters";
+
+const initialFiltersState: IFilters = {
+  rate: ["", ""],
+  position: "",
+  skills: [],
+  location: "",
+};
 
 const Requests: React.FC = () => {
   const [contact, setContact] = useState<IRequest["contact"] | null>(null);
+  const [filters, setFilters] = useState<IFilters>(initialFiltersState);
 
   const {
     isOpen: isOpenCreateModal,
@@ -26,6 +38,11 @@ const Requests: React.FC = () => {
     isOpen: isOpenContactModal,
     onClose: onCloseContactModal,
     onOpen: onOpenContactModal,
+  } = useBaseDisclosure();
+  const {
+    isOpen: isOpenFiltersDrawer,
+    onClose: onCloseFiltersDrawer,
+    onOpen: onOpenFiltersDrawer,
   } = useBaseDisclosure();
 
   const { data: requests, isLoading } = useRequests();
@@ -44,11 +61,40 @@ const Requests: React.FC = () => {
     [requests]
   );
 
+  const [filteredRequests, setFilteredRequests] = useState(sortedRequests);
+
+  const handleFilter = () => {
+    setFilteredRequests(getFilteredData(sortedRequests, filters));
+    onCloseFiltersDrawer();
+  };
+
+  const handleClear = useCallback(() => {
+    setFilteredRequests(sortedRequests);
+    setFilters(initialFiltersState);
+    onCloseFiltersDrawer();
+  }, [sortedRequests, onCloseFiltersDrawer]);
+
+  useEffect(() => {
+    handleClear();
+  }, [handleClear]);
+
   return (
     <>
       <BaseSection>
-        <BaseButton width="100%" onClick={onOpenCreateModal}>
+        <BaseButton
+          marginBottom="1rem"
+          width="100%"
+          onClick={onOpenCreateModal}
+        >
           Add new request
+        </BaseButton>
+
+        <BaseButton
+          variant="outline"
+          width="100%"
+          onClick={onOpenFiltersDrawer}
+        >
+          Filters
         </BaseButton>
 
         <BaseModal
@@ -58,6 +104,19 @@ const Requests: React.FC = () => {
         >
           <CreateRequest cb={onCloseCreateModal} />
         </BaseModal>
+
+        <BaseDrawer
+          header="Filters"
+          isOpen={isOpenFiltersDrawer}
+          onClose={onCloseFiltersDrawer}
+        >
+          <Filters
+            filters={filters}
+            setFilters={setFilters}
+            onFilter={handleFilter}
+            onClear={handleClear}
+          />
+        </BaseDrawer>
       </BaseSection>
 
       <BaseSection>
@@ -65,7 +124,7 @@ const Requests: React.FC = () => {
           <BaseFlex justify="center">
             <BaseSpinner />
           </BaseFlex>
-        ) : sortedRequests?.length ? (
+        ) : filteredRequests?.length ? (
           <>
             <BaseSimpleGrid
               spacing="1rem"
@@ -74,7 +133,7 @@ const Requests: React.FC = () => {
                 md: "repeat(auto-fill, minmax(500px, 1fr))",
               }}
             >
-              {sortedRequests.map((request, i) => (
+              {filteredRequests.map((request, i) => (
                 <RequestCard
                   key={i}
                   {...request}
@@ -99,7 +158,7 @@ const Requests: React.FC = () => {
             </BaseModal>
           </>
         ) : (
-          <BaseText>No requests yet</BaseText>
+          <BaseText>No requests found</BaseText>
         )}
       </BaseSection>
     </>
