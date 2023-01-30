@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import BaseModal from "@/common/components/BaseModal/BaseModal";
 import BaseSection from "@/common/components/BaseSection/BaseSection";
@@ -12,11 +12,12 @@ import BaseSimpleGrid from "@/common/components/BaseSimpleGrid/BaseSimpleGrid";
 import RequestCard from "../components/RequestCard/RequestCard";
 import Contact from "../../../common/components/Contact/Contact";
 import { IRequest } from "@/services/request/types";
-import { dateService } from "@/services/date/dateService";
 import BaseDrawer from "@/common/components/BaseDrawer/BaseDrawer";
 import Filters from "../../../common/components/Filters/Filters";
 import { getFilteredData } from "@/services/filter/filterService";
 import { Filters as IFilters } from "@/common/models/Filters";
+import { useNavigate } from "react-router-dom";
+import { RouteEnum } from "@/common/models/RouteEnum";
 
 const initialFiltersState: IFilters = {
   rate: ["", ""],
@@ -28,6 +29,8 @@ const initialFiltersState: IFilters = {
 const Requests: React.FC = () => {
   const [contact, setContact] = useState<IRequest["contact"] | null>(null);
   const [filters, setFilters] = useState<IFilters>(initialFiltersState);
+
+  const navigate = useNavigate();
 
   const {
     isOpen: isOpenCreateModal,
@@ -47,32 +50,18 @@ const Requests: React.FC = () => {
 
   const { data: requests, isLoading } = useRequests();
 
-  const sortedRequests = useMemo(
-    () =>
-      requests
-        ? requests.sort((a, b) =>
-            dateService
-              .getDate(a.createdAt)
-              .isAfter(dateService.getDate(b.createdAt))
-              ? -1
-              : 1
-          )
-        : [],
-    [requests]
-  );
-
-  const [filteredRequests, setFilteredRequests] = useState(sortedRequests);
+  const [filteredRequests, setFilteredRequests] = useState(requests);
 
   const handleFilter = () => {
-    setFilteredRequests(getFilteredData(sortedRequests, filters));
+    setFilteredRequests(getFilteredData(requests, filters));
     onCloseFiltersDrawer();
   };
 
   const handleClear = useCallback(() => {
-    setFilteredRequests(sortedRequests);
+    setFilteredRequests(requests);
     setFilters(initialFiltersState);
     onCloseFiltersDrawer();
-  }, [sortedRequests, onCloseFiltersDrawer]);
+  }, [requests, onCloseFiltersDrawer]);
 
   useEffect(() => {
     handleClear();
@@ -137,6 +126,9 @@ const Requests: React.FC = () => {
                 <RequestCard
                   key={i}
                   {...request}
+                  onClick={() =>
+                    navigate(`${RouteEnum.REQUESTS}/${request.id}`)
+                  }
                   onContact={() => {
                     setContact(request.contact);
                     onOpenContactModal();

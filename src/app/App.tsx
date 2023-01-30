@@ -23,6 +23,8 @@ import { queryClient } from "@/common/queryClient/queryClient";
 import { theme } from "./styles/theme/theme";
 import ContactUs from "@/features/contact-us/pages/ContactUs";
 import Settings from "@/features/settings/pages/Settings";
+import SingleRequest from "@/features/requests/pages/SingleRequest";
+import SingleProposal from "@/features/proposals/pages/SingleProposal";
 
 const { ToastContainer } = createStandaloneToast();
 
@@ -39,8 +41,16 @@ const router = createBrowserRouter([
         element: <Proposals />,
       },
       {
+        path: `${RouteEnum.PROPOSALS}/:id`,
+        element: <SingleProposal />,
+      },
+      {
         path: RouteEnum.REQUESTS,
         element: <Requests />,
+      },
+      {
+        path: `${RouteEnum.REQUESTS}/:id`,
+        element: <SingleRequest />,
       },
       {
         path: RouteEnum.INVITE,

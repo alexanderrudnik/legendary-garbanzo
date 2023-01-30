@@ -13,6 +13,7 @@ import { getPlural } from "@/common/utils/getPlural";
 
 interface Props extends IRequest {
   onContact: () => void;
+  onClick?: () => void;
 }
 
 const RequestCard: React.FC<Props> = ({
@@ -27,6 +28,7 @@ const RequestCard: React.FC<Props> = ({
   location,
   position,
   onContact,
+  onClick,
 }) => {
   return (
     <BaseCard
@@ -37,6 +39,8 @@ const RequestCard: React.FC<Props> = ({
           </BaseButton>
         </>
       }
+      onClick={onClick}
+      cursor={onClick ? "pointer" : "unset"}
     >
       <BaseFlex direction="column" gap="1rem">
         <BaseSimpleGrid

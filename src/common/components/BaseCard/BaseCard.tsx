@@ -12,9 +12,9 @@ interface Props extends CardProps {
   footer?: React.ReactNode;
 }
 
-const BaseCard: React.FC<Props> = ({ header, footer, children }) => {
+const BaseCard: React.FC<Props> = ({ header, footer, children, ...props }) => {
   return (
-    <Card>
+    <Card {...props}>
       {header && <CardHeader>{header}</CardHeader>}
 
       <CardBody>{children}</CardBody>

@@ -2,6 +2,7 @@ import { EngLevelEnum } from "@/common/models/EngLevelEnum";
 import { PositionEnum } from "@/common/models/PositionEnum";
 
 export interface Proposal {
+  id: string;
   firstName: string;
   lastName: string;
   rate: string;

@@ -2,6 +2,7 @@ import { EngLevelEnum } from "@/common/models/EngLevelEnum";
 import { PositionEnum } from "@/common/models/PositionEnum";
 
 export interface IRequest {
+  id: string;
   rate: string;
   yearsOfExperience: string;
   skills: string[];

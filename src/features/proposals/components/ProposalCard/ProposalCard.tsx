@@ -13,6 +13,7 @@ import { Proposal } from "@/services/proposal/types";
 
 interface Props extends Proposal {
   onContact: () => void;
+  onClick?: () => void;
 }
 
 const ProposalCard: React.FC<Props> = ({
@@ -30,6 +31,7 @@ const ProposalCard: React.FC<Props> = ({
   location,
   position,
   onContact,
+  onClick,
 }) => {
   return (
     <BaseCard
@@ -41,6 +43,8 @@ const ProposalCard: React.FC<Props> = ({
           </BaseButton>
         </>
       }
+      onClick={onClick}
+      cursor={onClick ? "pointer" : "unset"}
     >
       <BaseFlex direction="column" gap="1rem">
         <BaseSimpleGrid

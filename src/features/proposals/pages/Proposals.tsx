@@ -10,10 +10,11 @@ import Contact from "@/common/components/Contact/Contact";
 import Filters from "@/common/components/Filters/Filters";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import { Filters as IFilters } from "@/common/models/Filters";
-import { dateService } from "@/services/date/dateService";
+import { RouteEnum } from "@/common/models/RouteEnum";
 import { getFilteredData } from "@/services/filter/filterService";
 import { Proposal } from "@/services/proposal/types";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CreateProposal from "../components/CreateProposal/CreateProposal";
 import ProposalCard from "../components/ProposalCard/ProposalCard";
 import { useProposals } from "../hooks/useProposals";
@@ -28,6 +29,8 @@ const initialFiltersState: IFilters = {
 const Proposals: React.FC = () => {
   const [contact, setContact] = useState<Proposal["contact"] | null>(null);
   const [filters, setFilters] = useState<IFilters>(initialFiltersState);
+
+  const navigate = useNavigate();
 
   const {
     isOpen: isOpenCreateModal,
@@ -47,32 +50,18 @@ const Proposals: React.FC = () => {
 
   const { data: proposals, isLoading } = useProposals();
 
-  const sortedProposals = useMemo(
-    () =>
-      proposals
-        ? proposals.sort((a, b) =>
-            dateService
-              .getDate(a.createdAt)
-              .isAfter(dateService.getDate(b.createdAt))
-              ? -1
-              : 1
-          )
-        : [],
-    [proposals]
-  );
-
-  const [filteredProposals, setFilteredProposals] = useState(sortedProposals);
+  const [filteredProposals, setFilteredProposals] = useState(proposals);
 
   const handleFilter = () => {
-    setFilteredProposals(getFilteredData(sortedProposals, filters));
+    setFilteredProposals(getFilteredData(proposals, filters));
     onCloseFiltersDrawer();
   };
 
   const handleClear = useCallback(() => {
-    setFilteredProposals(sortedProposals);
+    setFilteredProposals(proposals);
     setFilters(initialFiltersState);
     onCloseFiltersDrawer();
-  }, [sortedProposals, onCloseFiltersDrawer]);
+  }, [proposals, onCloseFiltersDrawer]);
 
   useEffect(() => {
     handleClear();
@@ -137,6 +126,9 @@ const Proposals: React.FC = () => {
                 <ProposalCard
                   key={i}
                   {...proposal}
+                  onClick={() => {
+                    navigate(`${RouteEnum.PROPOSALS}/${proposal.id}`);
+                  }}
                   onContact={() => {
                     setContact(proposal.contact);
                     onOpenContactModal();
