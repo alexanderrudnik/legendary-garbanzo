@@ -8,22 +8,24 @@ import Contact from "@/common/components/Contact/Contact";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import { useMe } from "@/common/hooks/useMe";
 import { RouteEnum } from "@/common/models/RouteEnum";
-import RequestCard from "@/features/requests/components/RequestCard/RequestCard";
-import { useRequests } from "@/features/requests/hooks/useRequests";
-import { IRequest } from "@/services/request/types";
+import ProposalCard from "@/features/proposals/components/ProposalCard/ProposalCard";
+import { useProposals } from "@/features/proposals/hooks/useProposals";
+import { Proposal } from "@/services/proposal/types";
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const MyRequests: React.FC = () => {
-  const [contact, setContact] = useState<IRequest["contact"] | null>(null);
+const MyProposals: React.FC = () => {
+  const [contact, setContact] = useState<Proposal["contact"] | null>(null);
   const { data: me } = useMe();
 
-  const { data: requests, isLoading: isLoadingRequests } = useRequests();
+  const { data: proposals, isLoading: isLoadingProposals } = useProposals();
 
-  const myRequests = useMemo(
+  const myProposals = useMemo(
     () =>
-      requests ? requests.filter((request) => request.owner === me?.id) : [],
-    [me?.id, requests]
+      proposals
+        ? proposals.filter((proposal) => proposal.owner === me?.id)
+        : [],
+    [me?.id, proposals]
   );
 
   const navigate = useNavigate();
@@ -36,11 +38,11 @@ const MyRequests: React.FC = () => {
 
   return (
     <BaseSection>
-      {isLoadingRequests ? (
+      {isLoadingProposals ? (
         <BaseFlex justify="center">
           <BaseSpinner />
         </BaseFlex>
-      ) : myRequests?.length ? (
+      ) : myProposals?.length ? (
         <>
           <BaseSimpleGrid
             spacing="1rem"
@@ -49,15 +51,15 @@ const MyRequests: React.FC = () => {
               md: "repeat(auto-fill, minmax(500px, 1fr))",
             }}
           >
-            {myRequests.map((request, i) => (
-              <RequestCard
+            {myProposals.map((proposal, i) => (
+              <ProposalCard
                 key={i}
-                {...request}
+                {...proposal}
                 onClick={() => {
-                  navigate(`${RouteEnum.REQUESTS}/${request.id}`);
+                  navigate(`${RouteEnum.PROPOSALS}/${proposal.id}`);
                 }}
                 onContact={() => {
-                  setContact(request.contact);
+                  setContact(proposal.contact);
                   onOpenContactModal();
                 }}
               />
@@ -77,10 +79,10 @@ const MyRequests: React.FC = () => {
           </BaseModal>
         </>
       ) : (
-        <BaseText>No requests found</BaseText>
+        <BaseText>No proposals found</BaseText>
       )}
     </BaseSection>
   );
 };
 
-export default MyRequests;
+export default MyProposals;

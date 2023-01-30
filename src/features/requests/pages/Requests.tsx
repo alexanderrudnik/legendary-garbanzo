@@ -18,6 +18,9 @@ import { getFilteredData } from "@/services/filter/filterService";
 import { Filters as IFilters } from "@/common/models/Filters";
 import { useNavigate } from "react-router-dom";
 import { RouteEnum } from "@/common/models/RouteEnum";
+import { useCreateRequest } from "../hooks/useCreateRequest";
+import { RequestInputs } from "../models/RequestInputs";
+import { dateService } from "@/services/date/dateService";
 
 const initialFiltersState: IFilters = {
   rate: ["", ""],
@@ -67,6 +70,16 @@ const Requests: React.FC = () => {
     handleClear();
   }, [handleClear]);
 
+  const { isLoading: isCreatingRequest, mutateAsync: createRequest } =
+    useCreateRequest();
+
+  const handleSubmit = (values: RequestInputs) =>
+    createRequest({
+      ...values,
+      startDate: dateService.getDate(values.startDate).valueOf(),
+      skills: values.skills.map((skill) => skill.trim()),
+    }).then(() => onCloseCreateModal());
+
   return (
     <>
       <BaseSection>
@@ -91,7 +104,10 @@ const Requests: React.FC = () => {
           isOpen={isOpenCreateModal}
           onClose={onCloseCreateModal}
         >
-          <CreateRequest cb={onCloseCreateModal} />
+          <CreateRequest
+            onSubmit={handleSubmit}
+            isLoading={isCreatingRequest}
+          />
         </BaseModal>
 
         <BaseDrawer

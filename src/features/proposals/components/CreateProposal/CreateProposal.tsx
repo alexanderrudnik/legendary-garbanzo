@@ -10,7 +10,6 @@ import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
 import BaseInput from "@/common/components/BaseInput/BaseInput";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import { EngLevelEnum } from "@/common/models/EngLevelEnum";
-import { dateService } from "@/services/date/dateService";
 import { PositionEnum } from "@/common/models/PositionEnum";
 import {
   CV_LINK_REQUIRED_ERROR,
@@ -36,21 +35,23 @@ import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
 import BaseTagInput from "@/common/components/BaseTagInput/BaseTagInput";
 import BaseInputGroup from "@/common/components/BaseInputGroup/BaseInputGroup";
 import BaseInputRightElement from "@/common/components/BaseInputRightElement/BaseInputRightElement";
+import { ProposalsInputs } from "../../models/ProposalInputs";
 import { Proposal } from "@/services/proposal/types";
-import { useCreateProposal } from "../../hooks/useCreateProposal";
+import { dateService } from "@/services/date/dateService";
 
 const countries = countryList.getData();
-
-interface ProposalsInputs extends Omit<Proposal, "startDate"> {
-  startDate: string;
-}
 
 const schema = yup.object().shape({
   firstName: yup.string().required(FIRST_NAME_REQUIRED_ERROR),
   lastName: yup.string().required(LAST_NAME_REQUIRED_ERROR),
-  rate: yup.number().required(RATE_REQUIRED_ERROR).min(0, RATE_MIN_ERROR),
+  rate: yup
+    .number()
+    .transform((value) => (isNaN(value) ? undefined : value))
+    .required(RATE_REQUIRED_ERROR)
+    .min(0, RATE_MIN_ERROR),
   yearsOfExperience: yup
     .number()
+    .transform((value) => (isNaN(value) ? undefined : value))
     .required(YEARS_OF_EXPERIENCE_REQUIRED_ERROR)
     .min(0, YEARS_OF_EXPERIENCE_MIN_ERROR),
   skills: yup.array().required(SKILLS_REQUIRED_ERROR),
@@ -59,10 +60,12 @@ const schema = yup.object().shape({
   startDate: yup.string().required(START_DATE_REQUIRED_ERROR),
   duration: yup
     .number()
+    .transform((value) => (isNaN(value) ? undefined : value))
     .required(DURATION_REQUIRED_ERROR)
     .min(0, DURATION_MIN_ERROR),
   weeklyEmployment: yup
     .number()
+    .transform((value) => (isNaN(value) ? undefined : value))
     .required(WEEKLY_EMPLOYMENT_REQUIRED_ERROR)
     .min(0, WEEKLY_EMPLOYMENT_MIN_ERROR),
   location: yup.string().required(LOCATION_REQUIRED_ERROR),
@@ -70,10 +73,12 @@ const schema = yup.object().shape({
 });
 
 interface Props {
-  cb?: () => void;
+  values?: Proposal;
+  onSubmit: (values: ProposalsInputs) => void;
+  isLoading: boolean;
 }
 
-const CreateProposal: React.FC<Props> = ({ cb }) => {
+const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
   const {
     handleSubmit,
     control,
@@ -82,24 +87,29 @@ const CreateProposal: React.FC<Props> = ({ cb }) => {
   } = useForm<ProposalsInputs>({
     resolver: yupResolver(schema),
     mode: "onBlur",
-    defaultValues: {
-      engLevel: EngLevelEnum.A1,
-    },
+    defaultValues: values
+      ? {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          rate: values.rate,
+          yearsOfExperience: values.yearsOfExperience,
+          skills: values.skills,
+          engLevel: values.engLevel,
+          description: values.description,
+          CVLink: values.CVLink,
+          startDate: dateService.getDate(values.startDate).format("YYYY-MM-DD"),
+          duration: values.duration,
+          weeklyEmployment: values.weeklyEmployment,
+          location: values.location,
+          position: values.position,
+        }
+      : {
+          engLevel: EngLevelEnum.A1,
+        },
   });
 
-  const { mutateAsync: createProposal, isLoading: isCreatingProposal } =
-    useCreateProposal();
-
-  const onSubmit = (values: ProposalsInputs) => {
-    createProposal({
-      ...values,
-      startDate: dateService.getDate(values.startDate).valueOf(),
-      skills: values.skills.map((skill) => skill.trim()),
-    }).then(() => {
-      if (cb) {
-        cb();
-      }
-    });
+  const submit = (values: ProposalsInputs) => {
+    onSubmit(values);
   };
 
   return (
@@ -301,8 +311,8 @@ const CreateProposal: React.FC<Props> = ({ cb }) => {
         </BaseFormControl>
 
         <BaseButton
-          isLoading={isCreatingProposal}
-          onClick={handleSubmit(onSubmit)}
+          isLoading={isLoading}
+          onClick={handleSubmit(submit)}
           variant="solid"
         >
           Submit

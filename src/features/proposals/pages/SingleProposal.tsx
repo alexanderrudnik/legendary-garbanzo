@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import BaseCenter from "@/common/components/BaseCenter/BaseCenter";
 import BaseSection from "@/common/components/BaseSection/BaseSection";
 import BaseSpinner from "@/common/components/BaseSpinner/BaseSpinner";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import BaseModal from "@/common/components/BaseModal/BaseModal";
 import Contact from "@/common/components/Contact/Contact";
 import BaseBox from "@/common/components/BaseBox/BaseBox";
 import BaseText from "@/common/components/BaseText/BaseText";
-import { useProposals } from "../hooks/useProposals";
+import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
+import BaseButton from "@/common/components/BaseButton/BaseButton";
+import { useMe } from "@/common/hooks/useMe";
+import { RouteEnum } from "@/common/models/RouteEnum";
 import { Proposal } from "@/services/proposal/types";
+import { useProposals } from "../hooks/useProposals";
 import ProposalCard from "../components/ProposalCard/ProposalCard";
 
 const SingleProposal: React.FC = () => {
   const [contact, setContact] = useState<Proposal["contact"] | null>(null);
   const { data: proposals, isLoading } = useProposals();
+
+  const { data: me } = useMe();
 
   const [currentProposal, setCurrentProposal] = useState<Proposal | undefined>(
     undefined
@@ -36,6 +42,11 @@ const SingleProposal: React.FC = () => {
     }
   }, [params.id, proposals]);
 
+  const isMy = useMemo(
+    () => currentProposal?.owner === me?.id,
+    [me, currentProposal]
+  );
+
   return (
     <BaseSection>
       {isLoading ? (
@@ -44,15 +55,46 @@ const SingleProposal: React.FC = () => {
         </BaseCenter>
       ) : currentProposal ? (
         <>
-          <BaseBox margin="0 auto" width={{ base: "320px", md: "500px" }}>
-            <ProposalCard
-              {...currentProposal}
-              onContact={() => {
-                setContact(currentProposal.contact);
-                onOpenContactModal();
-              }}
-            />
-          </BaseBox>
+          <BaseFlex
+            flexDirection={{
+              base: "column",
+              md: "row",
+            }}
+            gap={{
+              base: "2rem",
+              md: "5rem",
+            }}
+            justify="center"
+          >
+            {isMy && (
+              <BaseFlex
+                gap="1rem"
+                width={{
+                  base: "unset",
+                  md: "10rem",
+                }}
+                flexDirection="column"
+              >
+                <Link to={`${RouteEnum.PROPOSALS}/edit/${currentProposal.id}`}>
+                  {" "}
+                  <BaseButton width="100%" variant="outline">
+                    Edit
+                  </BaseButton>
+                </Link>
+                <BaseButton colorScheme="red">Delete</BaseButton>
+              </BaseFlex>
+            )}
+
+            <BaseBox width={{ base: "320px", md: "500px" }}>
+              <ProposalCard
+                {...currentProposal}
+                onContact={() => {
+                  setContact(currentProposal.contact);
+                  onOpenContactModal();
+                }}
+              />
+            </BaseBox>
+          </BaseFlex>
 
           <BaseModal
             close

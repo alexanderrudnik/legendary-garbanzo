@@ -32,20 +32,21 @@ import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
 import BaseTagInput from "@/common/components/BaseTagInput/BaseTagInput";
 import { IRequest } from "@/services/request/types";
 import { dateService } from "@/services/date/dateService";
-import { useCreateRequest } from "../../hooks/useCreateRequest";
 import BaseInputGroup from "@/common/components/BaseInputGroup/BaseInputGroup";
 import BaseInputRightElement from "@/common/components/BaseInputRightElement/BaseInputRightElement";
+import { RequestInputs } from "../../models/RequestInputs";
 
 const countries = countryList.getData();
 
-interface RequestInputs extends Omit<IRequest, "startDate"> {
-  startDate: string;
-}
-
 const schema = yup.object().shape({
-  rate: yup.number().required(RATE_REQUIRED_ERROR).min(0, RATE_MIN_ERROR),
+  rate: yup
+    .number()
+    .transform((value) => (isNaN(value) ? undefined : value))
+    .required(RATE_REQUIRED_ERROR)
+    .min(0, RATE_MIN_ERROR),
   yearsOfExperience: yup
     .number()
+    .transform((value) => (isNaN(value) ? undefined : value))
     .required(YEARS_OF_EXPERIENCE_REQUIRED_ERROR)
     .min(0, YEARS_OF_EXPERIENCE_MIN_ERROR),
   skills: yup.array().required(SKILLS_REQUIRED_ERROR),
@@ -53,10 +54,12 @@ const schema = yup.object().shape({
   startDate: yup.string().required(START_DATE_REQUIRED_ERROR),
   duration: yup
     .number()
+    .transform((value) => (isNaN(value) ? undefined : value))
     .required(DURATION_REQUIRED_ERROR)
     .min(0, DURATION_MIN_ERROR),
   weeklyEmployment: yup
     .number()
+    .transform((value) => (isNaN(value) ? undefined : value))
     .required(WEEKLY_EMPLOYMENT_REQUIRED_ERROR)
     .min(0, WEEKLY_EMPLOYMENT_MIN_ERROR),
   location: yup.string().required(LOCATION_REQUIRED_ERROR),
@@ -64,10 +67,12 @@ const schema = yup.object().shape({
 });
 
 interface Props {
-  cb?: () => void;
+  values?: IRequest;
+  onSubmit: (values: RequestInputs) => void;
+  isLoading: boolean;
 }
 
-const CreateRequest: React.FC<Props> = ({ cb }) => {
+const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
   const {
     handleSubmit,
     control,
@@ -76,24 +81,24 @@ const CreateRequest: React.FC<Props> = ({ cb }) => {
   } = useForm<RequestInputs>({
     resolver: yupResolver(schema),
     mode: "onBlur",
-    defaultValues: {
-      engLevel: EngLevelEnum.A1,
-    },
+    defaultValues: values
+      ? {
+          rate: values.rate,
+          yearsOfExperience: values.yearsOfExperience,
+          skills: values.skills,
+          engLevel: values.engLevel,
+          description: values.description,
+          startDate: dateService.getDate(values.startDate).format("YYYY-MM-DD"),
+          duration: values.duration,
+          weeklyEmployment: values.weeklyEmployment,
+          location: values.location,
+          position: values.position,
+        }
+      : { engLevel: EngLevelEnum.A1 },
   });
 
-  const { mutateAsync: createRequest, isLoading: isCreatingRequest } =
-    useCreateRequest();
-
-  const onSubmit = (values: RequestInputs) => {
-    createRequest({
-      ...values,
-      startDate: dateService.getDate(values.startDate).valueOf(),
-      skills: values.skills.map((skill) => skill.trim()),
-    }).then(() => {
-      if (cb) {
-        cb();
-      }
-    });
+  const submit = (values: RequestInputs) => {
+    onSubmit(values);
   };
 
   return (
@@ -259,8 +264,8 @@ const CreateRequest: React.FC<Props> = ({ cb }) => {
         </BaseFormControl>
 
         <BaseButton
-          isLoading={isCreatingRequest}
-          onClick={handleSubmit(onSubmit)}
+          isLoading={isLoading}
+          onClick={handleSubmit(submit)}
           variant="solid"
         >
           Submit

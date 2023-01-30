@@ -11,13 +11,16 @@ import Filters from "@/common/components/Filters/Filters";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import { Filters as IFilters } from "@/common/models/Filters";
 import { RouteEnum } from "@/common/models/RouteEnum";
+import { dateService } from "@/services/date/dateService";
 import { getFilteredData } from "@/services/filter/filterService";
 import { Proposal } from "@/services/proposal/types";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CreateProposal from "../components/CreateProposal/CreateProposal";
 import ProposalCard from "../components/ProposalCard/ProposalCard";
+import { useCreateProposal } from "../hooks/useCreateProposal";
 import { useProposals } from "../hooks/useProposals";
+import { ProposalsInputs } from "../models/ProposalInputs";
 
 const initialFiltersState: IFilters = {
   rate: ["", ""],
@@ -67,6 +70,17 @@ const Proposals: React.FC = () => {
     handleClear();
   }, [handleClear]);
 
+  const { mutateAsync: createProposal, isLoading: isCreatingProposal } =
+    useCreateProposal();
+
+  const handleSubmit = (values: ProposalsInputs) => {
+    createProposal({
+      ...values,
+      startDate: dateService.getDate(values.startDate).valueOf(),
+      skills: values.skills.map((skill) => skill.trim()),
+    }).then(() => onCloseCreateModal());
+  };
+
   return (
     <>
       <BaseSection>
@@ -91,7 +105,10 @@ const Proposals: React.FC = () => {
           isOpen={isOpenCreateModal}
           onClose={onCloseCreateModal}
         >
-          <CreateProposal cb={onCloseCreateModal} />
+          <CreateProposal
+            onSubmit={handleSubmit}
+            isLoading={isCreatingProposal}
+          />
         </BaseModal>
 
         <BaseDrawer

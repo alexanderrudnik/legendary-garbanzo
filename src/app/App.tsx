@@ -25,6 +25,8 @@ import ContactUs from "@/features/contact-us/pages/ContactUs";
 import Settings from "@/features/settings/pages/Settings";
 import SingleRequest from "@/features/requests/pages/SingleRequest";
 import SingleProposal from "@/features/proposals/pages/SingleProposal";
+import EditRequest from "@/features/requests/pages/EditRequest";
+import EditProposal from "@/features/proposals/pages/EditProposal";
 
 const { ToastContainer } = createStandaloneToast();
 
@@ -45,12 +47,20 @@ const router = createBrowserRouter([
         element: <SingleProposal />,
       },
       {
+        path: `${RouteEnum.PROPOSALS}/edit/:id`,
+        element: <EditProposal />,
+      },
+      {
         path: RouteEnum.REQUESTS,
         element: <Requests />,
       },
       {
         path: `${RouteEnum.REQUESTS}/:id`,
         element: <SingleRequest />,
+      },
+      {
+        path: `${RouteEnum.REQUESTS}/edit/:id`,
+        element: <EditRequest />,
       },
       {
         path: RouteEnum.INVITE,

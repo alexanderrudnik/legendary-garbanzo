@@ -3,6 +3,7 @@ import { PositionEnum } from "@/common/models/PositionEnum";
 
 export interface IRequest {
   id: string;
+  owner: string;
   rate: string;
   yearsOfExperience: string;
   skills: string[];

@@ -10,6 +10,7 @@ import BaseText from "@/common/components/BaseText/BaseText";
 import { dateService } from "@/services/date/dateService";
 import { PositionEnum } from "@/common/models/PositionEnum";
 import { getPlural } from "@/common/utils/getPlural";
+import { useColorModeValue } from "@chakra-ui/react";
 
 interface Props extends IRequest {
   onContact: () => void;
@@ -30,6 +31,8 @@ const RequestCard: React.FC<Props> = ({
   onContact,
   onClick,
 }) => {
+  const color = useColorModeValue("primary.500", "primary.200");
+
   return (
     <BaseCard
       footer={
@@ -41,6 +44,7 @@ const RequestCard: React.FC<Props> = ({
       }
       onClick={onClick}
       cursor={onClick ? "pointer" : "unset"}
+      _hover={onClick ? { outline: "1px solid", outlineColor: color } : {}}
     >
       <BaseFlex direction="column" gap="1rem">
         <BaseSimpleGrid
