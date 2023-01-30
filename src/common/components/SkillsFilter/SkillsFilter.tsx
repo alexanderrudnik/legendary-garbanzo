@@ -13,6 +13,7 @@ const SkillsFilter: React.FC<Props> = ({ value, onChange }) => {
     <BaseFlex gap="0.5rem" flexDirection="column">
       <BaseText>Skills</BaseText>
       <BaseTagInput
+        variant="filled"
         placeholder="Type skills"
         value={value}
         onChange={onChange}

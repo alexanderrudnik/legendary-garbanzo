@@ -14,6 +14,7 @@ const PositionFilter: React.FC<Props> = ({ value, onChange }) => {
     <BaseFlex flexDirection="column" gap="0.5rem">
       <BaseText>Position</BaseText>
       <BaseSelect
+        variant="filled"
         value={value}
         onChange={(event) =>
           onChange(event.target.value as keyof typeof PositionEnum)

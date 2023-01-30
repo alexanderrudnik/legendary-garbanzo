@@ -14,12 +14,14 @@ const RateFilter: React.FC<Props> = ({ value, onChange }) => {
       <BaseText>Min. and max. rate (USD)</BaseText>
       <BaseFlex gap="0.5rem">
         <BaseInput
+          variant="filled"
           value={value[0]}
           type="number"
           placeholder="From"
           onChange={(event) => onChange([event.target.value, value[1]])}
         />
         <BaseInput
+          variant="filled"
           value={value[1]}
           type="number"
           placeholder="To"

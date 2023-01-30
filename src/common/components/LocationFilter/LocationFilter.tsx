@@ -16,6 +16,7 @@ const LocationFilter: React.FC<Props> = ({ value, onChange }) => {
     <BaseFlex gap="0.5rem" flexDirection="column">
       <BaseText>Location</BaseText>
       <BaseSelect
+        variant="filled"
         placeholder="Any"
         value={value}
         onChange={(event) => onChange(event.target.value)}
