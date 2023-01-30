@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import BaseCenter from "@/common/components/BaseCenter/BaseCenter";
 import BaseSection from "@/common/components/BaseSection/BaseSection";
 import BaseSpinner from "@/common/components/BaseSpinner/BaseSpinner";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import BaseModal from "@/common/components/BaseModal/BaseModal";
 import Contact from "@/common/components/Contact/Contact";
@@ -15,6 +15,8 @@ import { RouteEnum } from "@/common/models/RouteEnum";
 import { Proposal } from "@/services/proposal/types";
 import { useProposals } from "../hooks/useProposals";
 import ProposalCard from "../components/ProposalCard/ProposalCard";
+import BasePopconfirm from "@/common/components/BasePopconfirm/BasePopconfirm";
+import { useDeleteProposal } from "../hooks/useDeleteProposal";
 
 const SingleProposal: React.FC = () => {
   const [contact, setContact] = useState<Proposal["contact"] | null>(null);
@@ -34,6 +36,12 @@ const SingleProposal: React.FC = () => {
     onOpen: onOpenContactModal,
   } = useBaseDisclosure();
 
+  const {
+    isOpen: isOpenConfirmPopup,
+    onClose: onCloseConfirmPopup,
+    onOpen: onOpenConfirmPopup,
+  } = useBaseDisclosure();
+
   useEffect(() => {
     if (proposals) {
       setCurrentProposal(
@@ -46,6 +54,18 @@ const SingleProposal: React.FC = () => {
     () => currentProposal?.owner === me?.id,
     [me, currentProposal]
   );
+
+  const navigate = useNavigate();
+
+  const { mutateAsync: deleteProposal, isLoading: isDeletingProposal } =
+    useDeleteProposal();
+
+  const handleDelete = () => {
+    deleteProposal(params.id || "0").then(() => {
+      onCloseConfirmPopup();
+      navigate(RouteEnum.PROPOSALS);
+    });
+  };
 
   return (
     <BaseSection>
@@ -81,7 +101,19 @@ const SingleProposal: React.FC = () => {
                     Edit
                   </BaseButton>
                 </Link>
-                <BaseButton colorScheme="red">Delete</BaseButton>
+
+                <BasePopconfirm
+                  isOpen={isOpenConfirmPopup}
+                  isLoading={isDeletingProposal}
+                  onClose={onCloseConfirmPopup}
+                  text="Are you sure you want to delete?"
+                  onOk={handleDelete}
+                  trigger={
+                    <BaseButton colorScheme="red" onClick={onOpenConfirmPopup}>
+                      Delete
+                    </BaseButton>
+                  }
+                />
               </BaseFlex>
             )}
 

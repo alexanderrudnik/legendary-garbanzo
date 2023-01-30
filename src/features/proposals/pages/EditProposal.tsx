@@ -4,10 +4,12 @@ import BaseSection from "@/common/components/BaseSection/BaseSection";
 import BaseSpinner from "@/common/components/BaseSpinner/BaseSpinner";
 import BaseText from "@/common/components/BaseText/BaseText";
 import { useMe } from "@/common/hooks/useMe";
+import { RouteEnum } from "@/common/models/RouteEnum";
 import { Proposal } from "@/services/proposal/types";
 import React, { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CreateProposal from "../components/CreateProposal/CreateProposal";
+import { useEditProposal } from "../hooks/useEditProposal";
 import { useProposals } from "../hooks/useProposals";
 import { ProposalsInputs } from "../models/ProposalInputs";
 
@@ -22,6 +24,8 @@ const EditProposal: React.FC = () => {
 
   const params = useParams();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (proposals) {
       setCurrentProposal(
@@ -35,7 +39,14 @@ const EditProposal: React.FC = () => {
     [me, currentProposal]
   );
 
-  const handleSubmit = (values: ProposalsInputs) => {};
+  const { isLoading: isEditingProposal, mutateAsync: editProposal } =
+    useEditProposal();
+
+  const handleSubmit = (values: ProposalsInputs) => {
+    editProposal({ details: values, id: params.id || "0" }).then(() =>
+      navigate(RouteEnum.PROPOSALS)
+    );
+  };
 
   return (
     <BaseSection>
@@ -46,7 +57,7 @@ const EditProposal: React.FC = () => {
       ) : isMy ? (
         <BaseBox maxWidth="600px" margin="0 auto">
           <CreateProposal
-            isLoading={false}
+            isLoading={isEditingProposal}
             onSubmit={handleSubmit}
             values={currentProposal}
           />

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import BaseCenter from "@/common/components/BaseCenter/BaseCenter";
 import BaseSection from "@/common/components/BaseSection/BaseSection";
 import BaseSpinner from "@/common/components/BaseSpinner/BaseSpinner";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRequests } from "../hooks/useRequests";
 import { IRequest } from "@/services/request/types";
 import RequestCard from "../components/RequestCard/RequestCard";
@@ -15,6 +15,8 @@ import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import { useMe } from "@/common/hooks/useMe";
 import { RouteEnum } from "@/common/models/RouteEnum";
+import BasePopconfirm from "@/common/components/BasePopconfirm/BasePopconfirm";
+import { useDeleteRequest } from "../hooks/useDeleteRequest";
 
 const SingleRequest: React.FC = () => {
   const [contact, setContact] = useState<IRequest["contact"] | null>(null);
@@ -28,10 +30,18 @@ const SingleRequest: React.FC = () => {
 
   const params = useParams();
 
+  const navigate = useNavigate();
+
   const {
     isOpen: isOpenContactModal,
     onClose: onCloseContactModal,
     onOpen: onOpenContactModal,
+  } = useBaseDisclosure();
+
+  const {
+    isOpen: isOpenConfirmPopup,
+    onClose: onCloseConfirmPopup,
+    onOpen: onOpenConfirmPopup,
   } = useBaseDisclosure();
 
   useEffect(() => {
@@ -44,6 +54,16 @@ const SingleRequest: React.FC = () => {
     () => currentRequest?.owner === me?.id,
     [me, currentRequest]
   );
+
+  const { mutateAsync: deleteRequest, isLoading: isDeletingRequest } =
+    useDeleteRequest();
+
+  const handleDelete = () => {
+    deleteRequest(params.id || "0").then(() => {
+      onCloseConfirmPopup();
+      navigate(RouteEnum.REQUESTS);
+    });
+  };
 
   return (
     <BaseSection>
@@ -79,7 +99,19 @@ const SingleRequest: React.FC = () => {
                     Edit
                   </BaseButton>
                 </Link>
-                <BaseButton colorScheme="red">Delete</BaseButton>
+
+                <BasePopconfirm
+                  isOpen={isOpenConfirmPopup}
+                  isLoading={isDeletingRequest}
+                  onClose={onCloseConfirmPopup}
+                  text="Are you sure you want to delete?"
+                  onOk={handleDelete}
+                  trigger={
+                    <BaseButton colorScheme="red" onClick={onOpenConfirmPopup}>
+                      Delete
+                    </BaseButton>
+                  }
+                />
               </BaseFlex>
             )}
 

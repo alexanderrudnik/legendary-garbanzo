@@ -9,23 +9,27 @@ import {
   PopoverTrigger,
 } from "@chakra-ui/react";
 
-interface Props {
+export interface BasePopoverProps {
   trigger: React.ReactNode;
   arrow?: boolean;
   close?: boolean;
   header?: React.ReactNode;
   children: React.ReactNode;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
-const BasePopover: React.FC<Props> = ({
+const BasePopover: React.FC<BasePopoverProps> = ({
   trigger,
   arrow,
   close,
   header,
   children,
+  isOpen,
+  onClose,
 }) => {
   return (
-    <Popover>
+    <Popover isOpen={isOpen} onClose={onClose}>
       <PopoverTrigger>{trigger}</PopoverTrigger>
       <PopoverContent>
         {arrow && <PopoverArrow />}
