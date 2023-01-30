@@ -24,7 +24,7 @@ interface Props {
   cb?: () => void;
 }
 
-const CreateWorkspaceModal: React.FC<Props> = ({ cb }) => {
+const CreateWorkspace: React.FC<Props> = ({ cb }) => {
   const { mutateAsync: createWorkspace, isLoading: isCreatingWorkspace } =
     useCreateWorkspace();
 
@@ -82,4 +82,4 @@ const CreateWorkspaceModal: React.FC<Props> = ({ cb }) => {
   );
 };
 
-export default CreateWorkspaceModal;
+export default CreateWorkspace;

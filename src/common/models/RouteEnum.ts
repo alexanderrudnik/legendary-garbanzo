@@ -8,4 +8,5 @@ export enum RouteEnum {
   MY_WORKSPACE = "/my-workspace",
   FORGOT_PASSWORD = "/forgot-password",
   CONTACT_US = "/contact-us",
+  SETTINGS = "/settings",
 }

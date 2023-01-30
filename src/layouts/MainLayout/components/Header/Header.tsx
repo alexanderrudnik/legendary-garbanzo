@@ -75,6 +75,10 @@ const Header: React.FC = () => {
         onClick: () => toggleColorMode(),
       },
       {
+        label: "Settings",
+        href: RouteEnum.SETTINGS,
+      },
+      {
         label: "Sign out",
         onClick: () => signOut(),
         danger: true,
