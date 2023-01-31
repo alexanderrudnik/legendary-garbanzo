@@ -1,4 +1,14 @@
-import { InvitedUser, InviteUserDetails, User } from "./types";
+import {
+  InvitedUser,
+  InviteUserDetails,
+  UpdateEmailDetails,
+  UpdateEmailResponse,
+  UpdatePasswordDetails,
+  UpdatePasswordResponse,
+  UpdatePersonalInfoDetails,
+  UpdatePersonalInfoResponse,
+  User,
+} from "./types";
 import { axiosInstance } from "../base/baseService";
 
 class UserService {
@@ -12,6 +22,31 @@ class UserService {
 
   async getMe() {
     return axiosInstance.get<User>("/me");
+  }
+
+  async updateEmail({ email }: UpdateEmailDetails) {
+    return axiosInstance.post<UpdateEmailResponse>("/update/email", { email });
+  }
+
+  async updatePassword({ password }: UpdatePasswordDetails) {
+    return axiosInstance.post<UpdatePasswordResponse>("/update/password", {
+      password,
+    });
+  }
+
+  async updatePersonalInfo({
+    firstName,
+    lastName,
+    telegram,
+  }: UpdatePersonalInfoDetails) {
+    return axiosInstance.post<UpdatePersonalInfoResponse>(
+      "/update/personal-info",
+      {
+        firstName,
+        lastName,
+        telegram,
+      }
+    );
   }
 }
 

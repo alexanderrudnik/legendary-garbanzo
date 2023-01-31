@@ -14,3 +14,8 @@ export interface Workspace {
   requests: IRequest[];
   proposals: Proposal[];
 }
+
+export interface UpdateWorkspaceDetails {
+  name: string;
+  website: string;
+}

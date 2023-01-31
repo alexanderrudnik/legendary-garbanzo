@@ -1,4 +1,8 @@
-import { CreateWorkspaceDetails, Workspace } from "./types";
+import {
+  CreateWorkspaceDetails,
+  UpdateWorkspaceDetails,
+  Workspace,
+} from "./types";
 import { axiosInstance } from "../base/baseService";
 
 class WorkspaceService {
@@ -8,6 +12,10 @@ class WorkspaceService {
 
   async getWorkspace() {
     return axiosInstance.get<Workspace>("/workspace");
+  }
+
+  async updateWorkspace(details: UpdateWorkspaceDetails) {
+    return axiosInstance.patch("/workspace", details);
   }
 }
 

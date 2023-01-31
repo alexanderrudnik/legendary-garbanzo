@@ -17,3 +17,29 @@ export interface User {
   telegram?: string;
   isStaff?: boolean;
 }
+
+export interface UpdateEmailDetails {
+  email: string;
+}
+
+export interface UpdateEmailResponse {
+  email: string;
+}
+
+export interface UpdatePasswordDetails {
+  password: string;
+}
+
+export interface UpdatePasswordResponse {}
+
+export interface UpdatePersonalInfoDetails {
+  firstName: string;
+  lastName: string;
+  telegram?: string;
+}
+
+export interface UpdatePersonalInfoResponse {
+  firstName: string;
+  lastName: string;
+  telegram?: string;
+}
