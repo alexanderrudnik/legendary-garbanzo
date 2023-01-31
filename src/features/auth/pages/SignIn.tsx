@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -21,6 +21,8 @@ import {
 import { RouteEnum } from "@/common/models/RouteEnum";
 import BaseCheckbox from "@/common/components/BaseCheckbox/BaseCheckbox";
 import { SignInDetails } from "@/services/auth/types";
+import BaseInputGroup from "@/common/components/BaseInputGroup/BaseInputGroup";
+import BaseInputRightElement from "@/common/components/BaseInputRightElement/BaseInputRightElement";
 
 const schema = yup.object().shape({
   email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
@@ -28,6 +30,8 @@ const schema = yup.object().shape({
 });
 
 const SignIn: React.FC = () => {
+  const [show, setShow] = useState(false);
+
   const {
     handleSubmit,
     register,
@@ -63,12 +67,25 @@ const SignIn: React.FC = () => {
 
         <BaseFormControl isInvalid={Boolean(errors.password)}>
           <BaseFormLabel>Password</BaseFormLabel>
-          <BaseInput
-            variant="filled"
-            type="password"
-            placeholder="Enter password"
-            {...register("password")}
-          />
+          <BaseInputGroup>
+            <BaseInput
+              variant="filled"
+              type={show ? "text" : "password"}
+              placeholder="Enter password"
+              {...register("password")}
+            />
+            <BaseInputRightElement width="4.5rem">
+              <BaseButton
+                variant="outline"
+                h="1.75rem"
+                size="sm"
+                onClick={() => setShow(!show)}
+              >
+                {show ? "Hide" : "Show"}
+              </BaseButton>
+            </BaseInputRightElement>
+          </BaseInputGroup>
+
           <BaseFormErrorMessage>
             {errors.password?.message}
           </BaseFormErrorMessage>

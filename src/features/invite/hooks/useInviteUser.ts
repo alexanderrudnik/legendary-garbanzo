@@ -1,4 +1,3 @@
-import { errorMapper } from "@/common/errorMapper/errorMapper";
 import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
 import { notificationService } from "@/services/notification/notificationService";
@@ -40,7 +39,7 @@ export const useInviteUser = () => {
     onError: (error: Error) =>
       notificationService.show({
         title: "An error occured",
-        description: errorMapper(error.message),
+        description: error.message,
         status: "error",
       }),
   });

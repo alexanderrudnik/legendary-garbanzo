@@ -1,11 +1,14 @@
-import { auth } from "@/app/firebase/firebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { ResetPasswordDetails, SignInDetails, SignUpDetails } from "./types";
+import {
+  ResetPasswordDetails,
+  SignInDetails,
+  SignInResponse,
+  SignUpDetails,
+} from "./types";
 import { axiosInstance } from "../base/baseService";
 
 class AuthService {
   signIn({ email, password, rememberMe }: SignInDetails) {
-    return signInWithEmailAndPassword(auth, email, password);
+    return axiosInstance.post<SignInResponse>("/login", { email, password });
   }
 
   async signUp({

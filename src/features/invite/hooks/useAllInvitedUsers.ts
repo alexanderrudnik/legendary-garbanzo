@@ -1,5 +1,4 @@
 import { useQuery } from "react-query";
-import { errorMapper } from "@/common/errorMapper/errorMapper";
 import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { notificationService } from "@/services/notification/notificationService";
 import { userService } from "@/services/user/userService";
@@ -19,7 +18,7 @@ export const useAllInvitedUsers = () => {
     onError: (error: Error) =>
       notificationService.show({
         title: "An error occured",
-        description: errorMapper(error.message),
+        description: error.message,
         status: "error",
       }),
   });
