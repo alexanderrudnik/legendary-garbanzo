@@ -1,8 +1,6 @@
-import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { StorageEnum } from "@/common/models/StorageEnum";
-import { queryClient } from "@/common/queryClient/queryClient";
 import axios from "axios";
-import { toastService } from "../toast/toastService";
+import createAuthRefreshInterceptor from "axios-auth-refresh";
 import { storageService } from "../storage/storageService";
 
 export const axiosInstance = axios.create({
@@ -22,26 +20,23 @@ axiosInstance.interceptors.request.use(async (config) => {
   } as any;
 });
 
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  async (e) => {
-    const error = JSON.parse(JSON.stringify(e));
+const refreshAuthLogic = (failedRequest: any) =>
+  axiosInstance
+    .post("/refresh-token", {
+      token: storageService.get(StorageEnum.REFRESH_TOKEN),
+    })
+    .then((tokenRefreshResponse) => {
+      storageService.set(
+        StorageEnum.ACCESS_TOKEN,
+        tokenRefreshResponse.data.idToken
+      );
+      storageService.set(
+        StorageEnum.REFRESH_TOKEN,
+        tokenRefreshResponse.data.refreshToken
+      );
+      failedRequest.response.config.headers["Authorization"] =
+        "Bearer " + tokenRefreshResponse.data.idToken;
+      return Promise.resolve();
+    });
 
-    if (error.status === 401) {
-      toastService.show({
-        title: "An error occured",
-        description: e.response.data.message || "Unathorized",
-        status: "error",
-      });
-      await storageService.remove(StorageEnum.ACCESS_TOKEN);
-      await queryClient.setQueryData(QueryKeysEnum.ME, null);
-    }
-
-    const responseError = {
-      ...error,
-      message: e.response.data.message || e.message,
-    };
-
-    return Promise.reject(responseError);
-  }
-);
+createAuthRefreshInterceptor(axiosInstance, refreshAuthLogic);

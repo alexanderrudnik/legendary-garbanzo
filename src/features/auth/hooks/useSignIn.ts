@@ -23,7 +23,8 @@ export const useSignIn = () => {
 
   return useMutation(signIn, {
     onSuccess: async (data) => {
-      storageService.set(StorageEnum.ACCESS_TOKEN, data.accessToken);
+      storageService.set(StorageEnum.ACCESS_TOKEN, data.idToken);
+      storageService.set(StorageEnum.REFRESH_TOKEN, data.refreshToken);
       await queryClient.setQueryData(QueryKeysEnum.ME, () => undefined);
       getMe();
     },

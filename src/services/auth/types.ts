@@ -5,7 +5,9 @@ export interface SignInDetails {
 }
 
 export interface SignInResponse {
-  accessToken: string;
+  idToken: string;
+  refreshToken: string;
+  expiresIn: string;
 }
 
 export interface SignUpDetails {
