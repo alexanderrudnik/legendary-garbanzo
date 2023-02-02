@@ -57,27 +57,23 @@ const Header: React.FC = () => {
     []
   );
 
-  const menu = useMemo(
+  const defaultMenu = useMemo(
     () => [
-      {
-        label: "My workspace",
-        href: RouteEnum.MY_WORKSPACE,
-      },
       {
         label: "News",
         href: RouteEnum.NEWS,
       },
       {
-        label: "Invite a user",
-        href: RouteEnum.INVITE,
-      },
-      {
-        label: `Toggle ${colorMode === "dark" ? "light" : "dark"}`,
-        onClick: () => toggleColorMode(),
+        label: "My workspace",
+        href: RouteEnum.MY_WORKSPACE,
       },
       {
         label: "Settings",
         href: RouteEnum.SETTINGS,
+      },
+      {
+        label: `Toggle ${colorMode === "dark" ? "light" : "dark"}`,
+        onClick: () => toggleColorMode(),
       },
       {
         label: "Sign out",
@@ -86,6 +82,18 @@ const Header: React.FC = () => {
       },
     ],
     [colorMode, toggleColorMode]
+  );
+
+  const menu = useMemo(
+    () =>
+      user?.isStaff
+        ? [
+            { label: "Send notification", href: RouteEnum.SEND_NOTIFICATION },
+            { label: "Invite a user", href: RouteEnum.INVITE },
+            ...defaultMenu,
+          ]
+        : defaultMenu,
+    [defaultMenu, user?.isStaff]
   );
 
   const name = useMemo(() => `${user?.firstName} ${user?.lastName}`, [user]);

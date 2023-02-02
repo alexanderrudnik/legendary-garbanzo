@@ -10,4 +10,5 @@ export enum RouteEnum {
   CONTACT_US = "/contact-us",
   SETTINGS = "/settings",
   NEWS = "/news",
+  SEND_NOTIFICATION = "/send-notification",
 }

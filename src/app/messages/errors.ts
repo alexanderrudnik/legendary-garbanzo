@@ -47,4 +47,6 @@ export const POSITION_REQUIRED_ERROR = "Position is a required field!";
 
 export const CV_LINK_REQUIRED_ERROR = "CV link is a required field!";
 
+export const TITLE_REQUIRED_ERROR = "Title is a required field!";
+
 export const MESSAGE_REQUIRED_ERROR = "Message is a required field!";

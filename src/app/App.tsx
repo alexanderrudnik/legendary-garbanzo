@@ -28,6 +28,7 @@ import SingleProposal from "@/features/proposals/pages/SingleProposal";
 import EditRequest from "@/features/requests/pages/EditRequest";
 import EditProposal from "@/features/proposals/pages/EditProposal";
 import News from "@/features/news/pages/News";
+import SendNotification from "@/features/send-notification/pages/SendNotification";
 
 const { ToastContainer } = createStandaloneToast();
 
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
       {
         path: RouteEnum.CONTACT_US,
         element: <ContactUs />,
+      },
+      {
+        path: RouteEnum.SEND_NOTIFICATION,
+        element: <SendNotification />,
       },
     ],
   },
