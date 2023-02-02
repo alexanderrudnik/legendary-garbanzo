@@ -1,6 +1,9 @@
+import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { StorageEnum } from "@/common/models/StorageEnum";
+import { queryClient } from "@/common/queryClient/queryClient";
 import axios from "axios";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
+import { toastService } from "../toast/toastService";
 import { storageService } from "../storage/storageService";
 
 export const axiosInstance = axios.create({
@@ -20,8 +23,30 @@ axiosInstance.interceptors.request.use(async (config) => {
   } as any;
 });
 
-const refreshAuthLogic = (failedRequest: any) =>
-  axiosInstance
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (e) => {
+    const originalRequest = e.config;
+    if (e.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const accessToken = await refreshAccessToken();
+      axios.defaults.headers.common["Authorization"] = "Bearer " + accessToken;
+      return axiosInstance(originalRequest);
+    } else {
+      const error = JSON.parse(JSON.stringify(e));
+
+      const responseError = {
+        ...error,
+        message: e.response.data.message || e.message,
+      };
+
+      return Promise.reject(responseError);
+    }
+  }
+);
+
+const refreshAccessToken = async () => {
+  return axiosInstance
     .post("/refresh-token", {
       token: storageService.get(StorageEnum.REFRESH_TOKEN),
     })
@@ -34,9 +59,16 @@ const refreshAuthLogic = (failedRequest: any) =>
         StorageEnum.REFRESH_TOKEN,
         tokenRefreshResponse.data.refreshToken
       );
-      failedRequest.response.config.headers["Authorization"] =
-        "Bearer " + tokenRefreshResponse.data.idToken;
-      return Promise.resolve();
-    });
 
-createAuthRefreshInterceptor(axiosInstance, refreshAuthLogic);
+      return tokenRefreshResponse.data.idToken;
+    })
+    .catch(async (e) => {
+      toastService.show({
+        title: "An error occured",
+        description: e.response.data.message || "Unauthorized",
+        status: "error",
+      });
+      await storageService.remove(StorageEnum.ACCESS_TOKEN);
+      await queryClient.setQueryData(QueryKeysEnum.ME, null);
+    });
+};
