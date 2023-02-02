@@ -167,7 +167,7 @@ const Proposals: React.FC = () => {
             </BaseModal>
           </>
         ) : (
-          <BaseText>No requests yet</BaseText>
+          <BaseText>No proposals yet</BaseText>
         )}
       </BaseSection>
     </>
