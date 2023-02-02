@@ -37,7 +37,13 @@ const RequestCard: React.FC<Props> = ({
     <BaseCard
       footer={
         <>
-          <BaseButton width="100%" onClick={onContact}>
+          <BaseButton
+            width="100%"
+            onClick={(event) => {
+              event.stopPropagation();
+              onContact();
+            }}
+          >
             Contact
           </BaseButton>
         </>

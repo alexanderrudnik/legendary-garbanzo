@@ -41,7 +41,13 @@ const ProposalCard: React.FC<Props> = ({
       header={`${firstName} ${lastName}`}
       footer={
         <>
-          <BaseButton width="100%" onClick={onContact}>
+          <BaseButton
+            width="100%"
+            onClick={(event) => {
+              event.stopPropagation();
+              onContact();
+            }}
+          >
             Contact
           </BaseButton>
         </>
