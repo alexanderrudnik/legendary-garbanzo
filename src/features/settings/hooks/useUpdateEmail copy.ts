@@ -1,6 +1,6 @@
 import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { User } from "@/services/user/types";
 import { UpdateWorkspaceDetails, Workspace } from "@/services/workspace/types";
 import { workspaceService } from "@/services/workspace/workspaceService";
@@ -30,14 +30,14 @@ export const useUpdateWorkspace = () => {
           old ? { ...old, name: vars.name, website: vars.website } : old
       );
 
-      notificationService.show({
+      toastService.show({
         title: "Success",
         description: "Successfully updated your email",
         status: "success",
       });
     },
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",

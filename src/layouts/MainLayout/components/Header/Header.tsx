@@ -65,6 +65,7 @@ const Header: React.FC = () => {
       },
       {
         label: "Notifications",
+        href: RouteEnum.NOTIFICATIONS,
       },
       {
         label: "Invite a user",

@@ -1,4 +1,4 @@
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { UpdatePasswordDetails } from "@/services/user/types";
 import { userService } from "@/services/user/userService";
 import { useMutation } from "react-query";
@@ -16,14 +16,14 @@ const updatePassword = async (details: UpdatePasswordDetails) => {
 export const useUpdatePassword = () => {
   return useMutation(updatePassword, {
     onSuccess: async () => {
-      notificationService.show({
+      toastService.show({
         title: "Success",
         description: "Successfully updated your password",
         status: "success",
       });
     },
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",

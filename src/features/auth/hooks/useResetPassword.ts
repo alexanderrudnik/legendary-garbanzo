@@ -1,6 +1,6 @@
 import { authService } from "@/services/auth/authService";
 import { ResetPasswordDetails } from "@/services/auth/types";
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { useMutation } from "react-query";
 
 const resetPassword = async (details: ResetPasswordDetails) => {
@@ -16,7 +16,7 @@ const resetPassword = async (details: ResetPasswordDetails) => {
 export const useResetPassword = () => {
   return useMutation(resetPassword, {
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",

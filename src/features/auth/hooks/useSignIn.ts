@@ -1,7 +1,7 @@
 import { useMutation } from "react-query";
 import { authService } from "@/services/auth/authService";
 import { SignInDetails } from "@/services/auth/types";
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { useMe } from "@/common/hooks/useMe";
 import { storageService } from "@/services/storage/storageService";
 import { StorageEnum } from "@/common/models/StorageEnum";
@@ -28,7 +28,7 @@ export const useSignIn = () => {
       getMe();
     },
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occurred",
         description: error.message,
         status: "error",

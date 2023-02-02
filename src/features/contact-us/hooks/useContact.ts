@@ -1,6 +1,6 @@
 import { contactService } from "@/services/contact/contactService";
 import { ContactDetails } from "@/services/contact/types";
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { useMutation } from "react-query";
 
 const contact = async (details: ContactDetails) => {
@@ -16,13 +16,13 @@ const contact = async (details: ContactDetails) => {
 export const useContact = () => {
   return useMutation(contact, {
     onSuccess: (data) =>
-      notificationService.show({
+      toastService.show({
         title: "Success",
         description: data,
         status: "success",
       }),
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",

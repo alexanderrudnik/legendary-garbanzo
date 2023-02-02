@@ -1,6 +1,6 @@
 import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { UpdateEmailDetails, User } from "@/services/user/types";
 import { userService } from "@/services/user/userService";
 import { useMutation } from "react-query";
@@ -23,14 +23,14 @@ export const useUpdateEmail = () => {
         (old) => (old ? { ...old, email: data.email } : old)
       );
 
-      notificationService.show({
+      toastService.show({
         title: "Success",
         description: "Successfully updated your email",
         status: "success",
       });
     },
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",

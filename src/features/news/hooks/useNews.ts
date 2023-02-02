@@ -1,12 +1,12 @@
 import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { dateService } from "@/services/date/dateService";
+import { newsService } from "@/services/news/newsService";
 import { toastService } from "@/services/toast/toastService";
-import { requestService } from "@/services/request/requestService";
 import { useQuery } from "react-query";
 
-const getRequests = async () => {
+const getNews = async () => {
   try {
-    const response = await requestService.getAll();
+    const response = await newsService.getNews();
 
     return response.data;
   } catch (error) {
@@ -14,13 +14,11 @@ const getRequests = async () => {
   }
 };
 
-export const useRequests = () => {
-  return useQuery(QueryKeysEnum.REQUESTS, getRequests, {
+export const useNews = () => {
+  return useQuery(QueryKeysEnum.NOTIFICATIONS, getNews, {
     select: (data) =>
       data.sort((a, b) =>
-        dateService
-          .getDate(a.createdAt)
-          .isAfter(dateService.getDate(b.createdAt))
+        dateService.getDate(a.date).isAfter(dateService.getDate(b.date))
           ? -1
           : 1
       ),

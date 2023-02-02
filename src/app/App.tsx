@@ -27,6 +27,7 @@ import SingleRequest from "@/features/requests/pages/SingleRequest";
 import SingleProposal from "@/features/proposals/pages/SingleProposal";
 import EditRequest from "@/features/requests/pages/EditRequest";
 import EditProposal from "@/features/proposals/pages/EditProposal";
+import News from "@/features/news/pages/News";
 
 const { ToastContainer } = createStandaloneToast();
 
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: RouteEnum.HOME,
         element: <Navigate to={RouteEnum.REQUESTS} />,
+      },
+      {
+        path: RouteEnum.NEWS,
+        element: <News />,
       },
       {
         path: RouteEnum.PROPOSALS,

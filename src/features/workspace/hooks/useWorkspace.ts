@@ -1,5 +1,5 @@
 import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { workspaceService } from "@/services/workspace/workspaceService";
 import { useQuery } from "react-query";
 
@@ -17,7 +17,7 @@ export const useWorkspace = () => {
   return useQuery(QueryKeysEnum.WORKSPACE, getWorkspace, {
     enabled: false,
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",

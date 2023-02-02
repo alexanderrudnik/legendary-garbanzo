@@ -2,7 +2,7 @@ import { createStandaloneToast, UseToastOptions } from "@chakra-ui/toast";
 
 const { toast } = createStandaloneToast();
 
-class NotificationService {
+class ToastService {
   show(options: UseToastOptions) {
     toast({
       ...options,
@@ -12,4 +12,4 @@ class NotificationService {
   }
 }
 
-export const notificationService = new NotificationService();
+export const toastService = new ToastService();

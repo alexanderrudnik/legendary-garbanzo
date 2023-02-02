@@ -1,6 +1,6 @@
 import { authService } from "@/services/auth/authService";
 import { SignUpDetails } from "@/services/auth/types";
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { useMutation } from "react-query";
 
 const signUp = async (details: SignUpDetails) => {
@@ -16,7 +16,7 @@ const signUp = async (details: SignUpDetails) => {
 export const useSignUp = () => {
   return useMutation(signUp, {
     onError: (error: any) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",

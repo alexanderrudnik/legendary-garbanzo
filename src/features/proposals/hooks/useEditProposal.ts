@@ -1,4 +1,4 @@
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { IRequest } from "@/services/request/types";
 import { useMutation } from "react-query";
 import { queryClient } from "@/common/queryClient/queryClient";
@@ -48,7 +48,7 @@ export const useEditProposal = () => {
       );
     },
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",

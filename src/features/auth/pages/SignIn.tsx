@@ -19,7 +19,6 @@ import {
   PASSWORD_REQUIRED_ERROR,
 } from "@/app/messages/errors";
 import { RouteEnum } from "@/common/models/RouteEnum";
-import BaseCheckbox from "@/common/components/BaseCheckbox/BaseCheckbox";
 import { SignInDetails } from "@/services/auth/types";
 import BaseInputGroup from "@/common/components/BaseInputGroup/BaseInputGroup";
 import BaseInputRightElement from "@/common/components/BaseInputRightElement/BaseInputRightElement";
@@ -97,13 +96,13 @@ const SignIn: React.FC = () => {
           </BaseButton>
         </Link>
 
-        <BaseFormControl>
+        {/* <BaseFormControl>
           <BaseFlex align="center">
             <BaseCheckbox disabled {...register("rememberMe")}>
               Remember me (AVAILABLE SOON)
             </BaseCheckbox>
           </BaseFlex>
-        </BaseFormControl>
+        </BaseFormControl> */}
 
         <BaseButton isLoading={isSigningIn} variant="solid" type="submit">
           Submit

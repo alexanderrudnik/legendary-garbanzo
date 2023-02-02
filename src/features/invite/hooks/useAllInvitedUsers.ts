@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { userService } from "@/services/user/userService";
 
 const getAllInvitedUsers = async () => {
@@ -16,7 +16,7 @@ const getAllInvitedUsers = async () => {
 export const useAllInvitedUsers = () => {
   return useQuery(QueryKeysEnum.INVITED_USERS, getAllInvitedUsers, {
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",

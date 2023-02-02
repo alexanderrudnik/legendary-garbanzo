@@ -1,6 +1,6 @@
 import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { requestService } from "@/services/request/requestService";
 import { IRequest } from "@/services/request/types";
 import { Workspace } from "@/services/workspace/types";
@@ -31,7 +31,7 @@ export const useCreateRequest = () => {
       );
     },
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",

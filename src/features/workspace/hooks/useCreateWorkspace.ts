@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { CreateWorkspaceDetails, Workspace } from "@/services/workspace/types";
 import { workspaceService } from "@/services/workspace/workspaceService";
 import { queryClient } from "@/common/queryClient/queryClient";
@@ -36,7 +36,7 @@ export const useCreateWorkspace = () => {
       );
     },
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",

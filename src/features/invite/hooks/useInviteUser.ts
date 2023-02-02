@@ -1,6 +1,6 @@
 import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { InvitedUser, InviteUserDetails } from "@/services/user/types";
 import { userService } from "@/services/user/userService";
 import { useMutation } from "react-query";
@@ -29,7 +29,7 @@ export const useInviteUser = () => {
         }
       );
 
-      notificationService.show({
+      toastService.show({
         title: "Success",
         description: `Successfully invited ${vars.email}`,
         status: "success",
@@ -37,7 +37,7 @@ export const useInviteUser = () => {
     },
 
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",

@@ -2,7 +2,7 @@ import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { StorageEnum } from "@/common/models/StorageEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
 import axios from "axios";
-import { notificationService } from "../notification/notificationService";
+import { toastService } from "../toast/toastService";
 import { storageService } from "../storage/storageService";
 
 export const axiosInstance = axios.create({
@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
     const error = JSON.parse(JSON.stringify(e));
 
     if (error.status === 401) {
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: e.response.data.message || "Unathorized",
         status: "error",

@@ -1,6 +1,6 @@
 import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { dateService } from "@/services/date/dateService";
-import { notificationService } from "@/services/notification/notificationService";
+import { toastService } from "@/services/toast/toastService";
 import { proposalService } from "@/services/proposal/proposalService";
 import { useQuery } from "react-query";
 
@@ -25,7 +25,7 @@ export const useProposals = () => {
           : 1
       ),
     onError: (error: Error) =>
-      notificationService.show({
+      toastService.show({
         title: "An error occured",
         description: error.message,
         status: "error",
