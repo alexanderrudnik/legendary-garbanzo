@@ -18,15 +18,9 @@ const inviteUser = async (details: InviteUserDetails) => {
 export const useInviteUser = () => {
   return useMutation(inviteUser, {
     onSuccess: async (data, vars) => {
-      await queryClient.setQueryData<InvitedUser[]>(
+      await queryClient.setQueryData<InvitedUser[] | undefined>(
         QueryKeysEnum.INVITED_USERS,
-        (old) => {
-          if (old?.length) {
-            return [...old, data];
-          }
-
-          return [];
-        }
+        (old) => (old ? [...old, data] : old)
       );
 
       toastService.show({
