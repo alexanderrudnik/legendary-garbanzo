@@ -2,7 +2,6 @@ import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
 import { StorageEnum } from "@/common/models/StorageEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
 import axios from "axios";
-import createAuthRefreshInterceptor from "axios-auth-refresh";
 import { toastService } from "../toast/toastService";
 import { storageService } from "../storage/storageService";
 
@@ -63,12 +62,12 @@ const refreshAccessToken = async () => {
       return tokenRefreshResponse.data.idToken;
     })
     .catch(async (e) => {
-      toastService.show({
-        title: "An error occured",
-        description: e.response.data.message || "Unauthorized",
-        status: "error",
-      });
       await storageService.remove(StorageEnum.ACCESS_TOKEN);
       await queryClient.setQueryData(QueryKeysEnum.ME, null);
+      toastService.show({
+        title: "An error occured",
+        description: "Please, log in again to continue",
+        status: "error",
+      });
     });
 };
