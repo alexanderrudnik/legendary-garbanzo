@@ -12,13 +12,21 @@ import { Proposal } from "@/services/proposal/types";
 import { useColorModeValue } from "@chakra-ui/react";
 import BaseTag from "@/common/components/BaseTag/BaseTag";
 import BaseHeading from "@/common/components/BaseHeading/BaseHeading";
+import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
+import { Link, useNavigate } from "react-router-dom";
+import { useDeleteProposal } from "../../hooks/useDeleteProposal";
+import { RouteEnum } from "@/common/models/RouteEnum";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import BasePopconfirm from "@/common/components/BasePopconfirm/BasePopconfirm";
 
 interface Props extends Proposal {
   onContact: () => void;
   onClick?: () => void;
+  isMy?: boolean;
 }
 
 const ProposalCard: React.FC<Props> = ({
+  id,
   rate,
   yearsOfExperience,
   skills,
@@ -32,12 +40,71 @@ const ProposalCard: React.FC<Props> = ({
   position,
   onContact,
   onClick,
+  isMy,
 }) => {
+  const {
+    isOpen: isOpenConfirmPopup,
+    onClose: onCloseConfirmPopup,
+    onOpen: onOpenConfirmPopup,
+  } = useBaseDisclosure();
+
+  const navigate = useNavigate();
+
+  const { mutateAsync: deleteProposal, isLoading: isDeletingProposal } =
+    useDeleteProposal();
+
+  const handleDelete = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    deleteProposal(id).finally(() => {
+      onCloseConfirmPopup();
+    });
+  };
+
+  const handleOpen = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    onOpenConfirmPopup();
+  };
+
+  const handleEdit = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    navigate(`${RouteEnum.REQUESTS}/edit/${id}`);
+  };
+
   const color = useColorModeValue("primary.500", "primary.200");
 
   return (
     <BaseCard
-      header={<BaseHeading>{PositionEnum[position]}</BaseHeading>}
+      header={
+        <BaseFlex align="center" justify="space-between">
+          <BaseHeading>{PositionEnum[position]}</BaseHeading>
+
+          {isMy && (
+            <BaseFlex align="center" gap="0.5rem">
+              <Link
+                to={`${RouteEnum.PROPOSALS}/edit/${id}`}
+                onClick={handleEdit}
+              >
+                <BaseButton width="100%" variant="outline">
+                  <EditIcon />
+                </BaseButton>
+              </Link>
+
+              <BasePopconfirm
+                isOpen={isOpenConfirmPopup}
+                isLoading={isDeletingProposal}
+                onClose={onCloseConfirmPopup}
+                text="Are you sure you want to delete?"
+                onOk={handleDelete}
+                trigger={
+                  <BaseButton colorScheme="red" onClick={handleOpen}>
+                    <DeleteIcon />
+                  </BaseButton>
+                }
+              />
+            </BaseFlex>
+          )}
+        </BaseFlex>
+      }
       footer={
         <>
           <BaseButton

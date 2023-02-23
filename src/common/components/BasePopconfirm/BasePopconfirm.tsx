@@ -6,7 +6,7 @@ import BaseText from "../BaseText/BaseText";
 
 interface Props extends Omit<BasePopoverProps, "children"> {
   text: string;
-  onOk: () => void;
+  onOk: (event: React.MouseEvent) => void;
   isLoading?: boolean;
 }
 
@@ -23,13 +23,20 @@ const BasePopconfirm: React.FC<Props> = ({
         <BaseFlex gap="0.5rem">
           <BaseButton
             isLoading={isLoading}
-            onClick={() => {
-              onOk();
+            onClick={(event) => {
+              event.stopPropagation();
+              onOk(event);
             }}
           >
             OK
           </BaseButton>
-          <BaseButton variant="outline" onClick={props.onClose}>
+          <BaseButton
+            variant="outline"
+            onClick={(event) => {
+              event.stopPropagation();
+              props.onClose && props.onClose();
+            }}
+          >
             Cancel
           </BaseButton>
         </BaseFlex>

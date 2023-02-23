@@ -9,6 +9,7 @@ import BaseText from "@/common/components/BaseText/BaseText";
 import Contact from "@/common/components/Contact/Contact";
 import Filters from "@/common/components/Filters/Filters";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
+import { useMe } from "@/common/hooks/useMe";
 import { Filters as IFilters } from "@/common/models/Filters";
 import { RouteEnum } from "@/common/models/RouteEnum";
 import { dateService } from "@/services/date/dateService";
@@ -52,6 +53,8 @@ const Proposals: React.FC = () => {
   } = useBaseDisclosure();
 
   const { data: proposals, isLoading } = useProposals();
+
+  const { data: me } = useMe();
 
   const [filteredProposals, setFilteredProposals] = useState(proposals);
 
@@ -150,6 +153,7 @@ const Proposals: React.FC = () => {
                     setContact(proposal.contact);
                     onOpenContactModal();
                   }}
+                  isMy={me?.id === proposal.owner}
                 />
               ))}
             </BaseSimpleGrid>

@@ -21,6 +21,7 @@ import { RouteEnum } from "@/common/models/RouteEnum";
 import { useCreateRequest } from "../hooks/useCreateRequest";
 import { RequestInputs } from "../models/RequestInputs";
 import { dateService } from "@/services/date/dateService";
+import { useMe } from "@/common/hooks/useMe";
 
 const initialFiltersState: IFilters = {
   rate: ["", ""],
@@ -52,6 +53,7 @@ const Requests: React.FC = () => {
   } = useBaseDisclosure();
 
   const { data: requests, isLoading } = useRequests();
+  const { data: me } = useMe();
 
   const [filteredRequests, setFilteredRequests] = useState(requests);
 
@@ -149,6 +151,7 @@ const Requests: React.FC = () => {
                     setContact(request.contact);
                     onOpenContactModal();
                   }}
+                  isMy={me?.id === request.owner}
                 />
               ))}
             </BaseSimpleGrid>
