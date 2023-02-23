@@ -16,8 +16,6 @@ import {
   DURATION_MIN_ERROR,
   DURATION_REQUIRED_ERROR,
   ENG_LEVEL_REQUIRED_ERROR,
-  FIRST_NAME_REQUIRED_ERROR,
-  LAST_NAME_REQUIRED_ERROR,
   LOCATION_REQUIRED_ERROR,
   POSITION_REQUIRED_ERROR,
   RATE_MIN_ERROR,
@@ -42,8 +40,6 @@ import { dateService } from "@/services/date/dateService";
 const countries = countryList.getData();
 
 const schema = yup.object().shape({
-  firstName: yup.string().required(FIRST_NAME_REQUIRED_ERROR),
-  lastName: yup.string().required(LAST_NAME_REQUIRED_ERROR),
   rate: yup
     .number()
     .transform((value) => (isNaN(value) ? undefined : value))
@@ -89,8 +85,6 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
     mode: "onBlur",
     defaultValues: values
       ? {
-          firstName: values.firstName,
-          lastName: values.lastName,
           rate: values.rate,
           yearsOfExperience: values.yearsOfExperience,
           skills: values.skills,
@@ -115,30 +109,6 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
   return (
     <form>
       <BaseFlex gap="1rem" flexDirection="column">
-        <BaseFormControl isInvalid={Boolean(errors.firstName)}>
-          <BaseFormLabel>First name</BaseFormLabel>
-          <BaseInput
-            variant="filled"
-            placeholder="Enter first name"
-            {...register("firstName")}
-          />
-          <BaseFormErrorMessage>
-            {errors.firstName?.message}
-          </BaseFormErrorMessage>
-        </BaseFormControl>
-
-        <BaseFormControl isInvalid={Boolean(errors.lastName)}>
-          <BaseFormLabel>Last name</BaseFormLabel>
-          <BaseInput
-            variant="filled"
-            placeholder="Enter last name"
-            {...register("lastName")}
-          />
-          <BaseFormErrorMessage>
-            {errors.lastName?.message}
-          </BaseFormErrorMessage>
-        </BaseFormControl>
-
         <BaseFormControl isInvalid={Boolean(errors.rate)}>
           <BaseFormLabel>Rate</BaseFormLabel>
           <BaseInputGroup>

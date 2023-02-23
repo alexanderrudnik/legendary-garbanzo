@@ -4,8 +4,6 @@ import { PositionEnum } from "@/common/models/PositionEnum";
 export interface Proposal {
   id: string;
   owner: string;
-  firstName: string;
-  lastName: string;
   rate: string;
   yearsOfExperience: string;
   skills: string[];
