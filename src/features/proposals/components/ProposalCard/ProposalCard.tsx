@@ -11,6 +11,7 @@ import { getPlural } from "@/common/utils/getPlural";
 import { Proposal } from "@/services/proposal/types";
 import { useColorModeValue } from "@chakra-ui/react";
 import BaseTag from "@/common/components/BaseTag/BaseTag";
+import BaseHeading from "@/common/components/BaseHeading/BaseHeading";
 
 interface Props extends Proposal {
   onContact: () => void;
@@ -18,8 +19,6 @@ interface Props extends Proposal {
 }
 
 const ProposalCard: React.FC<Props> = ({
-  firstName,
-  lastName,
   rate,
   yearsOfExperience,
   skills,
@@ -38,7 +37,7 @@ const ProposalCard: React.FC<Props> = ({
 
   return (
     <BaseCard
-      header={`${firstName} ${lastName}`}
+      header={<BaseHeading>{PositionEnum[position]}</BaseHeading>}
       footer={
         <>
           <BaseButton
@@ -83,11 +82,6 @@ const ProposalCard: React.FC<Props> = ({
             value={`${weeklyEmployment} ${getPlural(weeklyEmployment, "hour")}`}
           />
           <BaseStat label="Location" value={getName(location)} />
-          <BaseStat
-            label="Position"
-            value={PositionEnum[position]}
-            isValueBold
-          />
         </BaseSimpleGrid>
 
         <BaseStat label="CV link" value={CVLink} />
@@ -95,7 +89,12 @@ const ProposalCard: React.FC<Props> = ({
         <BaseStat
           label="Skills"
           value={
-            <BaseFlex wrap="wrap" align="center" gap="0.5rem">
+            <BaseFlex
+              marginTop="0.5rem"
+              wrap="wrap"
+              align="center"
+              gap="0.5rem"
+            >
               {skills.map((skill) => (
                 <BaseTag key={skill} fontSize="1.5rem">
                   {skill}

@@ -11,6 +11,7 @@ import { PositionEnum } from "@/common/models/PositionEnum";
 import { getPlural } from "@/common/utils/getPlural";
 import { useColorModeValue } from "@chakra-ui/react";
 import BaseTag from "@/common/components/BaseTag/BaseTag";
+import BaseHeading from "@/common/components/BaseHeading/BaseHeading";
 
 interface Props extends IRequest {
   onContact: () => void;
@@ -35,6 +36,7 @@ const RequestCard: React.FC<Props> = ({
 
   return (
     <BaseCard
+      header={<BaseHeading>{PositionEnum[position]}</BaseHeading>}
       footer={
         <>
           <BaseButton
@@ -79,11 +81,6 @@ const RequestCard: React.FC<Props> = ({
             value={`${weeklyEmployment} ${getPlural(weeklyEmployment, "hour")}`}
           />
           <BaseStat label="Location" value={getName(location)} />
-          <BaseStat
-            label="Position"
-            value={PositionEnum[position]}
-            isValueBold
-          />
         </BaseSimpleGrid>
 
         <BaseStat
