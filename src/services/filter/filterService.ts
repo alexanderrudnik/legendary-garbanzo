@@ -9,8 +9,8 @@ class FilterService {
   filterByRate(data: Data, rate: [string, string]) {
     return data.filter(
       (item) =>
-        parseFloat(item.rate) >= parseFloat(rate[0]) &&
-        parseFloat(item.rate) <= parseFloat(rate[1])
+        parseFloat(item.rate) >= parseFloat(rate[0] || "0") &&
+        parseFloat(item.rate) <= parseFloat(rate[1] || "999999999")
     );
   }
 
@@ -40,7 +40,7 @@ export const getFilteredData = (data: any, filters: Filters): any => {
     let result: Data = data;
 
     result =
-      filters.rate[0] && filters.rate[1]
+      filters.rate[0] || filters.rate[1]
         ? filterService.filterByRate(result, filters.rate)
         : result;
     result = filters.position

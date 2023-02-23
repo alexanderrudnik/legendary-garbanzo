@@ -1,4 +1,5 @@
-import React from "react";
+import { toastService } from "@/services/toast/toastService";
+import React, { useEffect } from "react";
 import BaseFlex from "../BaseFlex/BaseFlex";
 import BaseInput from "../BaseInput/BaseInput";
 import BaseText from "../BaseText/BaseText";
@@ -9,6 +10,17 @@ interface Props {
 }
 
 const RateFilter: React.FC<Props> = ({ value, onChange }) => {
+  useEffect(() => {
+    if (parseFloat(value[0]) > parseFloat(value[1])) {
+      toastService.show({
+        title: "An error occured",
+        description: "Min. rate can not be higher than max. rate",
+        status: "warning",
+      });
+      onChange(["", ""]);
+    }
+  }, [value, onChange]);
+
   return (
     <BaseFlex flexDirection="column" gap="0.5rem">
       <BaseText>Min. and max. rate (USD)</BaseText>
