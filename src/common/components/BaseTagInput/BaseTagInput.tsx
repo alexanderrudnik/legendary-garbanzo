@@ -52,6 +52,7 @@ const BaseTagInput = React.forwardRef<any, Props>(
           minHeight: themeInput.field.h as any,
         }}
         gap="0.5rem"
+        justifyContent="center"
       >
         {value.length ? (
           <BaseFlex gap="0.5rem" wrap="wrap">
