@@ -51,23 +51,26 @@ const BaseTagInput = React.forwardRef<any, Props>(
           height: "unset",
           minHeight: themeInput.field.h as any,
         }}
+        gap="0.5rem"
       >
-        <BaseFlex marginBottom="0.5rem" gap="0.5rem" wrap="wrap">
-          {value.map((item, i) => (
-            <BaseTag
-              key={i}
-              close
-              onClose={() => {
-                const newValue = [...value];
-                newValue.splice(i, 1);
+        {value.length ? (
+          <BaseFlex gap="0.5rem" wrap="wrap">
+            {value.map((item, i) => (
+              <BaseTag
+                key={i}
+                close
+                onClose={() => {
+                  const newValue = [...value];
+                  newValue.splice(i, 1);
 
-                onChange(newValue);
-              }}
-            >
-              {item}
-            </BaseTag>
-          ))}
-        </BaseFlex>
+                  onChange(newValue);
+                }}
+              >
+                {item}
+              </BaseTag>
+            ))}
+          </BaseFlex>
+        ) : null}
         <BaseInput
           {...props}
           height="100%"
