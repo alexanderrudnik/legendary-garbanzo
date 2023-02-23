@@ -28,6 +28,7 @@ const initialFiltersState: IFilters = {
   position: "",
   skills: [],
   location: "",
+  own: "",
 };
 
 const Proposals: React.FC = () => {
@@ -59,7 +60,7 @@ const Proposals: React.FC = () => {
   const [filteredProposals, setFilteredProposals] = useState(proposals);
 
   const handleFilter = () => {
-    setFilteredProposals(getFilteredData(proposals, filters));
+    setFilteredProposals(getFilteredData(proposals, filters, me?.id || "0"));
     onCloseFiltersDrawer();
   };
 

@@ -1,7 +1,7 @@
 import { Proposal } from "../proposal/types";
 import { IRequest } from "../request/types";
 import { PositionEnum } from "@/common/models/PositionEnum";
-import { Filters } from "@/common/models/Filters";
+import { Filters, FiltersOwn } from "@/common/models/Filters";
 
 type Data = Proposal[] | IRequest[];
 
@@ -31,11 +31,21 @@ class FilterService {
   filterByLocation(data: Data, location: string) {
     return data.filter((item) => item.location === location);
   }
+
+  filterByOwn(data: Data, own: FiltersOwn, owner: string) {
+    return data.filter((item) =>
+      own === "my" ? item.owner === owner : item.owner !== owner
+    );
+  }
 }
 
 export const filterService = new FilterService();
 
-export const getFilteredData = (data: any, filters: Filters): any => {
+export const getFilteredData = (
+  data: any,
+  filters: Filters,
+  owner: string
+): any => {
   if (data) {
     let result: Data = data;
 
@@ -51,6 +61,9 @@ export const getFilteredData = (data: any, filters: Filters): any => {
       : result;
     result = filters.skills.length
       ? filterService.filterBySkills(result, filters.skills)
+      : result;
+    result = filters.own
+      ? filterService.filterByOwn(result, filters.own, owner)
       : result;
 
     return result;

@@ -28,6 +28,7 @@ const initialFiltersState: IFilters = {
   position: "",
   skills: [],
   location: "",
+  own: "",
 };
 
 const Requests: React.FC = () => {
@@ -58,7 +59,7 @@ const Requests: React.FC = () => {
   const [filteredRequests, setFilteredRequests] = useState(requests);
 
   const handleFilter = () => {
-    setFilteredRequests(getFilteredData(requests, filters));
+    setFilteredRequests(getFilteredData(requests, filters, me?.id || "0"));
     onCloseFiltersDrawer();
   };
 

@@ -6,6 +6,7 @@ import BaseButton from "@/common/components/BaseButton/BaseButton";
 import PositionFilter from "@/common/components/PositionFilter/PositionFilter";
 import SkillsFilter from "@/common/components/SkillsFilter/SkillsFilter";
 import LocationFilter from "@/common/components/LocationFilter/LocationFilter";
+import MyFilter from "../MyFilter/MyFilter";
 
 interface Props {
   filters: IFilters;
@@ -52,6 +53,11 @@ const Filters: React.FC<Props> = ({
           onChange={(value) =>
             setFilters((prev) => ({ ...prev, location: value }))
           }
+        />
+
+        <MyFilter
+          value={filters.own}
+          onChange={(value) => setFilters((prev) => ({ ...prev, own: value }))}
         />
       </BaseFlex>
       <BaseFlex gap="0.5rem" flexDirection="column">
