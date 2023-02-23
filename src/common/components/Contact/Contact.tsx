@@ -51,7 +51,9 @@ const Contact: React.FC<Props> = ({ contact }) => {
         <BaseFlex gap="0.5rem" align="center">
           <BaseText>Email:</BaseText>
           <BaseText>
-            <b>{contact?.email}</b>
+            <a href={`mailto:${contact?.email}`}>
+              <b>{contact?.email}</b>
+            </a>
           </BaseText>
           <BaseTooltip isOpen={isOpenEmailTooltip} label="Copied!">
             <BaseButton
@@ -69,7 +71,13 @@ const Contact: React.FC<Props> = ({ contact }) => {
         <BaseFlex gap="0.5rem" align="center">
           <BaseText>Telegram:</BaseText>
           <BaseText>
-            <b>{contact?.telegram}</b>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`https://t.me/${contact?.telegram.replace("@", "")}`}
+            >
+              <b>{contact?.telegram}</b>
+            </a>
           </BaseText>
           <BaseTooltip isOpen={isOpenTelegramTooltip} label="Copied!">
             <BaseButton
