@@ -5,12 +5,12 @@ import BaseCard from "@/common/components/BaseCard/BaseCard";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseSimpleGrid from "@/common/components/BaseSimpleGrid/BaseSimpleGrid";
 import BaseStat from "@/common/components/BaseStat/BaseStat";
-import BaseText from "@/common/components/BaseText/BaseText";
 import { dateService } from "@/services/date/dateService";
 import { PositionEnum } from "@/common/models/PositionEnum";
 import { getPlural } from "@/common/utils/getPlural";
 import { Proposal } from "@/services/proposal/types";
 import { useColorModeValue } from "@chakra-ui/react";
+import BaseTag from "@/common/components/BaseTag/BaseTag";
 
 interface Props extends Proposal {
   onContact: () => void;
@@ -83,7 +83,11 @@ const ProposalCard: React.FC<Props> = ({
             value={`${weeklyEmployment} ${getPlural(weeklyEmployment, "hour")}`}
           />
           <BaseStat label="Location" value={getName(location)} />
-          <BaseStat label="Position" value={PositionEnum[position]} />
+          <BaseStat
+            label="Position"
+            value={PositionEnum[position]}
+            isValueBold
+          />
         </BaseSimpleGrid>
 
         <BaseStat label="CV link" value={CVLink} />
@@ -93,7 +97,9 @@ const ProposalCard: React.FC<Props> = ({
           value={
             <BaseFlex wrap="wrap" align="center" gap="0.5rem">
               {skills.map((skill) => (
-                <BaseText key={skill}>{skill}</BaseText>
+                <BaseTag key={skill} fontSize="1.5rem">
+                  {skill}
+                </BaseTag>
               ))}
             </BaseFlex>
           }
