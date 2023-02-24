@@ -60,6 +60,7 @@ const MyRequests: React.FC = () => {
                   setContact(request.contact);
                   onOpenContactModal();
                 }}
+                isMy
               />
             ))}
           </BaseSimpleGrid>

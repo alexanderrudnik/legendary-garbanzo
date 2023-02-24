@@ -62,6 +62,7 @@ const MyProposals: React.FC = () => {
                   setContact(proposal.contact);
                   onOpenContactModal();
                 }}
+                isMy
               />
             ))}
           </BaseSimpleGrid>

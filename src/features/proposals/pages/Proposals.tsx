@@ -28,7 +28,7 @@ const initialFiltersState: IFilters = {
   position: "",
   skills: [],
   location: "",
-  own: "",
+  hideMy: false,
 };
 
 const Proposals: React.FC = () => {
