@@ -29,6 +29,10 @@ const initialFiltersState: IFilters = {
   skills: [],
   location: "",
   hideMy: false,
+  engLevel: "",
+  yearsOfExperience: ["", ""],
+  weeklyEmployment: ["", ""],
+  startDate: "",
 };
 
 const Requests: React.FC = () => {

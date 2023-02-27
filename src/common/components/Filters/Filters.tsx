@@ -7,6 +7,10 @@ import PositionFilter from "@/common/components/PositionFilter/PositionFilter";
 import SkillsFilter from "@/common/components/SkillsFilter/SkillsFilter";
 import LocationFilter from "@/common/components/LocationFilter/LocationFilter";
 import HideMyFilter from "../HideMyFilter/HideMyFilter";
+import EngLevelFilter from "../EngLevelFilter/EngLevelFilter";
+import YearsOfExperienceFilter from "../YearsOfExperienceFilter/YearsOfExperienceFilter";
+import StartDateFilter from "../StartDateFilter/StartDateFilter";
+import WeeklyEmploymentFilter from "../WeeklyEmploymentFilter/WeeklyEmploymentFilter";
 
 interface Props {
   filters: IFilters;
@@ -22,12 +26,7 @@ const Filters: React.FC<Props> = ({
   onClear,
 }) => {
   return (
-    <BaseFlex
-      flexDirection="column"
-      gap="1rem"
-      justifyContent="space-between"
-      height="100%"
-    >
+    <>
       <BaseFlex gap="1rem" flexDirection="column">
         <RateFilter
           value={filters.rate}
@@ -55,6 +54,34 @@ const Filters: React.FC<Props> = ({
           }
         />
 
+        <EngLevelFilter
+          value={filters.engLevel}
+          onChange={(value) =>
+            setFilters((prev) => ({ ...prev, engLevel: value }))
+          }
+        />
+
+        <YearsOfExperienceFilter
+          value={filters.yearsOfExperience}
+          onChange={(value) =>
+            setFilters((prev) => ({ ...prev, yearsOfExperience: value }))
+          }
+        />
+
+        <StartDateFilter
+          value={filters.startDate}
+          onChange={(value) =>
+            setFilters((prev) => ({ ...prev, startDate: value }))
+          }
+        />
+
+        <WeeklyEmploymentFilter
+          value={filters.weeklyEmployment}
+          onChange={(value) =>
+            setFilters((prev) => ({ ...prev, weeklyEmployment: value }))
+          }
+        />
+
         <HideMyFilter
           value={filters.hideMy}
           onChange={(value) =>
@@ -62,13 +89,14 @@ const Filters: React.FC<Props> = ({
           }
         />
       </BaseFlex>
-      <BaseFlex gap="0.5rem" flexDirection="column">
+
+      <BaseFlex marginTop="5rem" gap="0.5rem" flexDirection="column">
         <BaseButton onClick={onFilter}>Apply</BaseButton>
         <BaseButton variant="outline" onClick={onClear}>
           Clear
         </BaseButton>
       </BaseFlex>
-    </BaseFlex>
+    </>
   );
 };
 

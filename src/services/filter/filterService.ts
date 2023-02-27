@@ -2,6 +2,8 @@ import { Proposal } from "../proposal/types";
 import { IRequest } from "../request/types";
 import { PositionEnum } from "@/common/models/PositionEnum";
 import { Filters } from "@/common/models/Filters";
+import { EngLevelEnum } from "@/common/models/EngLevelEnum";
+import { dateService } from "../date/dateService";
 
 type Data = Proposal[] | IRequest[];
 
@@ -35,6 +37,38 @@ class FilterService {
   filterByOwn(data: Data, owner: string) {
     return data.filter((item) => item.owner !== owner);
   }
+
+  filterByEngLevel(data: Data, engLevel: keyof typeof EngLevelEnum) {
+    return data.filter((item) => item.engLevel === engLevel);
+  }
+
+  filterByYearsOfExperience(data: Data, yearsOfExperience: [string, string]) {
+    return data.filter(
+      (item) =>
+        parseFloat(item.yearsOfExperience) >=
+          parseFloat(yearsOfExperience[0] || "0") &&
+        parseFloat(item.yearsOfExperience) <=
+          parseFloat(yearsOfExperience[1] || "999999999")
+    );
+  }
+
+  filterByStartDate(data: Data, startDate: string) {
+    return data.filter((item) =>
+      dateService
+        .getDate(item.startDate)
+        .isSameOrAfter(dateService.getDate(startDate))
+    );
+  }
+
+  filterByWeeklyEmployment(data: Data, weeklyEmployment: [string, string]) {
+    return data.filter(
+      (item) =>
+        parseFloat(item.weeklyEmployment) >=
+          parseFloat(weeklyEmployment[0] || "0") &&
+        parseFloat(item.weeklyEmployment) <=
+          parseFloat(weeklyEmployment[1] || "999999999")
+    );
+  }
 }
 
 export const filterService = new FilterService();
@@ -61,6 +95,26 @@ export const getFilteredData = (
       ? filterService.filterBySkills(result, filters.skills)
       : result;
     result = filters.hideMy ? filterService.filterByOwn(result, owner) : result;
+    result = filters.engLevel
+      ? filterService.filterByEngLevel(result, filters.engLevel)
+      : result;
+    result =
+      filters.yearsOfExperience[0] || filters.yearsOfExperience[1]
+        ? filterService.filterByYearsOfExperience(
+            result,
+            filters.yearsOfExperience
+          )
+        : result;
+    result = filters.startDate
+      ? filterService.filterByStartDate(result, filters.startDate)
+      : result;
+    result =
+      filters.weeklyEmployment[0] || filters.weeklyEmployment[1]
+        ? filterService.filterByWeeklyEmployment(
+            result,
+            filters.weeklyEmployment
+          )
+        : result;
 
     return result;
   }

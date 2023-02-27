@@ -35,6 +35,7 @@ import { dateService } from "@/services/date/dateService";
 import BaseInputGroup from "@/common/components/BaseInputGroup/BaseInputGroup";
 import BaseInputRightElement from "@/common/components/BaseInputRightElement/BaseInputRightElement";
 import { RequestInputs } from "../../models/RequestInputs";
+import { FULL_DATE_FORMAT } from "@/services/date/dateFormats";
 
 const countries = countryList.getData();
 
@@ -88,7 +89,9 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           skills: values.skills,
           engLevel: values.engLevel,
           description: values.description,
-          startDate: dateService.getDate(values.startDate).format("YYYY-MM-DD"),
+          startDate: dateService
+            .getDate(values.startDate)
+            .format(FULL_DATE_FORMAT),
           duration: values.duration,
           weeklyEmployment: values.weeklyEmployment,
           location: values.location,
@@ -186,6 +189,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             type="date"
             variant="filled"
             placeholder="Enter start date"
+            min={dateService.getNow().format(FULL_DATE_FORMAT)}
             {...register("startDate")}
           />
           <BaseFormErrorMessage>

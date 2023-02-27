@@ -36,6 +36,7 @@ import BaseInputRightElement from "@/common/components/BaseInputRightElement/Bas
 import { ProposalsInputs } from "../../models/ProposalInputs";
 import { Proposal } from "@/services/proposal/types";
 import { dateService } from "@/services/date/dateService";
+import { FULL_DATE_FORMAT } from "@/services/date/dateFormats";
 
 const countries = countryList.getData();
 
@@ -91,7 +92,9 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           engLevel: values.engLevel,
           description: values.description,
           CVLink: values.CVLink,
-          startDate: dateService.getDate(values.startDate).format("YYYY-MM-DD"),
+          startDate: dateService
+            .getDate(values.startDate)
+            .format(FULL_DATE_FORMAT),
           duration: values.duration,
           weeklyEmployment: values.weeklyEmployment,
           location: values.location,

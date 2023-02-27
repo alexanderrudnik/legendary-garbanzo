@@ -8,10 +8,10 @@ interface Props {
   onChange: (value: [string, string]) => void;
 }
 
-const RateFilter: React.FC<Props> = ({ value, onChange }) => {
+const WeeklyEmploymentFilter: React.FC<Props> = ({ value, onChange }) => {
   return (
     <BaseFlex flexDirection="column" gap="0.5rem">
-      <BaseText>Min. and max. rate (USD)</BaseText>
+      <BaseText>Min. and max. weekly employment</BaseText>
       <BaseFlex gap="0.5rem">
         <BaseInput
           variant="filled"
@@ -32,4 +32,4 @@ const RateFilter: React.FC<Props> = ({ value, onChange }) => {
   );
 };
 
-export default RateFilter;
+export default WeeklyEmploymentFilter;

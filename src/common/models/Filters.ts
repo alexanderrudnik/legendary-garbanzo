@@ -1,3 +1,4 @@
+import { EngLevelEnum } from "./EngLevelEnum";
 import { PositionEnum } from "./PositionEnum";
 
 export interface Filters {
@@ -6,4 +7,8 @@ export interface Filters {
   skills: string[];
   location: string;
   hideMy: boolean;
+  engLevel: keyof typeof EngLevelEnum | "";
+  yearsOfExperience: [string, string];
+  startDate: string;
+  weeklyEmployment: [string, string];
 }
