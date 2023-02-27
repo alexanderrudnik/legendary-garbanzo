@@ -107,6 +107,8 @@ const Requests: React.FC = () => {
         </BaseButton>
 
         <BaseModal
+          closeOnEsc={false}
+          closeOnOverlayClick={false}
           header="Create request"
           isOpen={isOpenCreateModal}
           onClose={onCloseCreateModal}

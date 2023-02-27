@@ -109,6 +109,8 @@ const Proposals: React.FC = () => {
         </BaseButton>
 
         <BaseModal
+          closeOnEsc={false}
+          closeOnOverlayClick={false}
           header="Create proposal"
           isOpen={isOpenCreateModal}
           onClose={onCloseCreateModal}
