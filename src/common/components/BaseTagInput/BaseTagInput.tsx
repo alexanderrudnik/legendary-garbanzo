@@ -14,7 +14,7 @@ interface Props extends Omit<BaseInputProps, "value" | "onChange"> {
 }
 
 const BaseTagInput = React.forwardRef<any, Props>(
-  ({ value = [], onChange, isInvalid, ...props }, ref) => {
+  ({ value = [], onChange, isInvalid, onBlur, ...props }, ref) => {
     const [inputValue, setInputValue] = useState("");
 
     const theme = useTheme();
@@ -87,11 +87,11 @@ const BaseTagInput = React.forwardRef<any, Props>(
             }
           }}
           onBlur={(event) => {
-            if (props.onBlur) {
-              props.onBlur(event);
+            if (onBlur) {
+              onBlur(event);
             }
 
-            handleAdd();
+            setInputValue("");
           }}
           variant="unstyled"
         />
