@@ -266,15 +266,17 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             {errors.position?.message}
           </BaseFormErrorMessage>
         </BaseFormControl>
-
-        <BaseButton
-          isLoading={isLoading}
-          onClick={handleSubmit(submit)}
-          variant="solid"
-        >
-          Submit
-        </BaseButton>
       </BaseFlex>
+
+      <BaseButton
+        marginTop="2.5rem"
+        width="100%"
+        isLoading={isLoading}
+        onClick={handleSubmit(submit)}
+        variant="solid"
+      >
+        Submit
+      </BaseButton>
     </form>
   );
 };

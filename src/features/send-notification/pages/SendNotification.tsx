@@ -74,15 +74,17 @@ const SendNotification: React.FC = () => {
                 {errors.message?.message}
               </BaseFormErrorMessage>
             </BaseFormControl>
-
-            <BaseButton
-              isLoading={isSendingNotification}
-              variant="solid"
-              type="submit"
-            >
-              Send
-            </BaseButton>
           </BaseFlex>
+
+          <BaseButton
+            marginTop="2.5rem"
+            width="100%"
+            isLoading={isSendingNotification}
+            variant="solid"
+            type="submit"
+          >
+            Send
+          </BaseButton>
         </form>
       </BaseCard>
     </BaseSection>

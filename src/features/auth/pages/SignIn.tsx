@@ -103,11 +103,17 @@ const SignIn: React.FC = () => {
             </BaseCheckbox>
           </BaseFlex>
         </BaseFormControl> */}
-
-        <BaseButton isLoading={isSigningIn} variant="solid" type="submit">
-          Submit
-        </BaseButton>
       </BaseFlex>
+
+      <BaseButton
+        marginTop="2.5rem"
+        width="100%"
+        isLoading={isSigningIn}
+        variant="solid"
+        type="submit"
+      >
+        Submit
+      </BaseButton>
     </form>
   );
 };

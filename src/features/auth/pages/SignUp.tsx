@@ -151,11 +151,17 @@ const SignUp: React.FC = () => {
             {errors.password?.message}
           </BaseFormErrorMessage>
         </BaseFormControl>
-
-        <BaseButton isLoading={isSigningUp} variant="solid" type="submit">
-          Sign Up
-        </BaseButton>
       </BaseFlex>
+
+      <BaseButton
+        marginTop="2.5rem"
+        width="100%"
+        isLoading={isSigningUp}
+        variant="solid"
+        type="submit"
+      >
+        Sign Up
+      </BaseButton>
     </form>
   ) : (
     <BaseHeading textAlign="center">

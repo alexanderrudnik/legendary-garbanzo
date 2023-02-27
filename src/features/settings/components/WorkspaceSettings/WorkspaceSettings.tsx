@@ -78,11 +78,16 @@ const WorkspaceSettings: React.FC = () => {
               {errors.website?.message}
             </BaseFormErrorMessage>
           </BaseFormControl>
-
-          <BaseButton type="submit" isLoading={isUpdatingWorkspace}>
-            Update
-          </BaseButton>
         </BaseFlex>
+
+        <BaseButton
+          marginTop="2.5rem"
+          width="100%"
+          type="submit"
+          isLoading={isUpdatingWorkspace}
+        >
+          Update
+        </BaseButton>
       </form>
     </BaseSection>
   );

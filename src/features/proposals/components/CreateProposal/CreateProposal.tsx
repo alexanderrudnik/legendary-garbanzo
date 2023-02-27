@@ -282,15 +282,17 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             {errors.position?.message}
           </BaseFormErrorMessage>
         </BaseFormControl>
-
-        <BaseButton
-          isLoading={isLoading}
-          onClick={handleSubmit(submit)}
-          variant="solid"
-        >
-          Submit
-        </BaseButton>
       </BaseFlex>
+
+      <BaseButton
+        width="100%"
+        marginTop="2.5rem"
+        isLoading={isLoading}
+        onClick={handleSubmit(submit)}
+        variant="solid"
+      >
+        Submit
+      </BaseButton>
     </form>
   );
 };

@@ -71,15 +71,17 @@ const ForgotPassword: React.FC = () => {
           />
           <BaseFormErrorMessage>{errors.email?.message}</BaseFormErrorMessage>
         </BaseFormControl>
-
-        <BaseButton
-          isLoading={isResettingPassword}
-          variant="solid"
-          type="submit"
-        >
-          Submit
-        </BaseButton>
       </BaseFlex>
+
+      <BaseButton
+        marginTop="2.5rem"
+        width="100%"
+        isLoading={isResettingPassword}
+        variant="solid"
+        type="submit"
+      >
+        Submit
+      </BaseButton>
     </form>
   );
 };

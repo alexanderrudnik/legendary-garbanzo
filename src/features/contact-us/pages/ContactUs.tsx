@@ -63,11 +63,17 @@ const ContactUs: React.FC = () => {
                 {errors.message?.message}
               </BaseFormErrorMessage>
             </BaseFormControl>
-
-            <BaseButton isLoading={isContacting} variant="solid" type="submit">
-              Send
-            </BaseButton>
           </BaseFlex>
+
+          <BaseButton
+            marginTop="2.5rem"
+            width="100%"
+            isLoading={isContacting}
+            variant="solid"
+            type="submit"
+          >
+            Send
+          </BaseButton>
         </form>
       </BaseCard>
     </BaseSection>

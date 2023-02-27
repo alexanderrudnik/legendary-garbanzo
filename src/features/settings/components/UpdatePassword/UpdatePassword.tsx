@@ -65,11 +65,16 @@ const UpdatePassword: React.FC = () => {
             {errors.password?.message}
           </BaseFormErrorMessage>
         </BaseFormControl>
-
-        <BaseButton type="submit" isLoading={isUpdatingPassword}>
-          Update
-        </BaseButton>
       </BaseFlex>
+
+      <BaseButton
+        marginTop="2.5rem"
+        width="100%"
+        type="submit"
+        isLoading={isUpdatingPassword}
+      >
+        Update
+      </BaseButton>
     </form>
   );
 };

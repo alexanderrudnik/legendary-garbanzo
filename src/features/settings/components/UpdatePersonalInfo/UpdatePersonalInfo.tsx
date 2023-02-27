@@ -83,11 +83,16 @@ const UpdatePersonalInfo: React.FC = () => {
             {errors.telegram?.message}
           </BaseFormErrorMessage>
         </BaseFormControl>
-
-        <BaseButton isLoading={isUpdatingPersonalInfo} type="submit">
-          Update
-        </BaseButton>
       </BaseFlex>
+
+      <BaseButton
+        marginTop="2.5rem"
+        width="100%"
+        isLoading={isUpdatingPersonalInfo}
+        type="submit"
+      >
+        Update
+      </BaseButton>
     </form>
   );
 };

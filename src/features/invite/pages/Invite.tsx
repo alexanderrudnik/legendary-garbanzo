@@ -74,11 +74,16 @@ const Invite: React.FC = () => {
             )}
             <BaseFormErrorMessage>{errors.email?.message}</BaseFormErrorMessage>
           </BaseFormControl>
-
-          <BaseButton isLoading={isInvitingUser} type="submit">
-            Invite
-          </BaseButton>
         </BaseFlex>
+
+        <BaseButton
+          marginTop="2.5rem"
+          width="100%"
+          isLoading={isInvitingUser}
+          type="submit"
+        >
+          Invite
+        </BaseButton>
       </form>
     </BaseSection>
   );

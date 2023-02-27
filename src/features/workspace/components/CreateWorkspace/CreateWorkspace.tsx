@@ -69,15 +69,17 @@ const CreateWorkspace: React.FC<Props> = ({ cb }) => {
           />
           <BaseFormErrorMessage>{errors.website?.message}</BaseFormErrorMessage>
         </BaseFormControl>
-
-        <BaseButton
-          isLoading={isCreatingWorkspace}
-          variant="solid"
-          type="submit"
-        >
-          Submit
-        </BaseButton>
       </BaseFlex>
+
+      <BaseButton
+        marginTop="2.5rem"
+        width="100%"
+        isLoading={isCreatingWorkspace}
+        variant="solid"
+        type="submit"
+      >
+        Submit
+      </BaseButton>
     </form>
   );
 };
