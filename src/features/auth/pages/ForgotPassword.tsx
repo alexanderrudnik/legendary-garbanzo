@@ -20,6 +20,7 @@ import { Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { RouteEnum } from "@/common/models/RouteEnum";
 import { ResetPasswordDetails } from "@/services/auth/types";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 const schema = yup.object().shape({
   email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
@@ -59,30 +60,44 @@ const ForgotPassword: React.FC = () => {
       </Flex>
     </>
   ) : (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <BaseFlex gap="1rem" direction="column">
-        <BaseFormControl isInvalid={Boolean(errors.email)}>
-          <BaseFormLabel>Email</BaseFormLabel>
-          <BaseInput
-            variant="filled"
-            type="email"
-            placeholder="Enter email"
-            {...register("email")}
-          />
-          <BaseFormErrorMessage>{errors.email?.message}</BaseFormErrorMessage>
-        </BaseFormControl>
-      </BaseFlex>
+    <>
+      <Link to={RouteEnum.SIGN_IN}>
+        <BaseButton
+          colorScheme="blackAlpha"
+          gap="0.5rem"
+          marginBottom="3rem"
+          variant="link"
+        >
+          <ArrowBackIcon />
+          Back
+        </BaseButton>
+      </Link>
 
-      <BaseButton
-        marginTop="2.5rem"
-        width="100%"
-        isLoading={isResettingPassword}
-        variant="solid"
-        type="submit"
-      >
-        Submit
-      </BaseButton>
-    </form>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <BaseFlex gap="1rem" direction="column">
+          <BaseFormControl isInvalid={Boolean(errors.email)}>
+            <BaseFormLabel>Email</BaseFormLabel>
+            <BaseInput
+              variant="filled"
+              type="email"
+              placeholder="Enter email"
+              {...register("email")}
+            />
+            <BaseFormErrorMessage>{errors.email?.message}</BaseFormErrorMessage>
+          </BaseFormControl>
+        </BaseFlex>
+
+        <BaseButton
+          marginTop="2.5rem"
+          width="100%"
+          isLoading={isResettingPassword}
+          variant="solid"
+          type="submit"
+        >
+          Submit
+        </BaseButton>
+      </form>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -31,6 +31,7 @@ import {
 import { useSignUp } from "../hooks/useSignUp";
 import BaseText from "@/common/components/BaseText/BaseText";
 import { SignUpDetails } from "@/services/auth/types";
+import { RouteEnum } from "@/common/models/RouteEnum";
 
 const schema = yup.object().shape({
   email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
@@ -154,15 +155,27 @@ const SignUp: React.FC = () => {
         </BaseFormControl>
       </BaseFlex>
 
-      <BaseButton
+      <BaseFlex
         marginTop="2.5rem"
-        width="100%"
-        isLoading={isSigningUp}
-        variant="solid"
-        type="submit"
+        flexDirection="column"
+        gap="1rem"
+        align="center"
       >
-        Sign Up
-      </BaseButton>
+        <Link to={RouteEnum.SIGN_IN}>
+          <BaseButton width="100%" variant="link">
+            Already have an account?
+          </BaseButton>
+        </Link>
+
+        <BaseButton
+          width="100%"
+          isLoading={isSigningUp}
+          variant="solid"
+          type="submit"
+        >
+          Sign Up
+        </BaseButton>
+      </BaseFlex>
     </form>
   ) : (
     <BaseHeading textAlign="center">
