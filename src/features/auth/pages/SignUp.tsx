@@ -131,6 +131,7 @@ const SignUp: React.FC = () => {
         <BaseFormControl isInvalid={Boolean(errors.email)}>
           <BaseFormLabel>Email</BaseFormLabel>
           <BaseInput
+            isDisabled
             variant="filled"
             type="email"
             placeholder="Enter email"
