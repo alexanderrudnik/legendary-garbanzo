@@ -46,6 +46,7 @@ export const LOCATION_REQUIRED_ERROR = "Location is a required field!";
 export const POSITION_REQUIRED_ERROR = "Position is a required field!";
 
 export const CV_LINK_REQUIRED_ERROR = "CV link is a required field!";
+export const CV_LINK_INVALID_ERROR = "Please enter a valid CV link!";
 
 export const TITLE_REQUIRED_ERROR = "Title is a required field!";
 

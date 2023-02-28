@@ -12,6 +12,7 @@ import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseF
 import { EngLevelEnum } from "@/common/models/EngLevelEnum";
 import { PositionEnum } from "@/common/models/PositionEnum";
 import {
+  CV_LINK_INVALID_ERROR,
   CV_LINK_REQUIRED_ERROR,
   DURATION_MIN_ERROR,
   DURATION_REQUIRED_ERROR,
@@ -40,6 +41,9 @@ import { FULL_DATE_FORMAT } from "@/services/date/dateFormats";
 
 const countries = countryList.getData();
 
+const linkRegex =
+  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+
 const schema = yup.object().shape({
   rate: yup
     .number()
@@ -53,7 +57,10 @@ const schema = yup.object().shape({
     .min(0, YEARS_OF_EXPERIENCE_MIN_ERROR),
   skills: yup.array().required(SKILLS_REQUIRED_ERROR),
   engLevel: yup.string().required(ENG_LEVEL_REQUIRED_ERROR),
-  CVLink: yup.string().required(CV_LINK_REQUIRED_ERROR),
+  CVLink: yup
+    .string()
+    .required(CV_LINK_REQUIRED_ERROR)
+    .matches(new RegExp(linkRegex), CV_LINK_INVALID_ERROR),
   startDate: yup.string().required(START_DATE_REQUIRED_ERROR),
   duration: yup
     .number()
