@@ -60,10 +60,6 @@ const Header: React.FC = () => {
   const defaultMenu = useMemo(
     () => [
       {
-        label: "News",
-        href: RouteEnum.NEWS,
-      },
-      {
         label: "My workspace",
         href: RouteEnum.MY_WORKSPACE,
       },

@@ -9,6 +9,5 @@ export enum RouteEnum {
   FORGOT_PASSWORD = "/forgot-password",
   CONTACT_US = "/contact-us",
   SETTINGS = "/settings",
-  NEWS = "/news",
   SEND_NOTIFICATION = "/send-notification",
 }
