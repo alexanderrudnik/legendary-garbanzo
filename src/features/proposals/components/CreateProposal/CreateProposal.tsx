@@ -82,6 +82,7 @@ interface Props {
 const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
   const {
     handleSubmit,
+    setValue,
     control,
     register,
     formState: { errors },
@@ -212,6 +213,18 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             placeholder="Enter start date"
             {...register("startDate")}
           />
+          <BaseButton
+            marginTop="0.5rem"
+            variant="ghost"
+            onClick={() =>
+              setValue(
+                "startDate",
+                dateService.getNow().format(FULL_DATE_FORMAT)
+              )
+            }
+          >
+            ASAP
+          </BaseButton>
           <BaseFormErrorMessage>
             {errors.startDate?.message}
           </BaseFormErrorMessage>

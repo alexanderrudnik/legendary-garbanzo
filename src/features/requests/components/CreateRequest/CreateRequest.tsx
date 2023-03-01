@@ -74,6 +74,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
   const {
     handleSubmit,
     control,
+    setValue,
     register,
     formState: { errors },
   } = useForm<RequestInputs>({
@@ -189,6 +190,18 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             min={dateService.getNow().format(FULL_DATE_FORMAT)}
             {...register("startDate")}
           />
+          <BaseButton
+            marginTop="0.5rem"
+            variant="ghost"
+            onClick={() =>
+              setValue(
+                "startDate",
+                dateService.getNow().format(FULL_DATE_FORMAT)
+              )
+            }
+          >
+            ASAP
+          </BaseButton>
           <BaseFormErrorMessage>
             {errors.startDate?.message}
           </BaseFormErrorMessage>
