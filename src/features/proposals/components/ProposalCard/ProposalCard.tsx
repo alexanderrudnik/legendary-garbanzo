@@ -1,5 +1,4 @@
 import React from "react";
-import { getName } from "country-list";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import BaseCard from "@/common/components/BaseCard/BaseCard";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
@@ -18,6 +17,7 @@ import { useDeleteProposal } from "../../hooks/useDeleteProposal";
 import { RouteEnum } from "@/common/models/RouteEnum";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import BasePopconfirm from "@/common/components/BasePopconfirm/BasePopconfirm";
+import { getCountryName } from "@/common/utils/getCountryName";
 
 interface Props extends Proposal {
   onContact: () => void;
@@ -148,7 +148,7 @@ const ProposalCard: React.FC<Props> = ({
             label="Weekly Employment"
             value={`${weeklyEmployment} ${getPlural(weeklyEmployment, "hour")}`}
           />
-          <BaseStat label="Location" value={getName(location)} />
+          <BaseStat label="Location" value={getCountryName(location)} />
         </BaseSimpleGrid>
 
         <BaseStat label="CV link" value={CVLink} />

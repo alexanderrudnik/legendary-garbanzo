@@ -2,8 +2,6 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import countryList from "country-list";
-
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseFormControl from "@/common/components/BaseFormControl/BaseFormControl";
 import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
@@ -38,8 +36,7 @@ import { ProposalsInputs } from "../../models/ProposalInputs";
 import { Proposal } from "@/services/proposal/types";
 import { dateService } from "@/services/date/dateService";
 import { FULL_DATE_FORMAT } from "@/services/date/dateFormats";
-
-const countries = countryList.getData();
+import { LOCATIONS } from "@/common/constants/locations";
 
 const linkRegex =
   /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
@@ -259,7 +256,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             placeholder="Enter location"
             {...register("location")}
           >
-            {countries.map((country) => (
+            {LOCATIONS.map((country) => (
               <option key={country.code} value={country.code}>
                 {country.name}
               </option>

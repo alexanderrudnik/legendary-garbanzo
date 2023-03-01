@@ -2,8 +2,6 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import countryList from "country-list";
-
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseFormControl from "@/common/components/BaseFormControl/BaseFormControl";
 import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
@@ -36,8 +34,7 @@ import BaseInputGroup from "@/common/components/BaseInputGroup/BaseInputGroup";
 import BaseInputRightElement from "@/common/components/BaseInputRightElement/BaseInputRightElement";
 import { RequestInputs } from "../../models/RequestInputs";
 import { FULL_DATE_FORMAT } from "@/services/date/dateFormats";
-
-const countries = countryList.getData();
+import { LOCATIONS } from "@/common/constants/locations";
 
 const schema = yup.object().shape({
   rate: yup
@@ -236,7 +233,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             placeholder="Enter location"
             {...register("location")}
           >
-            {countries.map((country) => (
+            {LOCATIONS.map((country) => (
               <option key={country.code} value={country.code}>
                 {country.name}
               </option>

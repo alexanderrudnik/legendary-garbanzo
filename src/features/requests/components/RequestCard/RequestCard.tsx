@@ -1,6 +1,5 @@
 import React from "react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { getName } from "country-list";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import BaseCard from "@/common/components/BaseCard/BaseCard";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
@@ -18,6 +17,7 @@ import { RouteEnum } from "@/common/models/RouteEnum";
 import BasePopconfirm from "@/common/components/BasePopconfirm/BasePopconfirm";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import { useDeleteRequest } from "../../hooks/useDeleteRequest";
+import { getCountryName } from "@/common/utils/getCountryName";
 
 interface Props extends IRequest {
   onContact: () => void;
@@ -147,7 +147,7 @@ const RequestCard: React.FC<Props> = ({
             label="Weekly Employment"
             value={`${weeklyEmployment} ${getPlural(weeklyEmployment, "hour")}`}
           />
-          <BaseStat label="Location" value={getName(location)} />
+          <BaseStat label="Location" value={getCountryName(location)} />
         </BaseSimpleGrid>
 
         <BaseStat

@@ -1,10 +1,8 @@
+import { LOCATIONS } from "@/common/constants/locations";
 import React from "react";
-import countryList from "country-list";
 import BaseFlex from "../BaseFlex/BaseFlex";
 import BaseSelect from "../BaseSelect/BaseSelect";
 import BaseText from "../BaseText/BaseText";
-
-const countries = countryList.getData();
 
 interface Props {
   value: string;
@@ -21,7 +19,7 @@ const LocationFilter: React.FC<Props> = ({ value, onChange }) => {
         value={value}
         onChange={(event) => onChange(event.target.value)}
       >
-        {countries.map((country) => (
+        {LOCATIONS.map((country) => (
           <option key={country.code} value={country.code}>
             {country.name}
           </option>
