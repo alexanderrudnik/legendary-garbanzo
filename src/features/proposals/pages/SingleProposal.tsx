@@ -17,6 +17,7 @@ import { useProposals } from "../hooks/useProposals";
 import ProposalCard from "../components/ProposalCard/ProposalCard";
 import BasePopconfirm from "@/common/components/BasePopconfirm/BasePopconfirm";
 import { useDeleteProposal } from "../hooks/useDeleteProposal";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 const SingleProposal: React.FC = () => {
   const [contact, setContact] = useState<Proposal["contact"] | null>(null);
@@ -97,7 +98,11 @@ const SingleProposal: React.FC = () => {
               >
                 <Link to={`${RouteEnum.PROPOSALS}/edit/${currentProposal.id}`}>
                   {" "}
-                  <BaseButton width="100%" variant="outline">
+                  <BaseButton
+                    leftIcon={<EditIcon />}
+                    width="100%"
+                    variant="outline"
+                  >
                     Edit
                   </BaseButton>
                 </Link>
@@ -109,7 +114,11 @@ const SingleProposal: React.FC = () => {
                   text="Are you sure you want to delete?"
                   onOk={handleDelete}
                   trigger={
-                    <BaseButton colorScheme="red" onClick={onOpenConfirmPopup}>
+                    <BaseButton
+                      leftIcon={<DeleteIcon />}
+                      colorScheme="red"
+                      onClick={onOpenConfirmPopup}
+                    >
                       Delete
                     </BaseButton>
                   }

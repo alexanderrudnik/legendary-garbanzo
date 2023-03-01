@@ -15,6 +15,7 @@ import { MESSAGE_REQUIRED_ERROR } from "@/app/messages/errors";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import { useContact } from "../hooks/useContact";
 import { ContactDetails } from "@/services/contact/types";
+import { EmailIcon } from "@chakra-ui/icons";
 
 const schema = yup.object().shape({
   message: yup.string().required(MESSAGE_REQUIRED_ERROR),
@@ -66,6 +67,7 @@ const ContactUs: React.FC = () => {
           </BaseFlex>
 
           <BaseButton
+            leftIcon={<EmailIcon />}
             marginTop="2.5rem"
             width="100%"
             isLoading={isContacting}

@@ -16,6 +16,7 @@ import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
 import BaseInput from "@/common/components/BaseInput/BaseInput";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
+import { CheckIcon } from "@chakra-ui/icons";
 
 const schema = yup.object().shape({
   name: yup.string().required(WORKSPACE_REQUIRED_ERROR),
@@ -81,6 +82,7 @@ const WorkspaceSettings: React.FC = () => {
         </BaseFlex>
 
         <BaseButton
+          leftIcon={<CheckIcon />}
           marginTop="2.5rem"
           width="100%"
           type="submit"

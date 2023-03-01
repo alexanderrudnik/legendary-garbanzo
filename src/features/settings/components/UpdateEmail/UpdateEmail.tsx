@@ -15,6 +15,7 @@ import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import { UpdateEmailDetails } from "@/services/user/types";
 import { useUpdateEmail } from "../../hooks/useUpdateEmail";
+import { CheckIcon } from "@chakra-ui/icons";
 
 const schema = yup.object().shape({
   email: yup.string().required(EMAIL_REQUIRED_ERROR).email(EMAIL_INVALID_ERROR),
@@ -58,6 +59,7 @@ const UpdateEmail: React.FC = () => {
       </BaseFlex>
 
       <BaseButton
+        leftIcon={<CheckIcon />}
         marginTop="2.5rem"
         width="100%"
         type="submit"

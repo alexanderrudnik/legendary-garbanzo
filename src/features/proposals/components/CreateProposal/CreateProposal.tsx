@@ -37,6 +37,7 @@ import { Proposal } from "@/services/proposal/types";
 import { dateService } from "@/services/date/dateService";
 import { FULL_DATE_FORMAT } from "@/services/date/dateFormats";
 import { LOCATIONS } from "@/common/constants/locations";
+import { CheckIcon } from "@chakra-ui/icons";
 
 const linkRegex =
   /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
@@ -302,6 +303,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
       </BaseFlex>
 
       <BaseButton
+        leftIcon={<CheckIcon />}
         width="100%"
         marginTop="2.5rem"
         isLoading={isLoading}

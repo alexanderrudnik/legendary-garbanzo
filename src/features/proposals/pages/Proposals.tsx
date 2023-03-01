@@ -15,6 +15,7 @@ import { RouteEnum } from "@/common/models/RouteEnum";
 import { dateService } from "@/services/date/dateService";
 import { getFilteredData } from "@/services/filter/filterService";
 import { Proposal } from "@/services/proposal/types";
+import { AddIcon, SearchIcon } from "@chakra-ui/icons";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CreateProposal from "../components/CreateProposal/CreateProposal";
@@ -93,6 +94,7 @@ const Proposals: React.FC = () => {
     <>
       <BaseSection>
         <BaseButton
+          leftIcon={<AddIcon />}
           marginBottom="1rem"
           width="100%"
           onClick={onOpenCreateModal}
@@ -101,6 +103,7 @@ const Proposals: React.FC = () => {
         </BaseButton>
 
         <BaseButton
+          leftIcon={<SearchIcon />}
           variant="outline"
           width="100%"
           onClick={onOpenFiltersDrawer}

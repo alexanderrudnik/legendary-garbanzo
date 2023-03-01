@@ -17,6 +17,7 @@ import { useMe } from "@/common/hooks/useMe";
 import { RouteEnum } from "@/common/models/RouteEnum";
 import BasePopconfirm from "@/common/components/BasePopconfirm/BasePopconfirm";
 import { useDeleteRequest } from "../hooks/useDeleteRequest";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 const SingleRequest: React.FC = () => {
   const [contact, setContact] = useState<IRequest["contact"] | null>(null);
@@ -95,7 +96,11 @@ const SingleRequest: React.FC = () => {
               >
                 <Link to={`${RouteEnum.REQUESTS}/edit/${currentRequest.id}`}>
                   {" "}
-                  <BaseButton width="100%" variant="outline">
+                  <BaseButton
+                    leftIcon={<EditIcon />}
+                    width="100%"
+                    variant="outline"
+                  >
                     Edit
                   </BaseButton>
                 </Link>
@@ -107,7 +112,11 @@ const SingleRequest: React.FC = () => {
                   text="Are you sure you want to delete?"
                   onOk={handleDelete}
                   trigger={
-                    <BaseButton colorScheme="red" onClick={onOpenConfirmPopup}>
+                    <BaseButton
+                      leftIcon={<DeleteIcon />}
+                      colorScheme="red"
+                      onClick={onOpenConfirmPopup}
+                    >
                       Delete
                     </BaseButton>
                   }

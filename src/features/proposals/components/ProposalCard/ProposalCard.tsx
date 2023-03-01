@@ -15,7 +15,7 @@ import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import { Link, useNavigate } from "react-router-dom";
 import { useDeleteProposal } from "../../hooks/useDeleteProposal";
 import { RouteEnum } from "@/common/models/RouteEnum";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon, InfoIcon } from "@chakra-ui/icons";
 import BasePopconfirm from "@/common/components/BasePopconfirm/BasePopconfirm";
 import { getCountryName } from "@/common/utils/getCountryName";
 
@@ -108,6 +108,7 @@ const ProposalCard: React.FC<Props> = ({
       footer={
         <>
           <BaseButton
+            leftIcon={<InfoIcon />}
             width="100%"
             onClick={(event) => {
               event.stopPropagation();

@@ -19,6 +19,7 @@ import { useAllInvitedUsers } from "@/features/invite/hooks/useAllInvitedUsers";
 import { useMe } from "@/common/hooks/useMe";
 import { useInviteUser } from "../hooks/useInviteUser";
 import { InviteUserDetails } from "@/services/user/types";
+import { EmailIcon } from "@chakra-ui/icons";
 
 const schema = yup.object().shape({
   email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
@@ -77,6 +78,7 @@ const Invite: React.FC = () => {
         </BaseFlex>
 
         <BaseButton
+          leftIcon={<EmailIcon />}
           marginTop="2.5rem"
           width="100%"
           isLoading={isInvitingUser}

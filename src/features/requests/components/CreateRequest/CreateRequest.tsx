@@ -35,6 +35,7 @@ import BaseInputRightElement from "@/common/components/BaseInputRightElement/Bas
 import { RequestInputs } from "../../models/RequestInputs";
 import { FULL_DATE_FORMAT } from "@/services/date/dateFormats";
 import { LOCATIONS } from "@/common/constants/locations";
+import { CheckIcon } from "@chakra-ui/icons";
 
 const schema = yup.object().shape({
   rate: yup
@@ -279,6 +280,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
       </BaseFlex>
 
       <BaseButton
+        leftIcon={<CheckIcon />}
         marginTop="2.5rem"
         width="100%"
         isLoading={isLoading}

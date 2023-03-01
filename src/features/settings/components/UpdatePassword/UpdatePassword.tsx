@@ -22,6 +22,7 @@ import {
   PASSWORD_UPPER_CASE_REGEX,
 } from "@/common/regex/regex";
 import { useUpdatePassword } from "../../hooks/useUpdatePassword";
+import { CheckIcon } from "@chakra-ui/icons";
 
 const schema = yup.object().shape({
   password: yup
@@ -68,6 +69,7 @@ const UpdatePassword: React.FC = () => {
       </BaseFlex>
 
       <BaseButton
+        leftIcon={<CheckIcon />}
         marginTop="2.5rem"
         width="100%"
         type="submit"

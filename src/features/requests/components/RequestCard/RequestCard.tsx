@@ -1,5 +1,5 @@
 import React from "react";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { EditIcon, DeleteIcon, InfoIcon } from "@chakra-ui/icons";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import BaseCard from "@/common/components/BaseCard/BaseCard";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
@@ -107,6 +107,7 @@ const RequestCard: React.FC<Props> = ({
       footer={
         <>
           <BaseButton
+            leftIcon={<InfoIcon />}
             width="100%"
             onClick={(event) => {
               event.stopPropagation();

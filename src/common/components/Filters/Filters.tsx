@@ -11,6 +11,7 @@ import EngLevelFilter from "../EngLevelFilter/EngLevelFilter";
 import YearsOfExperienceFilter from "../YearsOfExperienceFilter/YearsOfExperienceFilter";
 import StartDateFilter from "../StartDateFilter/StartDateFilter";
 import WeeklyEmploymentFilter from "../WeeklyEmploymentFilter/WeeklyEmploymentFilter";
+import { CheckIcon, DeleteIcon } from "@chakra-ui/icons";
 
 interface Props {
   filters: IFilters;
@@ -91,8 +92,14 @@ const Filters: React.FC<Props> = ({
       </BaseFlex>
 
       <BaseFlex marginTop="5rem" gap="0.5rem" flexDirection="column">
-        <BaseButton onClick={onFilter}>Apply</BaseButton>
-        <BaseButton variant="outline" onClick={onClear}>
+        <BaseButton leftIcon={<CheckIcon />} onClick={onFilter}>
+          Apply
+        </BaseButton>
+        <BaseButton
+          leftIcon={<DeleteIcon />}
+          variant="outline"
+          onClick={onClear}
+        >
           Clear
         </BaseButton>
       </BaseFlex>

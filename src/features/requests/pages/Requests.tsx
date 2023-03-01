@@ -22,6 +22,7 @@ import { useCreateRequest } from "../hooks/useCreateRequest";
 import { RequestInputs } from "../models/RequestInputs";
 import { dateService } from "@/services/date/dateService";
 import { useMe } from "@/common/hooks/useMe";
+import { AddIcon, SearchIcon } from "@chakra-ui/icons";
 
 const initialFiltersState: IFilters = {
   rate: ["", ""],
@@ -91,6 +92,7 @@ const Requests: React.FC = () => {
     <>
       <BaseSection>
         <BaseButton
+          leftIcon={<AddIcon />}
           marginBottom="1rem"
           width="100%"
           onClick={onOpenCreateModal}
@@ -99,6 +101,7 @@ const Requests: React.FC = () => {
         </BaseButton>
 
         <BaseButton
+          leftIcon={<SearchIcon />}
           variant="outline"
           width="100%"
           onClick={onOpenFiltersDrawer}

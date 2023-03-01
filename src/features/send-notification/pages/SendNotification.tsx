@@ -18,6 +18,7 @@ import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import BaseInput from "@/common/components/BaseInput/BaseInput";
+import { EmailIcon } from "@chakra-ui/icons";
 
 const schema = yup.object().shape({
   title: yup.string().required(TITLE_REQUIRED_ERROR),
@@ -77,6 +78,7 @@ const SendNotification: React.FC = () => {
           </BaseFlex>
 
           <BaseButton
+            leftIcon={<EmailIcon />}
             marginTop="2.5rem"
             width="100%"
             isLoading={isSendingNotification}

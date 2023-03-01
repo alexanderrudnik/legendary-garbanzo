@@ -15,6 +15,7 @@ import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import { UpdatePersonalInfoDetails } from "@/services/user/types";
 import { useUpdatePersonalInfo } from "../../hooks/useUpdatePersonalInfo";
+import { CheckIcon } from "@chakra-ui/icons";
 
 const schema = yup.object().shape({
   firstName: yup.string().required(FIRST_NAME_REQUIRED_ERROR),
@@ -86,6 +87,7 @@ const UpdatePersonalInfo: React.FC = () => {
       </BaseFlex>
 
       <BaseButton
+        leftIcon={<CheckIcon />}
         marginTop="2.5rem"
         width="100%"
         isLoading={isUpdatingPersonalInfo}
