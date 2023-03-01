@@ -32,6 +32,7 @@ export const SKILLS_REQUIRED_ERROR = "Skills is a required field!";
 export const ENG_LEVEL_REQUIRED_ERROR = "English level is a required field!";
 
 export const START_DATE_REQUIRED_ERROR = "Start date is a required field!";
+export const START_DATE_FUTURE_ERROR = "Please choose today or future date!";
 
 export const DURATION_REQUIRED_ERROR = "Duration is a required field!";
 export const DURATION_MIN_ERROR = "Duration must be greater than or equal to 0";

@@ -20,6 +20,7 @@ import {
   RATE_MIN_ERROR,
   RATE_REQUIRED_ERROR,
   SKILLS_REQUIRED_ERROR,
+  START_DATE_FUTURE_ERROR,
   START_DATE_REQUIRED_ERROR,
   WEEKLY_EMPLOYMENT_MIN_ERROR,
   WEEKLY_EMPLOYMENT_REQUIRED_ERROR,
@@ -38,9 +39,10 @@ import { dateService } from "@/services/date/dateService";
 import { FULL_DATE_FORMAT } from "@/services/date/dateFormats";
 import { LOCATIONS } from "@/common/constants/locations";
 import { CheckIcon } from "@chakra-ui/icons";
+import { LINK_REGEX } from "@/common/regex/regex";
 
-const linkRegex =
-  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+const today = new Date();
+today.setHours(0, 0, 0, 0);
 
 const schema = yup.object().shape({
   rate: yup
@@ -58,8 +60,11 @@ const schema = yup.object().shape({
   CVLink: yup
     .string()
     .required(CV_LINK_REQUIRED_ERROR)
-    .matches(new RegExp(linkRegex), CV_LINK_INVALID_ERROR),
-  startDate: yup.string().required(START_DATE_REQUIRED_ERROR),
+    .matches(new RegExp(LINK_REGEX), CV_LINK_INVALID_ERROR),
+  startDate: yup
+    .date()
+    .required(START_DATE_REQUIRED_ERROR)
+    .min(today, START_DATE_FUTURE_ERROR),
   duration: yup
     .number()
     .transform((value) => (isNaN(value) ? undefined : value))
@@ -220,7 +225,8 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             onClick={() =>
               setValue(
                 "startDate",
-                dateService.getNow().format(FULL_DATE_FORMAT)
+                dateService.getNow().format(FULL_DATE_FORMAT),
+                { shouldValidate: true }
               )
             }
           >
