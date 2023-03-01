@@ -181,7 +181,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
         </BaseFormControl>
 
         <BaseFormControl isInvalid={Boolean(errors.startDate)}>
-          <BaseFormLabel>Start date</BaseFormLabel>
+          <BaseFormLabel>Approx. start date</BaseFormLabel>
           <BaseInput
             type="date"
             variant="filled"
@@ -195,7 +195,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
         </BaseFormControl>
 
         <BaseFormControl isInvalid={Boolean(errors.duration)}>
-          <BaseFormLabel>Duration</BaseFormLabel>
+          <BaseFormLabel>Approx. min. duration</BaseFormLabel>
           <BaseInputGroup>
             <BaseInput
               type="number"
@@ -211,7 +211,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
         </BaseFormControl>
 
         <BaseFormControl isInvalid={Boolean(errors.weeklyEmployment)}>
-          <BaseFormLabel>Weekly Employment</BaseFormLabel>
+          <BaseFormLabel>Min. weekly employment</BaseFormLabel>
           <BaseInputGroup>
             <BaseInput
               type="number"
