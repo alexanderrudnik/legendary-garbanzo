@@ -52,7 +52,7 @@ const Contact: React.FC<Props> = ({ contact }) => {
           <BaseText>Email:</BaseText>
           <BaseText>
             <a href={`mailto:${contact?.email}`}>
-              <b>{contact?.email}</b>
+              <BaseButton variant="link">{contact?.email}</BaseButton>
             </a>
           </BaseText>
           <BaseTooltip isOpen={isOpenEmailTooltip} label="Copied!">
@@ -74,9 +74,11 @@ const Contact: React.FC<Props> = ({ contact }) => {
             <a
               target="_blank"
               rel="noreferrer"
-              href={`https://t.me/${contact?.telegram.replace("@", "")}`}
+              href={`https://t.me/${contact?.telegram}`}
             >
-              <b>{contact?.telegram}</b>
+              <BaseButton variant="link">
+                https://t.me/{contact?.telegram}
+              </BaseButton>
             </a>
           </BaseText>
           <BaseTooltip isOpen={isOpenTelegramTooltip} label="Copied!">

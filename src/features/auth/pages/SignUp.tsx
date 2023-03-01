@@ -16,6 +16,7 @@ import {
   PASSWORD_NUMBER_ERROR,
   PASSWORD_REQUIRED_ERROR,
   PASSWORD_UPPER_CASE_ERROR,
+  TELEGRAM_AT_ERROR,
 } from "@/app/messages/errors";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseFormControl from "@/common/components/BaseFormControl/BaseFormControl";
@@ -27,11 +28,14 @@ import {
   PASSWORD_LOWER_CASE_REGEX,
   PASSWORD_NUMBER_REGEX,
   PASSWORD_UPPER_CASE_REGEX,
+  TELEGRAM_AT_REGEX,
 } from "@/common/regex/regex";
 import { useSignUp } from "../hooks/useSignUp";
 import BaseText from "@/common/components/BaseText/BaseText";
 import { SignUpDetails } from "@/services/auth/types";
 import { RouteEnum } from "@/common/models/RouteEnum";
+import BaseInputGroup from "@/common/components/BaseInputGroup/BaseInputGroup";
+import BaseInputLeftAddon from "@/common/components/BaseInputLeftAddon/BaseInputLeftAddon";
 
 const schema = yup.object().shape({
   email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
@@ -44,6 +48,9 @@ const schema = yup.object().shape({
     .matches(PASSWORD_LOWER_CASE_REGEX, PASSWORD_LOWER_CASE_ERROR),
   firstName: yup.string().required(FIRST_NAME_REQUIRED_ERROR),
   lastName: yup.string().required(LAST_NAME_REQUIRED_ERROR),
+  telegram: yup
+    .string()
+    .matches(new RegExp(TELEGRAM_AT_REGEX), TELEGRAM_AT_ERROR),
 });
 
 const SignUp: React.FC = () => {
@@ -119,11 +126,15 @@ const SignUp: React.FC = () => {
 
         <BaseFormControl isInvalid={Boolean(errors.telegram)}>
           <BaseFormLabel>Telegram</BaseFormLabel>
-          <BaseInput
-            variant="filled"
-            placeholder="Enter your telegram"
-            {...register("telegram")}
-          />
+          <BaseInputGroup>
+            <BaseInputLeftAddon pointerEvents="none">t.me/</BaseInputLeftAddon>
+            <BaseInput
+              borderLeftRadius="none"
+              variant="filled"
+              placeholder="Enter your telegram"
+              {...register("telegram")}
+            />
+          </BaseInputGroup>
           <BaseFormErrorMessage>
             {errors.telegram?.message}
           </BaseFormErrorMessage>

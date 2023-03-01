@@ -51,3 +51,5 @@ export const CV_LINK_INVALID_ERROR = "Please enter a valid CV link!";
 export const TITLE_REQUIRED_ERROR = "Title is a required field!";
 
 export const MESSAGE_REQUIRED_ERROR = "Message is a required field!";
+
+export const TELEGRAM_AT_ERROR = "Your telegram shouldn't contain '@'";

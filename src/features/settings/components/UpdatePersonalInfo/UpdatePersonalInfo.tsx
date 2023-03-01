@@ -5,6 +5,7 @@ import * as yup from "yup";
 import {
   FIRST_NAME_REQUIRED_ERROR,
   LAST_NAME_REQUIRED_ERROR,
+  TELEGRAM_AT_ERROR,
 } from "@/app/messages/errors";
 import BaseFormControl from "@/common/components/BaseFormControl/BaseFormControl";
 import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
@@ -16,10 +17,16 @@ import BaseButton from "@/common/components/BaseButton/BaseButton";
 import { UpdatePersonalInfoDetails } from "@/services/user/types";
 import { useUpdatePersonalInfo } from "../../hooks/useUpdatePersonalInfo";
 import { CheckIcon } from "@chakra-ui/icons";
+import { TELEGRAM_AT_REGEX } from "@/common/regex/regex";
+import BaseInputGroup from "@/common/components/BaseInputGroup/BaseInputGroup";
+import BaseInputLeftAddon from "@/common/components/BaseInputLeftAddon/BaseInputLeftAddon";
 
 const schema = yup.object().shape({
   firstName: yup.string().required(FIRST_NAME_REQUIRED_ERROR),
   lastName: yup.string().required(LAST_NAME_REQUIRED_ERROR),
+  telegram: yup
+    .string()
+    .matches(new RegExp(TELEGRAM_AT_REGEX), TELEGRAM_AT_ERROR),
 });
 
 const UpdatePersonalInfo: React.FC = () => {
@@ -75,11 +82,15 @@ const UpdatePersonalInfo: React.FC = () => {
 
         <BaseFormControl isInvalid={Boolean(errors.telegram)}>
           <BaseFormLabel>Telegram</BaseFormLabel>
-          <BaseInput
-            variant="filled"
-            placeholder="Enter telegram"
-            {...register("telegram")}
-          />
+          <BaseInputGroup>
+            <BaseInputLeftAddon pointerEvents="none">t.me/</BaseInputLeftAddon>
+            <BaseInput
+              borderLeftRadius="none"
+              variant="filled"
+              placeholder="Enter telegram"
+              {...register("telegram")}
+            />
+          </BaseInputGroup>
           <BaseFormErrorMessage>
             {errors.telegram?.message}
           </BaseFormErrorMessage>
