@@ -1,3 +1,4 @@
+import { SKILLS } from "@/common/constants/skills";
 import React from "react";
 import BaseFlex from "../BaseFlex/BaseFlex";
 import BaseTagInput from "../BaseTagInput/BaseTagInput";
@@ -13,6 +14,7 @@ const SkillsFilter: React.FC<Props> = ({ value, onChange }) => {
     <BaseFlex gap="0.5rem" flexDirection="column">
       <BaseText>Skills</BaseText>
       <BaseTagInput
+        defaultValues={SKILLS}
         variant="filled"
         placeholder="Type skills"
         value={value}

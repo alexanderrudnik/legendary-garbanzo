@@ -40,6 +40,7 @@ import { FULL_DATE_FORMAT } from "@/services/date/dateFormats";
 import { LOCATIONS } from "@/common/constants/locations";
 import { CheckIcon } from "@chakra-ui/icons";
 import { LINK_REGEX } from "@/common/regex/regex";
+import { SKILLS } from "@/common/constants/skills";
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -161,6 +162,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <BaseTagInput
+                defaultValues={SKILLS}
                 variant="filled"
                 placeholder="Enter skill e.g. React"
                 value={value}
