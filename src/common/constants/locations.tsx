@@ -8,6 +8,10 @@ export const LOCATIONS = [
     name: "Out of Belarus, Russia, Ukraine",
   },
   {
+    code: "RU",
+    name: "Russia",
+  },
+  {
     code: "BY",
     name: "Belarus",
   },
