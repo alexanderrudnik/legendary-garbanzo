@@ -16,6 +16,8 @@ export interface Proposal {
   location: string;
   position: keyof typeof PositionEnum;
   createdAt: number;
+  lastModified: number;
+  lastUpvoted: number;
   contact: {
     email: string;
     telegram?: string;
