@@ -14,8 +14,10 @@ import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
 import { MESSAGE_REQUIRED_ERROR } from "@/app/messages/errors";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import { useContact } from "../hooks/useContact";
-import { ContactDetails } from "@/services/contact/types";
 import { EmailIcon } from "@chakra-ui/icons";
+import { ContactValues } from "@/services/contact/types";
+import BaseInput from "@/common/components/BaseInput/BaseInput";
+import { getBase64 } from "@/common/utils/getBase64";
 
 const schema = yup.object().shape({
   message: yup.string().required(MESSAGE_REQUIRED_ERROR),
@@ -27,15 +29,20 @@ const ContactUs: React.FC = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm<ContactDetails>({
+  } = useForm<ContactValues>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
 
   const { isLoading: isContacting, mutateAsync: contact } = useContact();
 
-  const onSubmit = (values: ContactDetails) => {
-    contact(values).then(() => reset());
+  const onSubmit = async (values: ContactValues) => {
+    const data = {
+      message: values.message,
+      file: await getBase64(Array.from(values.file)[0]),
+    };
+
+    contact(data).then(() => reset());
   };
 
   return (
@@ -59,6 +66,20 @@ const ContactUs: React.FC = () => {
                 variant="filled"
                 placeholder="How can we help you?"
                 {...register("message")}
+              />
+              <BaseFormErrorMessage>
+                {errors.message?.message}
+              </BaseFormErrorMessage>
+            </BaseFormControl>
+
+            <BaseFormControl isInvalid={Boolean(errors.file)}>
+              <BaseFormLabel>Upload file</BaseFormLabel>
+              <BaseInput
+                borderRadius="none"
+                type="file"
+                accept="image/*"
+                variant="unstyled"
+                {...register("file")}
               />
               <BaseFormErrorMessage>
                 {errors.message?.message}
