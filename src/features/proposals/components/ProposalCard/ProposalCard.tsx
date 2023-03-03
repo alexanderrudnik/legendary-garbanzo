@@ -10,7 +10,6 @@ import { getPlural } from "@/common/utils/getPlural";
 import { Proposal } from "@/services/proposal/types";
 import { useColorModeValue } from "@chakra-ui/react";
 import BaseTag from "@/common/components/BaseTag/BaseTag";
-import BaseHeading from "@/common/components/BaseHeading/BaseHeading";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import { Link, useNavigate } from "react-router-dom";
 import { useDeleteProposal } from "../../hooks/useDeleteProposal";
@@ -18,6 +17,9 @@ import { RouteEnum } from "@/common/models/RouteEnum";
 import { DeleteIcon, EditIcon, InfoIcon } from "@chakra-ui/icons";
 import BasePopconfirm from "@/common/components/BasePopconfirm/BasePopconfirm";
 import { getCountryName } from "@/common/utils/getCountryName";
+import BaseHeading from "@/common/components/BaseHeading/BaseHeading";
+import BaseText from "@/common/components/BaseText/BaseText";
+import { FULL_DATE_TIME_FORMAT } from "@/services/date/dateFormats";
 
 interface Props extends Proposal {
   onContact: () => void;
@@ -27,6 +29,7 @@ interface Props extends Proposal {
 
 const ProposalCard: React.FC<Props> = ({
   id,
+  title,
   rate,
   yearsOfExperience,
   skills,
@@ -41,6 +44,7 @@ const ProposalCard: React.FC<Props> = ({
   onContact,
   onClick,
   isMy,
+  createdAt,
 }) => {
   const {
     isOpen: isOpenConfirmPopup,
@@ -75,8 +79,15 @@ const ProposalCard: React.FC<Props> = ({
   return (
     <BaseCard
       header={
-        <BaseFlex align="center" justify="space-between">
-          <BaseHeading>{PositionEnum[position]}</BaseHeading>
+        <BaseFlex gap="1rem" wrap="wrap" align="center" justify="space-between">
+          <BaseFlex flexDirection="column">
+            <BaseHeading>{title}</BaseHeading>
+
+            <BaseText fontSize="0.85rem" color="gray">
+              created at{" "}
+              {dateService.getDate(createdAt).format(FULL_DATE_TIME_FORMAT)}
+            </BaseText>
+          </BaseFlex>
 
           {isMy && (
             <BaseFlex align="center" gap="0.5rem">
@@ -96,7 +107,7 @@ const ProposalCard: React.FC<Props> = ({
                 text="Are you sure you want to delete?"
                 onOk={handleDelete}
                 trigger={
-                  <BaseButton colorScheme="red" onClick={handleOpen}>
+                  <BaseButton variant="outline" onClick={handleOpen}>
                     <DeleteIcon />
                   </BaseButton>
                 }
@@ -106,18 +117,16 @@ const ProposalCard: React.FC<Props> = ({
         </BaseFlex>
       }
       footer={
-        <>
-          <BaseButton
-            leftIcon={<InfoIcon />}
-            width="100%"
-            onClick={(event) => {
-              event.stopPropagation();
-              onContact();
-            }}
-          >
-            Contact
-          </BaseButton>
-        </>
+        <BaseButton
+          leftIcon={<InfoIcon />}
+          width="100%"
+          onClick={(event) => {
+            event.stopPropagation();
+            onContact();
+          }}
+        >
+          Contact
+        </BaseButton>
       }
       onClick={onClick}
       cursor={onClick ? "pointer" : "unset"}
@@ -128,7 +137,12 @@ const ProposalCard: React.FC<Props> = ({
           spacing="1rem"
           templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
         >
-          <BaseStat label="Rate" value={`${rate}$`} />
+          <BaseStat
+            label="Position"
+            value={PositionEnum[position]}
+            isValueBold
+          />
+          <BaseStat label="Rate" value={`${rate}$`} isValueBold />
           <BaseStat
             label="Years of experience"
             value={`${yearsOfExperience} ${getPlural(

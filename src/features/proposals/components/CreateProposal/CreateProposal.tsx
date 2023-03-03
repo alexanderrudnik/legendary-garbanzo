@@ -22,6 +22,7 @@ import {
   SKILLS_REQUIRED_ERROR,
   START_DATE_FUTURE_ERROR,
   START_DATE_REQUIRED_ERROR,
+  TITLE_REQUIRED_ERROR,
   WEEKLY_EMPLOYMENT_MIN_ERROR,
   WEEKLY_EMPLOYMENT_REQUIRED_ERROR,
   YEARS_OF_EXPERIENCE_MIN_ERROR,
@@ -46,6 +47,7 @@ const today = new Date();
 today.setHours(0, 0, 0, 0);
 
 const schema = yup.object().shape({
+  title: yup.string().required(TITLE_REQUIRED_ERROR),
   rate: yup
     .number()
     .transform((value) => (isNaN(value) ? undefined : value))
@@ -124,6 +126,16 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
   return (
     <form>
       <BaseFlex gap="1rem" flexDirection="column">
+        <BaseFormControl isInvalid={Boolean(errors.title)}>
+          <BaseFormLabel>Title</BaseFormLabel>
+          <BaseInput
+            variant="filled"
+            placeholder="Enter title"
+            {...register("title")}
+          />
+          <BaseFormErrorMessage>{errors.title?.message}</BaseFormErrorMessage>
+        </BaseFormControl>
+
         <BaseFormControl isInvalid={Boolean(errors.rate)}>
           <BaseFormLabel>Rate</BaseFormLabel>
           <BaseInputGroup>

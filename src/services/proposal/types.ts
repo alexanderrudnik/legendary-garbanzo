@@ -3,6 +3,7 @@ import { PositionEnum } from "@/common/models/PositionEnum";
 
 export interface Proposal {
   id: string;
+  title: string;
   owner: string;
   rate: string;
   yearsOfExperience: string;
