@@ -91,23 +91,19 @@ const Requests: React.FC = () => {
   return (
     <>
       <BaseSection>
-        <BaseButton
-          leftIcon={<AddIcon />}
-          marginBottom="1rem"
-          width="100%"
-          onClick={onOpenCreateModal}
-        >
-          Add new request
-        </BaseButton>
+        <BaseFlex justify="space-between" align="center">
+          <BaseButton leftIcon={<AddIcon />} onClick={onOpenCreateModal}>
+            Add new request
+          </BaseButton>
 
-        <BaseButton
-          leftIcon={<SearchIcon />}
-          variant="outline"
-          width="100%"
-          onClick={onOpenFiltersDrawer}
-        >
-          Filters
-        </BaseButton>
+          <BaseButton
+            leftIcon={<SearchIcon />}
+            variant="outline"
+            onClick={onOpenFiltersDrawer}
+          >
+            Filters
+          </BaseButton>
+        </BaseFlex>
 
         <BaseModal
           closeOnEsc={false}
