@@ -48,6 +48,12 @@ class UserService {
       }
     );
   }
+
+  async toggleMailing(isMailingEnabled: boolean) {
+    return axiosInstance.post<string>("/toggle-mailing", {
+      isMailingEnabled,
+    });
+  }
 }
 
 export const userService = new UserService();

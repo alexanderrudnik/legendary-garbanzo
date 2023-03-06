@@ -16,6 +16,7 @@ export interface User {
   workspace: string;
   telegram?: string;
   isStaff?: boolean;
+  isMailingEnabled: boolean;
 }
 
 export interface UpdateEmailDetails {
