@@ -71,7 +71,7 @@ const ProposalCard: React.FC<Props> = ({
 
   const handleEdit = (event: React.MouseEvent) => {
     event.stopPropagation();
-    navigate(`${RouteEnum.REQUESTS}/edit/${id}`);
+    navigate(`${RouteEnum.PROPOSALS}/edit/${id}`);
   };
 
   const color = usePrimaryColor();

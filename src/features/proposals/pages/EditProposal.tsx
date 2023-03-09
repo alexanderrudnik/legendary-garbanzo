@@ -64,7 +64,7 @@ const EditProposal: React.FC = () => {
         </BaseBox>
       ) : (
         <BaseCenter>
-          <BaseText>You cannot edit this request!</BaseText>
+          <BaseText>You cannot edit this proposal!</BaseText>
         </BaseCenter>
       )}
     </BaseSection>
