@@ -33,7 +33,7 @@ export const useUpdatePersonalInfo = () => {
 
       toastService.show({
         title: "Success",
-        description: "Successfully updated your email",
+        description: "Successfully updated your personal info",
         status: "success",
       });
     },

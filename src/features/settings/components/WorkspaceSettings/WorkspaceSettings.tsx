@@ -9,7 +9,7 @@ import {
   WORKSPACE_REQUIRED_ERROR,
 } from "@/app/messages/errors";
 import { UpdateWorkspaceDetails } from "@/services/workspace/types";
-import { useUpdateWorkspace } from "../../hooks/useUpdateEmail copy";
+import { useUpdateWorkspace } from "../../hooks/useUpdateWorkspace";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseFormControl from "@/common/components/BaseFormControl/BaseFormControl";
 import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";

@@ -32,7 +32,7 @@ export const useUpdateWorkspace = () => {
 
       toastService.show({
         title: "Success",
-        description: "Successfully updated your email",
+        description: "Successfully updated your workspace",
         status: "success",
       });
     },
