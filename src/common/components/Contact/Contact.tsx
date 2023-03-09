@@ -51,7 +51,11 @@ const Contact: React.FC<Props> = ({ contact }) => {
         <BaseFlex gap="0.5rem" align="center">
           <BaseText>Email:</BaseText>
           <BaseText>
-            <a href={`mailto:${contact?.email}`}>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`mailto:${contact?.email}`}
+            >
               <BaseButton variant="link">{contact?.email}</BaseButton>
             </a>
           </BaseText>
