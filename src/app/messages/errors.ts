@@ -18,6 +18,7 @@ export const LAST_NAME_REQUIRED_ERROR = "Last name is a required field!";
 export const WORKSPACE_REQUIRED_ERROR = "Workspace is a required field!";
 
 export const WEBSITE_REQUIRED_ERROR = "Website is a required field!";
+export const WEBSITE_INVALID_ERROR = "Please enter a valid website link!";
 
 export const RATE_REQUIRED_ERROR = "Rate is a required field!";
 export const RATE_MIN_ERROR = "Rate must be greater than or equal to 0";

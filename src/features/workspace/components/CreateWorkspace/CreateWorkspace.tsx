@@ -4,6 +4,7 @@ import { useCreateWorkspace } from "../../hooks/useCreateWorkspace";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
+  WEBSITE_INVALID_ERROR,
   WEBSITE_REQUIRED_ERROR,
   WORKSPACE_REQUIRED_ERROR,
 } from "@/app/messages/errors";
@@ -14,10 +15,14 @@ import BaseInput from "@/common/components/BaseInput/BaseInput";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import { CreateWorkspaceDetails } from "@/services/workspace/types";
+import { LINK_REGEX } from "@/common/regex/regex";
 
 const schema = yup.object().shape({
   workspace: yup.string().required(WORKSPACE_REQUIRED_ERROR),
-  website: yup.string().required(WEBSITE_REQUIRED_ERROR),
+  website: yup
+    .string()
+    .required(WEBSITE_REQUIRED_ERROR)
+    .matches(LINK_REGEX, WEBSITE_INVALID_ERROR),
 });
 
 interface Props {
