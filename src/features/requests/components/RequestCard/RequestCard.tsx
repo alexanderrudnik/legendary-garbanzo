@@ -118,7 +118,6 @@ const RequestCard: React.FC<Props> = ({
         <>
           <BaseButton
             leftIcon={<InfoIcon />}
-            width="100%"
             onClick={(event) => {
               event.stopPropagation();
               onContact();

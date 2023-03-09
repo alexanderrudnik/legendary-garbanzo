@@ -71,7 +71,6 @@ const UpdatePassword: React.FC = () => {
       <BaseButton
         leftIcon={<CheckIcon />}
         marginTop="2.5rem"
-        width="100%"
         type="submit"
         isLoading={isUpdatingPassword}
       >

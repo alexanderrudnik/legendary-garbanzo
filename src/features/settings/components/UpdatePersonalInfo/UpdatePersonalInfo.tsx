@@ -100,7 +100,6 @@ const UpdatePersonalInfo: React.FC = () => {
       <BaseButton
         leftIcon={<CheckIcon />}
         marginTop="2.5rem"
-        width="100%"
         isLoading={isUpdatingPersonalInfo}
         type="submit"
       >

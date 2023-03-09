@@ -80,7 +80,6 @@ const SendNotification: React.FC = () => {
           <BaseButton
             leftIcon={<EmailIcon />}
             marginTop="2.5rem"
-            width="100%"
             isLoading={isSendingNotification}
             variant="solid"
             type="submit"

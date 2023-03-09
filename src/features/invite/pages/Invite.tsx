@@ -80,7 +80,6 @@ const Invite: React.FC = () => {
         <BaseButton
           leftIcon={<EmailIcon />}
           marginTop="2.5rem"
-          width="100%"
           isLoading={isInvitingUser}
           type="submit"
         >

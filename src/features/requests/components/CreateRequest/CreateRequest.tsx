@@ -304,7 +304,6 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
       <BaseButton
         leftIcon={<CheckIcon />}
         marginTop="2.5rem"
-        width="100%"
         isLoading={isLoading}
         onClick={handleSubmit(submit)}
         variant="solid"

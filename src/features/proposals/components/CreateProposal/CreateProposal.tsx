@@ -324,7 +324,6 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
 
       <BaseButton
         leftIcon={<CheckIcon />}
-        width="100%"
         marginTop="2.5rem"
         isLoading={isLoading}
         onClick={handleSubmit(submit)}

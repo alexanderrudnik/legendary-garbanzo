@@ -119,7 +119,6 @@ const ProposalCard: React.FC<Props> = ({
       footer={
         <BaseButton
           leftIcon={<InfoIcon />}
-          width="100%"
           onClick={(event) => {
             event.stopPropagation();
             onContact();

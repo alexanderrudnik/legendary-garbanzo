@@ -90,7 +90,6 @@ const ContactUs: React.FC = () => {
           <BaseButton
             leftIcon={<EmailIcon />}
             marginTop="2.5rem"
-            width="100%"
             isLoading={isContacting}
             variant="solid"
             type="submit"

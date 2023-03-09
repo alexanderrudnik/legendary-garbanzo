@@ -61,7 +61,6 @@ const UpdateEmail: React.FC = () => {
       <BaseButton
         leftIcon={<CheckIcon />}
         marginTop="2.5rem"
-        width="100%"
         type="submit"
         isLoading={isUpdatingEmail}
       >
