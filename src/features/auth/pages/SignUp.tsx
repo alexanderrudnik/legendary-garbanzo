@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -55,6 +55,8 @@ const schema = yup.object().shape({
 });
 
 const SignUp: React.FC = () => {
+  const timeoutId = useRef<ReturnType<typeof setTimeout> | undefined>();
+
   const [isSignUpAccessed, setIsSignUpAccessed] = useState(false);
   const [show, setShow] = useState(false);
 
@@ -63,6 +65,8 @@ const SignUp: React.FC = () => {
   const [searchParams] = useSearchParams();
 
   const email = useMemo(() => searchParams.get("email"), [searchParams]);
+
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -92,6 +96,18 @@ const SignUp: React.FC = () => {
   const onSubmit = (values: SignUpDetails) => {
     signUp(values);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      timeoutId.current = setTimeout(() => {
+        navigate(RouteEnum.SIGN_IN);
+      }, 1000 * 5);
+
+      return () => {
+        clearTimeout(timeoutId.current);
+      };
+    }
+  }, [isSuccess, navigate]);
 
   return isLoading ? (
     <Loading />
