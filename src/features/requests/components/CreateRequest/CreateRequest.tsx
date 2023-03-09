@@ -93,6 +93,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
     mode: "onBlur",
     defaultValues: values
       ? {
+          title: values.title,
           rate: values.rate,
           yearsOfExperience: values.yearsOfExperience,
           skills: values.skills,
