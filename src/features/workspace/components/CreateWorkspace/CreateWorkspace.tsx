@@ -54,7 +54,7 @@ const CreateWorkspace: React.FC<Props> = ({ cb }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <BaseFlex gap="1rem" direction="column">
         <BaseFormControl isInvalid={Boolean(errors.workspace)}>
-          <BaseFormLabel>Workspace</BaseFormLabel>
+          <BaseFormLabel>Workspace (company name)</BaseFormLabel>
           <BaseInput
             variant="filled"
             placeholder="Enter your workspace"
