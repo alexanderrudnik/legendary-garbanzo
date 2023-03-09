@@ -22,6 +22,7 @@ const AuthLayout: React.FC = () => {
         alignItems="center"
         backgroundImage={bg}
         backgroundSize="cover"
+        backgroundPosition="center"
       >
         <BaseCenter width="100%" maxWidth={400}>
           <BaseContainer>

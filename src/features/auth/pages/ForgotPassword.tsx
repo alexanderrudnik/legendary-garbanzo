@@ -64,7 +64,6 @@ const ForgotPassword: React.FC = () => {
       <Link to={RouteEnum.SIGN_IN}>
         <BaseButton
           leftIcon={<ArrowBackIcon />}
-          colorScheme="blackAlpha"
           marginBottom="3rem"
           variant="link"
         >
