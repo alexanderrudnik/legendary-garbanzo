@@ -11,11 +11,8 @@ import {
   EMAIL_REQUIRED_ERROR,
   FIRST_NAME_REQUIRED_ERROR,
   LAST_NAME_REQUIRED_ERROR,
-  PASSWORD_LENGTH_ERROR,
-  PASSWORD_LOWER_CASE_ERROR,
-  PASSWORD_NUMBER_ERROR,
+  PASSWORD_INVALID_ERROR,
   PASSWORD_REQUIRED_ERROR,
-  PASSWORD_UPPER_CASE_ERROR,
   TELEGRAM_AT_ERROR,
 } from "@/app/messages/errors";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
@@ -24,12 +21,7 @@ import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
 import BaseInput from "@/common/components/BaseInput/BaseInput";
 import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseFormErrorMessage";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
-import {
-  PASSWORD_LOWER_CASE_REGEX,
-  PASSWORD_NUMBER_REGEX,
-  PASSWORD_UPPER_CASE_REGEX,
-  TELEGRAM_AT_REGEX,
-} from "@/common/regex/regex";
+import { PASSWORD_REGEX, TELEGRAM_AT_REGEX } from "@/common/regex/regex";
 import { useSignUp } from "../hooks/useSignUp";
 import BaseText from "@/common/components/BaseText/BaseText";
 import { SignUpDetails } from "@/services/auth/types";
@@ -43,10 +35,7 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required(PASSWORD_REQUIRED_ERROR)
-    .min(8, PASSWORD_LENGTH_ERROR)
-    .matches(PASSWORD_NUMBER_REGEX, PASSWORD_NUMBER_ERROR)
-    .matches(PASSWORD_UPPER_CASE_REGEX, PASSWORD_UPPER_CASE_ERROR)
-    .matches(PASSWORD_LOWER_CASE_REGEX, PASSWORD_LOWER_CASE_ERROR),
+    .matches(PASSWORD_REGEX, PASSWORD_INVALID_ERROR),
   firstName: yup.string().required(FIRST_NAME_REQUIRED_ERROR),
   lastName: yup.string().required(LAST_NAME_REQUIRED_ERROR),
   telegram: yup

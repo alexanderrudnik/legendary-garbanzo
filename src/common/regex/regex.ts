@@ -1,6 +1,4 @@
-export const PASSWORD_NUMBER_REGEX = /(?=.*\d)/;
-export const PASSWORD_UPPER_CASE_REGEX = /(?=.*[A-Z])/;
-export const PASSWORD_LOWER_CASE_REGEX = /(?=.*[a-z])/;
+export const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
 export const TELEGRAM_AT_REGEX = /^((?!@).)*$/;
 

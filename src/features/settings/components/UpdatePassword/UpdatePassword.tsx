@@ -3,11 +3,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {
-  PASSWORD_LENGTH_ERROR,
-  PASSWORD_LOWER_CASE_ERROR,
-  PASSWORD_NUMBER_ERROR,
   PASSWORD_REQUIRED_ERROR,
-  PASSWORD_UPPER_CASE_ERROR,
+  PASSWORD_INVALID_ERROR,
 } from "@/app/messages/errors";
 import BaseFormControl from "@/common/components/BaseFormControl/BaseFormControl";
 import BaseFormLabel from "@/common/components/BaseFormLabel/BaseFormLabel";
@@ -16,11 +13,7 @@ import BaseFormErrorMessage from "@/common/components/BaseFormErrorMessage/BaseF
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import { UpdatePasswordDetails } from "@/services/user/types";
-import {
-  PASSWORD_LOWER_CASE_REGEX,
-  PASSWORD_NUMBER_REGEX,
-  PASSWORD_UPPER_CASE_REGEX,
-} from "@/common/regex/regex";
+import { PASSWORD_REGEX } from "@/common/regex/regex";
 import { useUpdatePassword } from "../../hooks/useUpdatePassword";
 import { CheckIcon } from "@chakra-ui/icons";
 
@@ -28,10 +21,7 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required(PASSWORD_REQUIRED_ERROR)
-    .min(8, PASSWORD_LENGTH_ERROR)
-    .matches(PASSWORD_NUMBER_REGEX, PASSWORD_NUMBER_ERROR)
-    .matches(PASSWORD_UPPER_CASE_REGEX, PASSWORD_UPPER_CASE_ERROR)
-    .matches(PASSWORD_LOWER_CASE_REGEX, PASSWORD_LOWER_CASE_ERROR),
+    .matches(PASSWORD_REGEX, PASSWORD_INVALID_ERROR),
 });
 
 const UpdatePassword: React.FC = () => {
