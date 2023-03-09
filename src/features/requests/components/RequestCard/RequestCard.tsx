@@ -9,7 +9,6 @@ import { IRequest } from "@/services/request/types";
 import { dateService } from "@/services/date/dateService";
 import { PositionEnum } from "@/common/models/PositionEnum";
 import { getPlural } from "@/common/utils/getPlural";
-import { useColorModeValue } from "@chakra-ui/react";
 import BaseTag from "@/common/components/BaseTag/BaseTag";
 import { Link, useNavigate } from "react-router-dom";
 import { RouteEnum } from "@/common/models/RouteEnum";

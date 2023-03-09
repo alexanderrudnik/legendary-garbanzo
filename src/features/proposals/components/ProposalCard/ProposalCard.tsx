@@ -8,7 +8,6 @@ import { dateService } from "@/services/date/dateService";
 import { PositionEnum } from "@/common/models/PositionEnum";
 import { getPlural } from "@/common/utils/getPlural";
 import { Proposal } from "@/services/proposal/types";
-import { useColorModeValue } from "@chakra-ui/react";
 import BaseTag from "@/common/components/BaseTag/BaseTag";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import { Link, useNavigate } from "react-router-dom";
