@@ -36,6 +36,7 @@ import { SignUpDetails } from "@/services/auth/types";
 import { RouteEnum } from "@/common/models/RouteEnum";
 import BaseInputGroup from "@/common/components/BaseInputGroup/BaseInputGroup";
 import BaseInputLeftAddon from "@/common/components/BaseInputLeftAddon/BaseInputLeftAddon";
+import BaseInputRightElement from "@/common/components/BaseInputRightElement/BaseInputRightElement";
 
 const schema = yup.object().shape({
   email: yup.string().email(EMAIL_INVALID_ERROR).required(EMAIL_REQUIRED_ERROR),
@@ -55,6 +56,7 @@ const schema = yup.object().shape({
 
 const SignUp: React.FC = () => {
   const [isSignUpAccessed, setIsSignUpAccessed] = useState(false);
+  const [show, setShow] = useState(false);
 
   const { isLoading, data: invitedUsers } = useAllInvitedUsers();
 
@@ -154,12 +156,24 @@ const SignUp: React.FC = () => {
 
         <BaseFormControl isInvalid={Boolean(errors.password)}>
           <BaseFormLabel>Password</BaseFormLabel>
-          <BaseInput
-            variant="filled"
-            type="password"
-            placeholder="Enter password"
-            {...register("password")}
-          />
+          <BaseInputGroup>
+            <BaseInput
+              type={show ? "text" : "password"}
+              variant="filled"
+              placeholder="Enter password"
+              {...register("password")}
+            />
+            <BaseInputRightElement width="4.5rem">
+              <BaseButton
+                variant="outline"
+                h="1.75rem"
+                size="sm"
+                onClick={() => setShow(!show)}
+              >
+                {show ? "Hide" : "Show"}
+              </BaseButton>
+            </BaseInputRightElement>
+          </BaseInputGroup>
           <BaseFormErrorMessage>
             {errors.password?.message}
           </BaseFormErrorMessage>
