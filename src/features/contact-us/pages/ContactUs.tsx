@@ -14,7 +14,7 @@ import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
 import { MESSAGE_REQUIRED_ERROR } from "@/app/messages/errors";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import { useContact } from "../hooks/useContact";
-import { EmailIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EmailIcon } from "@chakra-ui/icons";
 import { ContactValues } from "@/services/contact/types";
 import BaseInput from "@/common/components/BaseInput/BaseInput";
 import { getBase64 } from "@/common/utils/getBase64";
@@ -28,18 +28,26 @@ const ContactUs: React.FC = () => {
     handleSubmit,
     register,
     reset,
+    resetField,
+    watch,
     formState: { errors },
   } = useForm<ContactValues>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
 
+  const watchFields = watch();
+
+  console.log(watchFields);
+
   const { isLoading: isContacting, mutateAsync: contact } = useContact();
 
   const onSubmit = async (values: ContactValues) => {
     const data = {
       message: values.message,
-      file: await getBase64(Array.from(values.file)[0]),
+      file: values.file
+        ? await getBase64(Array.from(values.file)[0])
+        : undefined,
     };
 
     contact(data).then(() => reset());
@@ -74,13 +82,25 @@ const ContactUs: React.FC = () => {
 
             <BaseFormControl isInvalid={Boolean(errors.file)}>
               <BaseFormLabel>Upload file</BaseFormLabel>
-              <BaseInput
-                borderRadius="none"
-                type="file"
-                accept="image/*"
-                variant="unstyled"
-                {...register("file")}
-              />
+              <BaseFlex justify="flex-start" align="center" gap="0.5rem">
+                <BaseInput
+                  width="unset"
+                  borderRadius="none"
+                  type="file"
+                  accept="image/*"
+                  variant="unstyled"
+                  {...register("file")}
+                />
+
+                {watchFields.file && Array.from(watchFields.file).length ? (
+                  <BaseButton
+                    variant="outline"
+                    onClick={() => resetField("file")}
+                  >
+                    <DeleteIcon />
+                  </BaseButton>
+                ) : null}
+              </BaseFlex>
               <BaseFormErrorMessage>
                 {errors.message?.message}
               </BaseFormErrorMessage>
