@@ -7,7 +7,7 @@ import BaseBox from "@/common/components/BaseBox/BaseBox";
 import { RouteEnum } from "@/common/models/RouteEnum";
 import BaseImage from "@/common/components/BaseImage/BaseImage";
 import logo from "@/app/assets/images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import MenuDrawer from "../MenuDrawer/MenuDrawer";
@@ -17,6 +17,7 @@ import { storageService } from "@/services/storage/storageService";
 import { StorageEnum } from "@/common/models/StorageEnum";
 import { queryClient } from "@/common/queryClient/queryClient";
 import { QueryKeysEnum } from "@/common/models/QueryKeysEnum";
+import { usePrimaryColor } from "@/common/hooks/usePrimaryColor";
 
 const Header: React.FC = () => {
   const { data: user } = useMe();
@@ -31,6 +32,8 @@ const Header: React.FC = () => {
     "0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06)",
     "none"
   );
+
+  const location = useLocation();
 
   const bg = useColorModeValue(theme.colors.white, theme.colors.gray[700]);
 
@@ -94,6 +97,8 @@ const Header: React.FC = () => {
 
   const name = useMemo(() => `${user?.firstName} ${user?.lastName}`, [user]);
 
+  const color = usePrimaryColor();
+
   return (
     <BaseBox
       zIndex={999}
@@ -137,8 +142,25 @@ const Header: React.FC = () => {
               {nav.map((item) => (
                 <Link key={item.label} to={item.href}>
                   <BaseButton
+                    position="relative"
                     variant="unstyled"
-                    _hover={{ color: "primary.500" }}
+                    _after={{
+                      content: "''",
+                      width: "100%",
+                      height: "1px",
+                      background: color,
+                      position: "absolute",
+                      top: "100%",
+                      left: 0,
+                      opacity: 0,
+                      transition: "opacity 0.3s ease",
+                    }}
+                    _hover={{
+                      _after: {
+                        opacity: 1,
+                      },
+                    }}
+                    {...(location.pathname === item.href && { color })}
                   >
                     {item.label}
                   </BaseButton>

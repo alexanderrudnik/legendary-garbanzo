@@ -20,6 +20,7 @@ import { getCountryName } from "@/common/utils/getCountryName";
 import BaseHeading from "@/common/components/BaseHeading/BaseHeading";
 import BaseText from "@/common/components/BaseText/BaseText";
 import { FULL_DATE_TIME_FORMAT } from "@/services/date/dateFormats";
+import { usePrimaryColor } from "@/common/hooks/usePrimaryColor";
 
 interface Props extends Proposal {
   onContact: () => void;
@@ -74,7 +75,7 @@ const ProposalCard: React.FC<Props> = ({
     navigate(`${RouteEnum.REQUESTS}/edit/${id}`);
   };
 
-  const color = useColorModeValue("primary.500", "primary.200");
+  const color = usePrimaryColor();
 
   return (
     <BaseCard

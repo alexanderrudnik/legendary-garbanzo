@@ -1,20 +1,11 @@
 import React from "react";
-import {
-  Input as ChakraInput,
-  InputProps,
-  useColorModeValue,
-  useTheme,
-} from "@chakra-ui/react";
+import { Input as ChakraInput, InputProps } from "@chakra-ui/react";
+import { usePrimaryColor } from "@/common/hooks/usePrimaryColor";
 
 export interface BaseInputProps extends InputProps {}
 
 const BaseInput = React.forwardRef<any, InputProps>(({ ...props }, ref) => {
-  const theme = useTheme();
-
-  const color = useColorModeValue(
-    theme.colors.primary[500],
-    theme.colors.primary[200]
-  );
+  const color = usePrimaryColor();
 
   return <ChakraInput ref={ref} focusBorderColor={color} {...props} />;
 });
