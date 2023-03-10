@@ -63,7 +63,7 @@ const SignUp: React.FC = () => {
     formState: { errors },
   } = useForm<SignUpDetails>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: {
       email: email || "",
     },

@@ -55,7 +55,10 @@ const schema = yup.object().shape({
     .transform((value) => (isNaN(value) ? undefined : value))
     .required(YEARS_OF_EXPERIENCE_REQUIRED_ERROR)
     .min(0, YEARS_OF_EXPERIENCE_MIN_ERROR),
-  skills: yup.array().required(SKILLS_REQUIRED_ERROR),
+  skills: yup
+    .array()
+    .required(SKILLS_REQUIRED_ERROR)
+    .min(1, SKILLS_REQUIRED_ERROR),
   engLevel: yup.string().required(ENG_LEVEL_REQUIRED_ERROR),
   startDate: yup
     .date()
@@ -90,7 +93,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
     formState: { errors },
   } = useForm<RequestInputs>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: values
       ? {
           title: values.title,

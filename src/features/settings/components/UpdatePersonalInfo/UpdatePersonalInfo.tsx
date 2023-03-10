@@ -38,7 +38,7 @@ const UpdatePersonalInfo: React.FC = () => {
     formState: { errors },
   } = useForm<UpdatePersonalInfoDetails>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: {
       firstName: me?.firstName,
       lastName: me?.lastName,

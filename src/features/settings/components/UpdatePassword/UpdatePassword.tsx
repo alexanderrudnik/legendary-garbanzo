@@ -31,7 +31,7 @@ const UpdatePassword: React.FC = () => {
     formState: { errors },
   } = useForm<UpdatePasswordDetails>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const { mutateAsync: updatePassword, isLoading: isUpdatingPassword } =

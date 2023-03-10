@@ -58,7 +58,10 @@ const schema = yup.object().shape({
     .transform((value) => (isNaN(value) ? undefined : value))
     .required(YEARS_OF_EXPERIENCE_REQUIRED_ERROR)
     .min(0, YEARS_OF_EXPERIENCE_MIN_ERROR),
-  skills: yup.array().required(SKILLS_REQUIRED_ERROR),
+  skills: yup
+    .array()
+    .required(SKILLS_REQUIRED_ERROR)
+    .min(1, SKILLS_REQUIRED_ERROR),
   engLevel: yup.string().required(ENG_LEVEL_REQUIRED_ERROR),
   CVLink: yup
     .string()
@@ -97,7 +100,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
     formState: { errors },
   } = useForm<ProposalsInputs>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: values
       ? {
           title: values.title,

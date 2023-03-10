@@ -33,7 +33,7 @@ const ForgotPassword: React.FC = () => {
     formState: { errors },
   } = useForm<ResetPasswordDetails>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const {

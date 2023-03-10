@@ -30,7 +30,7 @@ const UpdateEmail: React.FC = () => {
     formState: { errors },
   } = useForm<UpdateEmailDetails>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: {
       email: me?.email,
     },

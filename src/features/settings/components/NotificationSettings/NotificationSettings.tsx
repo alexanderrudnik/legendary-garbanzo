@@ -24,7 +24,7 @@ const NotificationSettings: React.FC = () => {
     formState: { errors },
   } = useForm<{ isMailingEnabled: boolean }>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: {
       isMailingEnabled: me?.isMailingEnabled,
     },

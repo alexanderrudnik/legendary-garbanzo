@@ -33,7 +33,7 @@ const WorkspaceSettings: React.FC = () => {
     formState: { errors },
   } = useForm<UpdateWorkspaceDetails>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: {
       name: workspace?.name,
       website: workspace?.website,

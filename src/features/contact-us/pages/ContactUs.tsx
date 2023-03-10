@@ -33,7 +33,7 @@ const ContactUs: React.FC = () => {
     formState: { errors },
   } = useForm<ContactValues>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const watchFields = watch();

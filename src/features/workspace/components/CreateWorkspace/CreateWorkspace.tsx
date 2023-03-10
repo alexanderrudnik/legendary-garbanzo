@@ -39,7 +39,7 @@ const CreateWorkspace: React.FC<Props> = ({ cb }) => {
     formState: { errors },
   } = useForm<CreateWorkspaceDetails>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const onSubmit = (values: CreateWorkspaceDetails) => {

@@ -33,7 +33,7 @@ const Invite: React.FC = () => {
     formState: { errors },
   } = useForm<InviteUserDetails>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const { isLoading: isInvitingUser, mutateAsync: inviteUser } =

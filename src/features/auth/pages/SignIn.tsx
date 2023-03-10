@@ -37,7 +37,7 @@ const SignIn: React.FC = () => {
     formState: { errors },
   } = useForm<SignInDetails>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const { isLoading: isSigningIn, mutateAsync: signIn } = useSignIn();

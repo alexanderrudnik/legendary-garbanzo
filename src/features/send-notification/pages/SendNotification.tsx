@@ -33,7 +33,7 @@ const SendNotification: React.FC = () => {
     formState: { errors },
   } = useForm<SendNotificationDetails>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const { mutateAsync: sendNotification, isLoading: isSendingNotification } =
