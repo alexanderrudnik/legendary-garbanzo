@@ -127,13 +127,7 @@ const BaseTagInput = React.forwardRef<any, Props>(
                 handleAdd(inputValue);
               }
             }}
-            onBlur={(event) => {
-              if (onBlur) {
-                onBlur(event);
-              }
-
-              setInputValue("");
-            }}
+            onBlur={onBlur}
             variant="unstyled"
           />
         </BaseFlex>
