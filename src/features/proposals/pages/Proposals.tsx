@@ -13,8 +13,9 @@ import { useMe } from "@/common/hooks/useMe";
 import { Filters as IFilters } from "@/common/models/Filters";
 import { RouteEnum } from "@/common/models/RouteEnum";
 import { dateService } from "@/services/date/dateService";
-import { getFilteredData } from "@/services/filter/filterService";
+import { getFilteredData, validate } from "@/services/filter/filterService";
 import { Proposal } from "@/services/proposal/types";
+import { toastService } from "@/services/toast/toastService";
 import { AddIcon, SearchIcon } from "@chakra-ui/icons";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -65,8 +66,19 @@ const Proposals: React.FC = () => {
   const [filteredProposals, setFilteredProposals] = useState(proposals);
 
   const handleFilter = () => {
-    setFilteredProposals(getFilteredData(proposals, filters, me?.id || "0"));
-    onCloseFiltersDrawer();
+    const errors = validate(filters);
+    if (Object.values(errors).some((error) => error)) {
+      toastService.show({
+        title: "An error occured",
+        description: Object.entries(errors).filter(
+          ([key, value]) => value
+        )[0][1],
+        status: "error",
+      });
+    } else {
+      setFilteredProposals(getFilteredData(proposals, filters, me?.id || "0"));
+      onCloseFiltersDrawer();
+    }
   };
 
   const handleClear = useCallback(() => {

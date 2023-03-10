@@ -7,6 +7,13 @@ import { dateService } from "../date/dateService";
 
 type Data = Proposal[] | IRequest[];
 
+type Error = string | null;
+export interface FilterErrors {
+  rate: Error;
+  yearsOfExperience: Error;
+  weeklyEmployment: Error;
+}
+
 class FilterService {
   filterByRate(data: Data, rate: [string, string]) {
     return data.filter(
@@ -69,6 +76,23 @@ class FilterService {
           parseFloat(weeklyEmployment[1] || "999999999")
     );
   }
+
+  validateFilters(filters: Filters): FilterErrors {
+    return {
+      rate:
+        filters.rate[0] > filters.rate[1]
+          ? "Min. rate can not be higher than max.rate"
+          : null,
+      yearsOfExperience:
+        filters.yearsOfExperience[0] > filters.yearsOfExperience[1]
+          ? "Min. years can not be higher than max. years"
+          : null,
+      weeklyEmployment:
+        filters.weeklyEmployment[0] > filters.weeklyEmployment[1]
+          ? "Min. employment can not be higher than max. employment"
+          : null,
+    };
+  }
 }
 
 export const filterService = new FilterService();
@@ -121,3 +145,6 @@ export const getFilteredData = (
 
   return [];
 };
+
+export const validate = (filters: Filters) =>
+  filterService.validateFilters(filters);

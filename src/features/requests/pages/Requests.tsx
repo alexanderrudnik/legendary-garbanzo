@@ -14,7 +14,7 @@ import Contact from "../../../common/components/Contact/Contact";
 import { IRequest } from "@/services/request/types";
 import BaseDrawer from "@/common/components/BaseDrawer/BaseDrawer";
 import Filters from "../../../common/components/Filters/Filters";
-import { getFilteredData } from "@/services/filter/filterService";
+import { getFilteredData, validate } from "@/services/filter/filterService";
 import { Filters as IFilters } from "@/common/models/Filters";
 import { useNavigate } from "react-router-dom";
 import { RouteEnum } from "@/common/models/RouteEnum";
@@ -23,6 +23,7 @@ import { RequestInputs } from "../models/RequestInputs";
 import { dateService } from "@/services/date/dateService";
 import { useMe } from "@/common/hooks/useMe";
 import { AddIcon, SearchIcon } from "@chakra-ui/icons";
+import { toastService } from "@/services/toast/toastService";
 
 const initialFiltersState: IFilters = {
   rate: ["", ""],
@@ -64,8 +65,19 @@ const Requests: React.FC = () => {
   const [filteredRequests, setFilteredRequests] = useState(requests);
 
   const handleFilter = () => {
-    setFilteredRequests(getFilteredData(requests, filters, me?.id || "0"));
-    onCloseFiltersDrawer();
+    const errors = validate(filters);
+    if (Object.values(errors).some((error) => error)) {
+      toastService.show({
+        title: "An error occured",
+        description: Object.entries(errors).filter(
+          ([key, value]) => value
+        )[0][1],
+        status: "error",
+      });
+    } else {
+      setFilteredRequests(getFilteredData(requests, filters, me?.id || "0"));
+      onCloseFiltersDrawer();
+    }
   };
 
   const handleClear = useCallback(() => {
