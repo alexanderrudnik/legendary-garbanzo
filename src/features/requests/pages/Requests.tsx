@@ -83,8 +83,7 @@ const Requests: React.FC = () => {
   const handleClear = useCallback(() => {
     setFilteredRequests(requests);
     setFilters(initialFiltersState);
-    onCloseFiltersDrawer();
-  }, [requests, onCloseFiltersDrawer]);
+  }, [requests]);
 
   useEffect(() => {
     handleClear();

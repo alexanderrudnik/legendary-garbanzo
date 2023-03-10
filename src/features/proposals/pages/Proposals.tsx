@@ -84,8 +84,7 @@ const Proposals: React.FC = () => {
   const handleClear = useCallback(() => {
     setFilteredProposals(proposals);
     setFilters(initialFiltersState);
-    onCloseFiltersDrawer();
-  }, [proposals, onCloseFiltersDrawer]);
+  }, [proposals]);
 
   useEffect(() => {
     handleClear();
