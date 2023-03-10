@@ -51,7 +51,7 @@ const UpdateEmail: React.FC = () => {
           <BaseInput
             type="email"
             variant="filled"
-            placeholder="Enter email"
+            placeholder="alex@email.com"
             {...register("email")}
           />
           <BaseFormErrorMessage>{errors.email?.message}</BaseFormErrorMessage>

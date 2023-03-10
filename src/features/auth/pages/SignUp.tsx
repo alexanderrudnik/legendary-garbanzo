@@ -111,7 +111,7 @@ const SignUp: React.FC = () => {
           <BaseFormLabel>First Name</BaseFormLabel>
           <BaseInput
             variant="filled"
-            placeholder="Enter first name"
+            placeholder="Alex"
             {...register("firstName")}
           />
           <BaseFormErrorMessage>
@@ -123,7 +123,7 @@ const SignUp: React.FC = () => {
           <BaseFormLabel>Last Name</BaseFormLabel>
           <BaseInput
             variant="filled"
-            placeholder="Enter last name"
+            placeholder="Thorn"
             {...register("lastName")}
           />
           <BaseFormErrorMessage>
@@ -153,7 +153,7 @@ const SignUp: React.FC = () => {
             isDisabled
             variant="filled"
             type="email"
-            placeholder="Enter email"
+            placeholder="thornalex"
             {...register("email")}
           />
           <BaseFormErrorMessage>{errors.email?.message}</BaseFormErrorMessage>

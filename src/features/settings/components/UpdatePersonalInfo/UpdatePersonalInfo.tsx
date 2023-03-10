@@ -60,7 +60,7 @@ const UpdatePersonalInfo: React.FC = () => {
           <BaseFormLabel>First name</BaseFormLabel>
           <BaseInput
             variant="filled"
-            placeholder="Enter first name"
+            placeholder="Alex"
             {...register("firstName")}
           />
           <BaseFormErrorMessage>
@@ -72,7 +72,7 @@ const UpdatePersonalInfo: React.FC = () => {
           <BaseFormLabel>Last name</BaseFormLabel>
           <BaseInput
             variant="filled"
-            placeholder="Enter last name"
+            placeholder="Thorn"
             {...register("lastName")}
           />
           <BaseFormErrorMessage>
@@ -87,7 +87,7 @@ const UpdatePersonalInfo: React.FC = () => {
             <BaseInput
               borderLeftRadius="none"
               variant="filled"
-              placeholder="Enter telegram"
+              placeholder="thornalex"
               {...register("telegram")}
             />
           </BaseInputGroup>

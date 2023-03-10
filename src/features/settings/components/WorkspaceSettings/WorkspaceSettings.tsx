@@ -62,7 +62,7 @@ const WorkspaceSettings: React.FC = () => {
             <BaseFormLabel>Workspace</BaseFormLabel>
             <BaseInput
               variant="filled"
-              placeholder="Enter workspace"
+              placeholder="Google"
               {...register("name")}
             />
             <BaseFormErrorMessage>{errors.name?.message}</BaseFormErrorMessage>
@@ -72,7 +72,7 @@ const WorkspaceSettings: React.FC = () => {
             <BaseFormLabel>Website</BaseFormLabel>
             <BaseInput
               variant="filled"
-              placeholder="Enter website"
+              placeholder="https://google.com"
               {...register("website")}
             />
             <BaseFormErrorMessage>

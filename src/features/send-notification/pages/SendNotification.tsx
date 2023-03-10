@@ -56,7 +56,7 @@ const SendNotification: React.FC = () => {
               <BaseFormLabel>Title</BaseFormLabel>
               <BaseInput
                 variant="filled"
-                placeholder="Enter title"
+                placeholder="Attention"
                 {...register("title")}
               />
               <BaseFormErrorMessage>
@@ -68,7 +68,7 @@ const SendNotification: React.FC = () => {
               <BaseFormLabel>Message (HTML)</BaseFormLabel>
               <BaseTextArea
                 variant="filled"
-                placeholder="Enter message"
+                placeholder="<p>Some message</p>"
                 {...register("message")}
               />
               <BaseFormErrorMessage>

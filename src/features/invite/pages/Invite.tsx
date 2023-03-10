@@ -61,7 +61,7 @@ const Invite: React.FC = () => {
             <BaseInput
               variant="filled"
               type="email"
-              placeholder="Enter email"
+              placeholder="alex@email.com"
               {...register("email")}
             />
             {invitedUsers && (

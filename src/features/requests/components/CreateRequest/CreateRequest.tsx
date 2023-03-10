@@ -124,7 +124,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           <BaseFormLabel>Title</BaseFormLabel>
           <BaseInput
             variant="filled"
-            placeholder="Enter title"
+            placeholder="Looking for Frontend dev"
             {...register("title")}
           />
           <BaseFormErrorMessage>{errors.title?.message}</BaseFormErrorMessage>
@@ -136,7 +136,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             <BaseInput
               type="number"
               variant="filled"
-              placeholder="Enter rate e.g. 40"
+              placeholder="50"
               {...register("rate")}
             />
             <BaseInputRightElement>$</BaseInputRightElement>
@@ -151,7 +151,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             <BaseInput
               variant="filled"
               type="number"
-              placeholder="Enter years of experience"
+              placeholder="2"
               {...register("yearsOfExperience")}
             />
             <BaseInputRightElement width="4rem">years</BaseInputRightElement>
@@ -170,7 +170,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
               <BaseTagInput
                 defaultValues={SKILLS}
                 variant="filled"
-                placeholder="Enter skill e.g. React"
+                placeholder="React"
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
@@ -199,7 +199,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           <BaseFormLabel>Description</BaseFormLabel>
           <BaseTextArea
             variant="filled"
-            placeholder="Enter description"
+            placeholder="Looking for Frontend developer"
             {...register("description")}
           />
           <BaseFormErrorMessage>
@@ -212,7 +212,6 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           <BaseInput
             type="date"
             variant="filled"
-            placeholder="Enter start date"
             min={dateService.getNow().format(FULL_DATE_FORMAT)}
             {...register("startDate")}
           />
@@ -240,7 +239,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             <BaseInput
               type="number"
               variant="filled"
-              placeholder="Enter duration"
+              placeholder="12"
               {...register("duration")}
             />
             <BaseInputRightElement width="5rem">months</BaseInputRightElement>
@@ -256,7 +255,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             <BaseInput
               type="number"
               variant="filled"
-              placeholder="Enter weekly employment"
+              placeholder="20"
               {...register("weeklyEmployment")}
             />
             <BaseInputRightElement width="5rem">hours</BaseInputRightElement>
@@ -270,7 +269,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           <BaseFormLabel>Location</BaseFormLabel>
           <BaseSelect
             variant="filled"
-            placeholder="Enter location"
+            placeholder="Belarus"
             {...register("location")}
           >
             {LOCATIONS.map((country) => (
@@ -288,7 +287,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           <BaseFormLabel>Position</BaseFormLabel>
           <BaseSelect
             variant="filled"
-            placeholder="Enter position"
+            placeholder="Frontend Developer"
             {...register("position")}
           >
             {(

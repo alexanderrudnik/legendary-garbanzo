@@ -54,10 +54,10 @@ const CreateWorkspace: React.FC<Props> = ({ cb }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <BaseFlex gap="1rem" direction="column">
         <BaseFormControl isInvalid={Boolean(errors.workspace)}>
-          <BaseFormLabel>Workspace (company name)</BaseFormLabel>
+          <BaseFormLabel>Workspace</BaseFormLabel>
           <BaseInput
             variant="filled"
-            placeholder="Enter your workspace"
+            placeholder="Google"
             {...register("workspace")}
           />
           <BaseFormErrorMessage>
@@ -69,7 +69,7 @@ const CreateWorkspace: React.FC<Props> = ({ cb }) => {
           <BaseFormLabel>Website</BaseFormLabel>
           <BaseInput
             variant="filled"
-            placeholder="Enter your website"
+            placeholder="https://google.com"
             {...register("website")}
           />
           <BaseFormErrorMessage>{errors.website?.message}</BaseFormErrorMessage>

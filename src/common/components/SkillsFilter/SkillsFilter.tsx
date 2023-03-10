@@ -16,7 +16,7 @@ const SkillsFilter: React.FC<Props> = ({ value, onChange }) => {
       <BaseTagInput
         defaultValues={SKILLS}
         variant="filled"
-        placeholder="Type skills"
+        placeholder="React"
         value={value}
         onChange={onChange}
       />

@@ -15,7 +15,6 @@ const StartDateFilter: React.FC<Props> = ({ value, onChange }) => {
       <BaseInput
         type="Date"
         variant="filled"
-        placeholder="Enter start date"
         value={value}
         onChange={(event) => onChange(event.target.value)}
       />

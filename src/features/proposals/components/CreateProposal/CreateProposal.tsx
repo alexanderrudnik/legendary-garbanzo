@@ -134,7 +134,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           <BaseFormLabel>Title</BaseFormLabel>
           <BaseInput
             variant="filled"
-            placeholder="Enter title"
+            placeholder="Frontend dev"
             {...register("title")}
           />
           <BaseFormErrorMessage>{errors.title?.message}</BaseFormErrorMessage>
@@ -146,7 +146,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             <BaseInput
               type="number"
               variant="filled"
-              placeholder="Enter rate e.g. 40"
+              placeholder="50"
               {...register("rate")}
             />
             <BaseInputRightElement>$</BaseInputRightElement>
@@ -161,7 +161,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             <BaseInput
               variant="filled"
               type="number"
-              placeholder="Enter years of experience"
+              placeholder="2"
               {...register("yearsOfExperience")}
             />
             <BaseInputRightElement width="4rem">years</BaseInputRightElement>
@@ -180,7 +180,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
               <BaseTagInput
                 defaultValues={SKILLS}
                 variant="filled"
-                placeholder="Enter skill e.g. React"
+                placeholder="React"
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
@@ -211,7 +211,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           <BaseFormLabel>Description</BaseFormLabel>
           <BaseTextArea
             variant="filled"
-            placeholder="Enter description"
+            placeholder="Frontend developer"
             {...register("description")}
           />
           <BaseFormErrorMessage>
@@ -223,7 +223,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           <BaseFormLabel>CV link</BaseFormLabel>
           <BaseInput
             variant="filled"
-            placeholder="Enter CV link"
+            placeholder="https://google.com"
             {...register("CVLink")}
           />
           <BaseFormErrorMessage>{errors.CVLink?.message}</BaseFormErrorMessage>
@@ -231,12 +231,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
 
         <BaseFormControl isInvalid={Boolean(errors.startDate)}>
           <BaseFormLabel>Approx. start date</BaseFormLabel>
-          <BaseInput
-            type="date"
-            variant="filled"
-            placeholder="Enter start date"
-            {...register("startDate")}
-          />
+          <BaseInput type="date" variant="filled" {...register("startDate")} />
           <BaseButton
             marginTop="0.5rem"
             variant="ghost"
@@ -261,7 +256,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             <BaseInput
               type="number"
               variant="filled"
-              placeholder="Enter duration"
+              placeholder="12"
               {...register("duration")}
             />
             <BaseInputRightElement width="5rem">months</BaseInputRightElement>
@@ -277,7 +272,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
             <BaseInput
               type="number"
               variant="filled"
-              placeholder="Enter weekly employment"
+              placeholder="20"
               {...register("weeklyEmployment")}
             />
             <BaseInputRightElement width="5rem">hours</BaseInputRightElement>
@@ -291,7 +286,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           <BaseFormLabel>Location</BaseFormLabel>
           <BaseSelect
             variant="filled"
-            placeholder="Enter location"
+            placeholder="Belarus"
             {...register("location")}
           >
             {LOCATIONS.map((country) => (
@@ -309,7 +304,7 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           <BaseFormLabel>Position</BaseFormLabel>
           <BaseSelect
             variant="filled"
-            placeholder="Enter position"
+            placeholder="Frontend Developer"
             {...register("position")}
           >
             {(
