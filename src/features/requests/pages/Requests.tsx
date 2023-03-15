@@ -7,7 +7,6 @@ import CreateRequest from "../components/CreateRequest/CreateRequest";
 import { useRequests } from "../hooks/useRequests";
 import BaseSpinner from "@/common/components/BaseSpinner/BaseSpinner";
 import BaseFlex from "@/common/components/BaseFlex/BaseFlex";
-import BaseText from "@/common/components/BaseText/BaseText";
 import BaseSimpleGrid from "@/common/components/BaseSimpleGrid/BaseSimpleGrid";
 import RequestCard from "../components/RequestCard/RequestCard";
 import Contact from "../../../common/components/Contact/Contact";
@@ -24,6 +23,7 @@ import { dateService } from "@/services/date/dateService";
 import { useMe } from "@/common/hooks/useMe";
 import { AddIcon, SearchIcon } from "@chakra-ui/icons";
 import { toastService } from "@/services/toast/toastService";
+import NotFound from "@/common/components/NotFound/NotFound";
 
 const initialFiltersState: IFilters = {
   rate: ["", ""],
@@ -186,7 +186,7 @@ const Requests: React.FC = () => {
             </BaseModal>
           </>
         ) : (
-          <BaseText>No requests found</BaseText>
+          <NotFound />
         )}
       </BaseSection>
     </>

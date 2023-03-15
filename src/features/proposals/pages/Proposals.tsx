@@ -5,9 +5,9 @@ import BaseModal from "@/common/components/BaseModal/BaseModal";
 import BaseSection from "@/common/components/BaseSection/BaseSection";
 import BaseSimpleGrid from "@/common/components/BaseSimpleGrid/BaseSimpleGrid";
 import BaseSpinner from "@/common/components/BaseSpinner/BaseSpinner";
-import BaseText from "@/common/components/BaseText/BaseText";
 import Contact from "@/common/components/Contact/Contact";
 import Filters from "@/common/components/Filters/Filters";
+import NotFound from "@/common/components/NotFound/NotFound";
 import useBaseDisclosure from "@/common/hooks/useBaseDisclosure";
 import { useMe } from "@/common/hooks/useMe";
 import { Filters as IFilters } from "@/common/models/Filters";
@@ -188,7 +188,7 @@ const Proposals: React.FC = () => {
             </BaseModal>
           </>
         ) : (
-          <BaseText>No proposals yet</BaseText>
+          <NotFound />
         )}
       </BaseSection>
     </>
