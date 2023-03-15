@@ -8,9 +8,14 @@ import BaseCenter from "@/common/components/BaseCenter/BaseCenter";
 import AuthBGLight from "@/app/assets/images/auth-bg-light.webp";
 import AuthBGDark from "@/app/assets/images/auth-bg-dark.webp";
 import { useColorModeValue } from "@chakra-ui/react";
+import BaseCard from "@/common/components/BaseCard/BaseCard";
 
 const AuthLayout: React.FC = () => {
   const bg = useColorModeValue(AuthBGLight, AuthBGDark);
+  const cardBG = useColorModeValue(
+    "var(--chakra-colors-white)",
+    "var(--chakra-colors-gray-700)"
+  );
 
   return (
     <main>
@@ -26,7 +31,9 @@ const AuthLayout: React.FC = () => {
       >
         <BaseCenter width="100%" maxWidth={400}>
           <BaseContainer>
-            <Outlet />
+            <BaseCard background={cardBG} variant="filled">
+              <Outlet />
+            </BaseCard>
           </BaseContainer>
         </BaseCenter>
       </BaseSection>
