@@ -80,14 +80,18 @@ class FilterService {
   validateFilters(filters: Filters): FilterErrors {
     return {
       rate:
-        filters.rate[0] > filters.rate[1]
+        filters.rate[0] && filters.rate[1] && filters.rate[0] > filters.rate[1]
           ? "Min. rate can not be higher than max.rate"
           : null,
       yearsOfExperience:
+        filters.yearsOfExperience[0] &&
+        filters.yearsOfExperience[1] &&
         filters.yearsOfExperience[0] > filters.yearsOfExperience[1]
           ? "Min. years can not be higher than max. years"
           : null,
       weeklyEmployment:
+        filters.weeklyEmployment[0] &&
+        filters.weeklyEmployment[1] &&
         filters.weeklyEmployment[0] > filters.weeklyEmployment[1]
           ? "Min. employment can not be higher than max. employment"
           : null,
