@@ -120,6 +120,9 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
         }
       : {
           engLevel: EngLevelEnum.A1,
+          location: "BY",
+          position: "FRONTEND",
+          startDate: dateService.getNow().format(FULL_DATE_FORMAT),
         },
   });
 

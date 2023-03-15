@@ -110,7 +110,12 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           location: values.location,
           position: values.position,
         }
-      : { engLevel: EngLevelEnum.A1 },
+      : {
+          engLevel: EngLevelEnum.A1,
+          location: "BY",
+          position: "FRONTEND",
+          startDate: dateService.getNow().format(FULL_DATE_FORMAT),
+        },
   });
 
   const submit = (values: RequestInputs) => {
@@ -287,7 +292,7 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
           <BaseFormLabel>Position</BaseFormLabel>
           <BaseSelect
             variant="filled"
-            placeholder="Frontend Developer"
+            placeholder="Frontend"
             {...register("position")}
           >
             {(
