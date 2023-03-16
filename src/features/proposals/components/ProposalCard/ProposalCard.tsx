@@ -165,7 +165,14 @@ const ProposalCard: React.FC<Props> = ({
           <BaseStat label="Location" value={getCountryName(location)} />
         </BaseSimpleGrid>
 
-        <BaseStat label="CV link" value={CVLink} />
+        <BaseStat
+          label="CV link"
+          value={
+            <a href={CVLink} target="_blank" rel="noreferrer">
+              {CVLink}
+            </a>
+          }
+        />
 
         <BaseStat
           label="Skills"
