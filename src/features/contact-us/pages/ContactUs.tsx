@@ -43,7 +43,7 @@ const ContactUs: React.FC = () => {
   const onSubmit = async (values: ContactValues) => {
     const data = {
       message: values.message,
-      file: values.file
+      file: values.file?.length
         ? await getBase64(Array.from(values.file)[0])
         : undefined,
     };
