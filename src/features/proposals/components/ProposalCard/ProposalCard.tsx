@@ -25,6 +25,7 @@ interface Props extends Proposal {
   onContact: () => void;
   onClick?: () => void;
   isMy?: boolean;
+  isFull?: boolean;
 }
 
 const ProposalCard: React.FC<Props> = ({
@@ -45,6 +46,7 @@ const ProposalCard: React.FC<Props> = ({
   onClick,
   isMy,
   createdAt,
+  isFull,
 }) => {
   const {
     isOpen: isOpenConfirmPopup,
@@ -191,7 +193,18 @@ const ProposalCard: React.FC<Props> = ({
             </BaseFlex>
           }
         />
-        {description && <BaseStat label="Description" value={description} />}
+        {description && (
+          <BaseStat
+            label="Description"
+            value={
+              isFull
+                ? description
+                : `${description.slice(0, 300)}${
+                    description.length > 300 ? "..." : ""
+                  }`
+            }
+          />
+        )}
       </BaseFlex>
     </BaseCard>
   );

@@ -129,6 +129,7 @@ const SingleProposal: React.FC = () => {
             <BaseBox width={{ base: "320px", md: "500px" }}>
               <ProposalCard
                 {...currentProposal}
+                isFull
                 onContact={() => {
                   setContact(currentProposal.contact);
                   onOpenContactModal();

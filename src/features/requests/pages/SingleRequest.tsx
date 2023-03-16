@@ -127,6 +127,7 @@ const SingleRequest: React.FC = () => {
             <BaseBox width={{ base: "320px", md: "500px" }}>
               <RequestCard
                 {...currentRequest}
+                isFull
                 onContact={() => {
                   setContact(currentRequest.contact);
                   onOpenContactModal();
