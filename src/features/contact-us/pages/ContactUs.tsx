@@ -38,8 +38,6 @@ const ContactUs: React.FC = () => {
 
   const watchFields = watch();
 
-  console.log(watchFields);
-
   const { isLoading: isContacting, mutateAsync: contact } = useContact();
 
   const onSubmit = async (values: ContactValues) => {
