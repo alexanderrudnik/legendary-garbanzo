@@ -1,6 +1,6 @@
 export type ContactValues = {
   message: string;
-  file?: FileList;
+  file?: File;
 };
 
 export type ContactDetails = {

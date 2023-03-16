@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import BaseSection from "@/common/components/BaseSection/BaseSection";
@@ -14,10 +14,10 @@ import BaseTextArea from "@/common/components/BaseTextArea/BaseTextArea";
 import { MESSAGE_REQUIRED_ERROR } from "@/app/messages/errors";
 import BaseButton from "@/common/components/BaseButton/BaseButton";
 import { useContact } from "../hooks/useContact";
-import { DeleteIcon, EmailIcon } from "@chakra-ui/icons";
+import { EmailIcon } from "@chakra-ui/icons";
 import { ContactValues } from "@/services/contact/types";
-import BaseInput from "@/common/components/BaseInput/BaseInput";
 import { getBase64 } from "@/common/utils/getBase64";
+import UploadFile from "@/common/components/UploadFile/UploadFile";
 
 const schema = yup.object().shape({
   message: yup.string().required(MESSAGE_REQUIRED_ERROR),
@@ -26,26 +26,22 @@ const schema = yup.object().shape({
 const ContactUs: React.FC = () => {
   const {
     handleSubmit,
+    control,
     register,
     reset,
     resetField,
-    watch,
     formState: { errors },
   } = useForm<ContactValues>({
     resolver: yupResolver(schema),
     mode: "onTouched",
   });
 
-  const watchFields = watch();
-
   const { isLoading: isContacting, mutateAsync: contact } = useContact();
 
   const onSubmit = async (values: ContactValues) => {
     const data = {
       message: values.message,
-      file: values.file?.length
-        ? await getBase64(Array.from(values.file)[0])
-        : undefined,
+      file: values.file ? await getBase64(values.file) : undefined,
     };
 
     contact(data).then(() => reset());
@@ -81,23 +77,18 @@ const ContactUs: React.FC = () => {
             <BaseFormControl isInvalid={Boolean(errors.file)}>
               <BaseFormLabel>Upload file</BaseFormLabel>
               <BaseFlex justify="flex-start" align="center" gap="0.5rem">
-                <BaseInput
-                  width="unset"
-                  borderRadius="none"
-                  type="file"
-                  accept="image/*"
-                  variant="unstyled"
-                  {...register("file")}
+                <Controller
+                  name="file"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <UploadFile
+                      accept="image/*"
+                      value={value}
+                      onChange={onChange}
+                      onDelete={() => resetField("file")}
+                    />
+                  )}
                 />
-
-                {watchFields.file && Array.from(watchFields.file).length ? (
-                  <BaseButton
-                    variant="outline"
-                    onClick={() => resetField("file")}
-                  >
-                    <DeleteIcon />
-                  </BaseButton>
-                ) : null}
               </BaseFlex>
               <BaseFormErrorMessage>
                 {errors.message?.message}
