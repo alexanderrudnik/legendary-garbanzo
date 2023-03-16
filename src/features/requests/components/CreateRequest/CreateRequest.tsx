@@ -37,7 +37,7 @@ import BaseInputRightElement from "@/common/components/BaseInputRightElement/Bas
 import { RequestInputs } from "../../models/RequestInputs";
 import { FULL_DATE_FORMAT } from "@/services/date/dateFormats";
 import { LOCATIONS } from "@/common/constants/locations";
-import { CheckIcon } from "@chakra-ui/icons";
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { SKILLS } from "@/common/constants/skills";
 
 const today = new Date();
@@ -82,9 +82,15 @@ interface Props {
   values?: IRequest;
   onSubmit: (values: RequestInputs) => void;
   isLoading: boolean;
+  onCancel: () => void;
 }
 
-const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
+const CreateRequest: React.FC<Props> = ({
+  values,
+  onCancel,
+  onSubmit,
+  isLoading,
+}) => {
   const {
     handleSubmit,
     control,
@@ -309,15 +315,24 @@ const CreateRequest: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
         </BaseFormControl>
       </BaseFlex>
 
-      <BaseButton
-        leftIcon={<CheckIcon />}
-        marginTop="2.5rem"
-        isLoading={isLoading}
-        onClick={handleSubmit(submit)}
-        variant="solid"
-      >
-        Submit
-      </BaseButton>
+      <BaseFlex marginTop="2.5rem" justify="space-between" align="center">
+        <BaseButton
+          variant="outline"
+          leftIcon={<CloseIcon />}
+          onClick={onCancel}
+        >
+          Cancel
+        </BaseButton>
+
+        <BaseButton
+          leftIcon={<CheckIcon />}
+          isLoading={isLoading}
+          onClick={handleSubmit(submit)}
+          variant="solid"
+        >
+          Submit
+        </BaseButton>
+      </BaseFlex>
     </form>
   );
 };

@@ -128,6 +128,7 @@ const Proposals: React.FC = () => {
           <CreateProposal
             onSubmit={handleSubmit}
             isLoading={isCreatingProposal}
+            onCancel={onCloseCreateModal}
           />
         </BaseModal>
 

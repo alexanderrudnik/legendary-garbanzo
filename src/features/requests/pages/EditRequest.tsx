@@ -46,6 +46,10 @@ const EditRequest: React.FC = () => {
     );
   };
 
+  const handleCancel = () => {
+    navigate(-1);
+  };
+
   return (
     <BaseSection>
       {isLoadingRequests ? (
@@ -58,6 +62,7 @@ const EditRequest: React.FC = () => {
             isLoading={isEditingRequest}
             onSubmit={handleSubmit}
             values={currentRequest}
+            onCancel={handleCancel}
           />
         </BaseBox>
       ) : (

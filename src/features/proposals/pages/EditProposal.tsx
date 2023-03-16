@@ -48,6 +48,10 @@ const EditProposal: React.FC = () => {
     );
   };
 
+  const handleCancel = () => {
+    navigate(-1);
+  };
+
   return (
     <BaseSection>
       {isLoading ? (
@@ -60,6 +64,7 @@ const EditProposal: React.FC = () => {
             isLoading={isEditingProposal}
             onSubmit={handleSubmit}
             values={currentProposal}
+            onCancel={handleCancel}
           />
         </BaseBox>
       ) : (

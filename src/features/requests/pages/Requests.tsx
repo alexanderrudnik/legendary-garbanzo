@@ -126,6 +126,7 @@ const Requests: React.FC = () => {
           <CreateRequest
             onSubmit={handleSubmit}
             isLoading={isCreatingRequest}
+            onCancel={onCloseCreateModal}
           />
         </BaseModal>
 

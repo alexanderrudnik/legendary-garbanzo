@@ -39,7 +39,7 @@ import { Proposal } from "@/services/proposal/types";
 import { dateService } from "@/services/date/dateService";
 import { FULL_DATE_FORMAT } from "@/services/date/dateFormats";
 import { LOCATIONS } from "@/common/constants/locations";
-import { CheckIcon } from "@chakra-ui/icons";
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { LINK_REGEX } from "@/common/regex/regex";
 import { SKILLS } from "@/common/constants/skills";
 
@@ -89,9 +89,15 @@ interface Props {
   values?: Proposal;
   onSubmit: (values: ProposalsInputs) => void;
   isLoading: boolean;
+  onCancel: () => void;
 }
 
-const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
+const CreateProposal: React.FC<Props> = ({
+  values,
+  onSubmit,
+  isLoading,
+  onCancel,
+}) => {
   const {
     handleSubmit,
     setValue,
@@ -324,15 +330,24 @@ const CreateProposal: React.FC<Props> = ({ values, onSubmit, isLoading }) => {
         </BaseFormControl>
       </BaseFlex>
 
-      <BaseButton
-        leftIcon={<CheckIcon />}
-        marginTop="2.5rem"
-        isLoading={isLoading}
-        onClick={handleSubmit(submit)}
-        variant="solid"
-      >
-        Submit
-      </BaseButton>
+      <BaseFlex marginTop="2.5rem" justify="space-between" align="center">
+        <BaseButton
+          variant="outline"
+          leftIcon={<CloseIcon />}
+          onClick={onCancel}
+        >
+          Cancel
+        </BaseButton>
+
+        <BaseButton
+          leftIcon={<CheckIcon />}
+          isLoading={isLoading}
+          onClick={handleSubmit(submit)}
+          variant="solid"
+        >
+          Submit
+        </BaseButton>
+      </BaseFlex>
     </form>
   );
 };
